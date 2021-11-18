@@ -83,7 +83,7 @@ for v in cs do(
         if v[i,1] # 0 and bool = false then
         (
           w:append(w,[v[i,1]]), bool: true,
-          vsimp:(v/v[i,1]),
+          vsimp:(v/v[i,1])
         )
       ),      
       csimp:append(csimp,[vsimp])
