@@ -75,55 +75,38 @@ elseif nonscalarp(theta) and not(symbolp(theta))
 )$
 
 /*Calcolo di autovalori e autovettori*/
-myColspace(A):= block([m, nc, nr, cs : set(), pos, x, algebraic : true, c_min],
-require_unblockedmatrix(A, "first","myColspace"),
-[nr, nc] : matrix_size(A),
-if nc = 0 or nr = 0 then (
-error("The argument to 'columnspace' must be a matrix with one or more rows and columns")),
- m : triangularize(A),
- c_min : 1,
- for i : 1 thru nr while c_min <= nc do (
-if listp(pos : locate_matrix_entry(m, i, c_min, i, nc, lambda([x], x # 0), 'bool)) then (
-c_min : second(pos) + 1,
-cs : adjoin(col(A,second(pos)) ,cs))),
-funmake('span, listify(cs))
-)$
-imagesimp(A):=block(
-[M:A, bool:false, imm, i, j, sz:size(A),w:[]],
-      algebraic:true,
-      for i:1 thru sz[1] do(  
-          w:append(w,[1]),
-          bool:false,
-             for j:1 thru sz[2] do(
-               if M[j,i] # 0 and bool = false then(               
-                 w[i]:M[j,i], bool:true              
-               ),
-             M[j,i]:ratsimp(M[j,i]/w[i])           
-             )                   
+colsimp(cs):=block(
+[csimp:[], v, bool, w:[], vsimp],
+for v in cs do(
+      bool: false,
+      for i:1 thru length(v) do(
+        if v[i,1] # 0 and bool = false then
+        (
+          w:append(w,[v[i,1]]), bool: true,
+          vsimp:(v/v[i,1]),
+        )
       ),      
-      imm:ratsimp(myColspace(M)),
-      return([imm,w])
+      csimp:append(csimp,[vsimp])
+),
+return([csimp,w])
 )$
-kersimp(A):=block(
-[M:A, bool:false, ker, i, j, w, sz:size(A)],
-      algebraic:true,
-      for i:1 thru sz[1] do(
-        for j:1 thru sz[1] do(
-          if M[i,j] # 0 then(
-            w:M[i,j],
-            M:M/w,
-            bool:true,
-            return([M,w])
-          ),
-          if bool then return([M,w]) 
-        ),
-        if bool then return([M,w]) 
-      ),
-      ker:nullspace(M),
-      return([ker,w])
+myColspace(A):= block(
+[sz:size(A), cs:set(), pos, i, j, col, v, zeros],
+     if sz[1]#sz[2] or sz[1]=0 or sz[2]=0 then(
+       error("Inserisci una matrice quadrata")
+     ),
+/*Determino sottoinsieme di colonne lin. indip. di A.*/    
+     zeros:zeromatrix(sz[1],1),
+     for i:1 thru sz[1] do(
+       col:simp(col(A,i)),
+       if col # zeros then (cs:adjoin(col, cs))
+     ),
+/*Scalo le colonne per una loro componente non nulla*/        
+    cs:args(cs),
+    return(cs)
 )$
 myEigens(A):=block(
-[II, sII, sIImA, pA, i, j, k, sz:size(A), specSz, adj, adji, imm, ker, v, M, wImm, wKer, zeros, bool],
+[II, sII, sIImA, pA, i, j, k, sz:size(A), specSz, adj, adji, imm, ker, v, M, zeros, bool],
      if (sz[1] # sz[2]) and (sz[1] <2) then 
        error("Matrice non quadrata o vettore in ingresso"),
 /* definisco una matrice identità delle dimensioni di A*/
@@ -138,21 +121,24 @@ myEigens(A):=block(
      v:[], 
      zeros: zeromatrix(sz[1],sz[2]),
      for i:1 thru specSz do(
-       adji: subst(eigs[i], adj),
+       adji: simp(subst(eigs[i], adj)),
 /*Se l'aggiunta è nulla l'autovettore è preso come vettore nel nucleo di (sI-A)*/
        if adji = zeros then(
-         [kerA,wKer]:kersimp(subst(eigs[i],sIImA)),
+         kerA:nullspace(subst(eigs[i],sIImA)),
          for j:1 thru length(kerA) do(
 /*Tramite args() prendiamo una colonna linearmente indipendente*/
            v:append(v,[args(kerA)[j]])
          )
      ) else (
-         [immA,wImm]:imagesimp(adji),
+         immA:simp(myColspace(adji)),
 /*Tramite args()[1] prendiamo una colonna linearmente indipendente*/
-         v:append(v,[args(immA)[1]]))
+         v:append(v,[immA[1]]))
      ),
-     return([map(rhs,eigs),v,wImm,wKer])
+      [v,w]:colsimp(v),
+     return([map(rhs,eigs),v,w])
 )$
+
+
 /*Generare una matrice di rotazione tramite angoli nautici*/
 nautRot(axList, angleList):=block(
 [axis:[x, y, z], R, isAxeList, i, newAngleList:ratsimp(angleList)],
@@ -263,10 +249,10 @@ sz:size(v),
 if nonscalarp(v) and sz[2] = 1  then(
   vv:ratsimp(v),
   /*Applico una semplificazione numerica, dividendo il vettore per una sua componente non nulla, al fine di migliorare l'output*/
-  for i:1 thru sz[1] do(
+  /*for i:1 thru sz[1] do(
     if vv[i] # 0 then
        return(vv:vv/vv[i,1])
-  ),
+  ),*/
   norm:sqrt(transpose(vv).vv),
   u:vv/norm
 ),

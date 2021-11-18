@@ -27,69 +27,65 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
-      myColspace(A):= block([m, nc, nr, cs : set(), pos, x, algebraic : true,
-      c_min],
+      colsimp(cs):=block(
 
-      require_unblockedmatrix(A, "first","myColspace"),
+      [csimp:[], v, bool, w:[]],
 
-      [nr, nc] : matrix_size(A),
+      for v in cs do(
 
-      if nc = 0 or nr = 0 then (
+      \ \ \ \ \ \ bool: false,
 
-      error("The argument to 'columnspace' must be a matrix with one or more
-      rows and columns")),
+      \ \ \ \ \ \ for i:1 thru length(v) do(
 
-      \ m : triangularize(A),
+      \ \ \ \ \ \ \ \ if v[i,1] # 0 and bool = false then(
 
-      \ c_min : 1,
+      \ \ \ \ \ \ \ \ \ \ w:append(w,[v[i,1]]), bool: true,
 
-      \ for i : 1 thru nr while c_min \<less\>= nc do (
+      \ \ \ \ \ \ \ \ \ \ v:ratsimp(v/w[i])
 
-      if listp(pos : locate_matrix_entry(m, i, c_min, i, nc, lambda([x], x #
-      0), 'bool)) then (
+      \ \ \ \ \ \ \ \ )
 
-      c_min : second(pos) + 1,
+      \ \ \ \ \ \ ),
 
-      cs : adjoin(col(A,second(pos)) ,cs))),
+      \ \ \ \ \ \ csimp:append(csimp,[v])
 
-      funmake('span, listify(cs)))$
+      ),
+
+      return([csimp,w])
+
+      )$
     </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|input>
-      imagesimp(A):=block(
+      myColspace(A):= block(
 
-      [M:A, bool:false, imm, i, j, w:[], sz:size(A)],
+      [sz:size(A), cs:set(), pos, i, j, col, v, zeros],
 
-      \ \ \ \ \ \ algebraic:true,
+      \ \ \ \ \ if sz[1]#sz[2] or sz[1]=0 or sz[2]=0 then(
 
-      \ \ \ \ \ \ for i:1 thru sz[1] do( \ 
+      \ \ \ \ \ \ \ error("Inserisci una matrice quadrata")
 
-      \ \ \ \ \ \ \ \ \ \ w:append(w,[1]),
+      \ \ \ \ \ ),
 
-      \ \ \ \ \ \ \ \ \ \ bool:false,
+      /*Determino sottoinsieme di colonne lin. indip. di A.*/ \ \ \ 
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ for j:1 thru sz[2] do(
+      \ \ \ \ \ zeros:zeromatrix(sz[1],1),
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if M[j,i] # 0 and bool = false then(
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+      \ \ \ \ \ for i:1 thru sz[1] do(
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w[i]:M[j,i], bool:true
-      \ \ \ \ \ \ \ \ \ \ \ \ \ 
+      \ \ \ \ \ \ \ col:col(A,i),
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ),
+      \ \ \ \ \ \ \ if col # zeros then cs:adjoin(col, cs)
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ M[j,i]:ratsimp(M[j,i]/w[i])
-      \ \ \ \ \ \ \ \ \ \ 
+      \ \ \ \ \ ),
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ ) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 
+      /*Scalo le colonne per una loro componente non nulla*/ \ \ \ \ \ \ \ 
 
-      \ \ \ \ \ \ ), \ \ \ \ \ 
+      \ \ \ \ cs:args(cs),
 
-      \ \ \ \ \ \ imm:ratsimp(myColspace(M)),
-
-      \ \ \ \ \ \ return([imm,w])
+      \ \ \ \ return(cs)
 
       )$
     </input>
@@ -97,50 +93,10 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|input>
-      kersimp(A):=block(
-
-      [M:A, bool:false, ker, i, j, w, sz:size(A)],
-
-      \ \ \ \ \ \ algebraic:true,
-
-      \ \ \ \ \ \ for i:1 thru sz[1] do(
-
-      \ \ \ \ \ \ \ \ for j:1 thru sz[1] do(
-
-      \ \ \ \ \ \ \ \ \ \ if M[i,j] # 0 then(
-
-      \ \ \ \ \ \ \ \ \ \ \ \ w:M[i,j],
-
-      \ \ \ \ \ \ \ \ \ \ \ \ M:M/w,
-
-      \ \ \ \ \ \ \ \ \ \ \ \ bool:true,
-
-      \ \ \ \ \ \ \ \ \ \ \ \ return([M,w])
-
-      \ \ \ \ \ \ \ \ \ \ ),
-
-      \ \ \ \ \ \ \ \ \ \ if bool then return([M,w])\ 
-
-      \ \ \ \ \ \ \ \ ),
-
-      \ \ \ \ \ \ \ \ if bool then return([M,w])\ 
-
-      \ \ \ \ \ \ ),
-
-      \ \ \ \ \ \ ker:nullspace(M),
-
-      \ \ \ \ \ \ return([ker,w])
-
-      )$
-    </input>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|input>
       myEigens(A):=block(
 
       [II, sII, sIImA, pA, i, j, k, sz:size(A), specSz, adj, adji, imm, ker,
-      v, M, wImm, wKer, zeros, bool],
+      v, M, zeros, bool,w],
 
       \ \ \ \ \ if (sz[1] # sz[2]) and (sz[1] \<less\>2) then\ 
 
@@ -177,7 +133,7 @@
 
       \ \ \ \ \ \ \ if adji = zeros then(
 
-      \ \ \ \ \ \ \ \ \ [kerA,wKer]:kersimp(subst(eigs[i],sIImA)),
+      \ \ \ \ \ \ \ \ \ kerA:nullspace(subst(eigs[i],sIImA)),
 
       \ \ \ \ \ \ \ \ \ for j:1 thru length(kerA) do(
 
@@ -189,35 +145,37 @@
 
       \ \ \ \ \ ) else (
 
-      \ \ \ \ \ \ \ \ \ [immA,wImm]:imagesimp(adji),
+      \ \ \ \ \ \ \ \ \ immA:myColspace(adji),
 
       /*Tramite args()[1] prendiamo una colonna linearmente indipendente*/
 
       \ \ \ \ \ \ \ \ \ v:append(v,[args(immA)[1]]))
 
-      \ \ \ \ \ ),
+      \ \ \ \ \ ),\ 
 
-      \ \ \ \ \ return([map(rhs,eigs),v,wImm,wKer])
+      \ \ \ \ \ \ [v,w]:colsimp(v),
+
+      \ \ \ \ \ return([map(rhs,eigs),v,w])
 
       )$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
+      <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|unfolded-io>
       A:matrix([2,1,0],[0, 1, 0],[0,0,2])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
       >><matrix|<tformat|<table|<row|<cell|2>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|2>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
+      <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
       myEigens(A)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
-      >><around*|[|<around*|[|1,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-1>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>|]>,<around*|[|1,-1,1|]>,-1|]>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      >><around*|[|<around*|[|1,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-1>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>|]>,<around*|[|-1,-1,-1|]>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -227,11 +185,11 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
+      <with|color|red|(<with|math-font-family|rm|%i>6) >
     <|unfolded-io>
       eigenvectors(A)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
       >><around*|[|<around*|[|<around*|[|1,2|]>,<around*|[|1,2|]>|]>,<around*|[|<around*|[|<around*|[|1,-1,0|]>|]>,<around*|[|<around*|[|1,0,0|]>,<around*|[|0,0,1|]>|]>|]>|]>>>
     </unfolded-io>
 
@@ -240,23 +198,31 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>8) >
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
       M:matrix([sqrt(2),0,2],[1.1,2,3],[0,0,3])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
       >><matrix|<tformat|<table|<row|<cell|<sqrt|2>>|<cell|0>|<cell|2>>|<row|<cell|1.1>|<cell|2>|<cell|3>>|<row|<cell|0>|<cell|0>|<cell|3>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
       myEigens(M)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
-      >><around*|[|<around*|[|<sqrt|2>,3,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-<frac|11*<sqrt|2>+22|20>>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-<frac|15*<sqrt|2>-56|10>>>|<row|<cell|-<frac|<sqrt|2>-3|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>|]>,<around*|[|-1.1,<sqrt|2>-2,3*<around*|(|2-<sqrt|2>|)>+2.2|]>,<math-up|wKer>|]>>>
+      <math|<with|math-display|true|<around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|-1.1>>|<row|<cell|0>>>>>|]>>>
+
+      \;
+
+      \ <math|<with|math-display|true|<around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>|]>>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >><around*|[|<around*|[|<sqrt|2>,3,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>|]>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -278,7 +244,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|input>
       toComplex(x,y):=block(
 
@@ -302,7 +268,7 @@
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
     <|input>
       toExp(rho, theta):=block(
 
@@ -314,20 +280,20 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
       z:toComplex(1,1)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><around*|[|<sqrt|2>,<frac|\<pi\>|4>,\<mathi\>+1,<sqrt|2>*\<mathe\><rsup|<frac|\<mathi\>*\<pi\>|4>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
       zz:toExp(rho,theta)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
       >>\<rho\>*\<mathe\><rsup|\<mathi\>*\<vartheta\>>>>
     </unfolded-io>
 
@@ -337,7 +303,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|input>
       compArgs(z):=block(
 
@@ -357,9 +323,18 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
       compArgs(z[3])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >><around*|[|<sqrt|2>,<frac|\<pi\>|4>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>15) >
+    <|unfolded-io>
+      compArgs(z[4])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
       >><around*|[|<sqrt|2>,<frac|\<pi\>|4>|]>>>
@@ -368,18 +343,9 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
     <|unfolded-io>
-      compArgs(z[4])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
-      >><around*|[|<sqrt|2>,<frac|\<pi\>|4>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>17) >
-    <|unfolded-io>
       compArgs(zz)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
       >><around*|[|<around*|\||\<rho\>|\|>,<math-up|atan2><around*|(|sin
       <around*|(|\<vartheta\>|)>,cos <around*|(|\<vartheta\>|)>|)>+<math-up|atan2><around*|(|0,\<rho\>|)>|]>>>
     </unfolded-io>
@@ -389,7 +355,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
+      <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|input>
       polarT(m,L1,L2,L3,th1,th2,th3):=block(
 
@@ -431,7 +397,7 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>19) >
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
       T:polarT(m,L[1],L[2],L[3],theta[1],theta[2],theta[3])
     <|unfolded-io>
@@ -448,7 +414,7 @@
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
       >><frac|<around*|(|<around*|(|2*L<rsub|1>*\<omega\><rsub|1>*L<rsub|3>*\<omega\><rsub|3>+<around*|(|2*L<rsub|1>*\<omega\><rsub|1>*\<omega\><rsub|2>+2*L<rsub|1>*\<omega\><rsub|1><rsup|2>|)>*L<rsub|3>|)>*cos
       <around*|(|\<vartheta\><rsub|3>+\<vartheta\><rsub|2>|)>+<around*|(|<around*|(|2*L<rsub|2>*\<omega\><rsub|2>+2*\<omega\><rsub|1>*L<rsub|2>|)>*L<rsub|3>*\<omega\><rsub|3>+<around*|(|2*L<rsub|2>*\<omega\><rsub|2><rsup|2>+4*\<omega\><rsub|1>*L<rsub|2>*\<omega\><rsub|2>+2*\<omega\><rsub|1><rsup|2>*L<rsub|2>|)>*L<rsub|3>|)>*cos
       <around*|(|\<vartheta\><rsub|3>|)>+<around*|(|2*L<rsub|1>*\<omega\><rsub|1>*L<rsub|2>*\<omega\><rsub|2>+2*L<rsub|1>*\<omega\><rsub|1><rsup|2>*L<rsub|2>|)>*cos
@@ -460,7 +426,7 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
+      <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|unfolded-io>
       let(cos(theta[1]),c[1]);let(sin(theta[1]),s[1]);
 
@@ -478,261 +444,86 @@
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
       >>cos <around*|(|\<vartheta\><rsub|1>|)>\<longrightarrow\>c<rsub|1>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
       >>sin <around*|(|\<vartheta\><rsub|1>|)>\<longrightarrow\>s<rsub|1>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
       >>cos <around*|(|\<vartheta\><rsub|2>|)>\<longrightarrow\>c<rsub|2>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
       >>sin <around*|(|\<vartheta\><rsub|2>|)>\<longrightarrow\>s<rsub|2>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
       >>cos <around*|(|\<vartheta\><rsub|3>|)>\<longrightarrow\>c<rsub|3>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
       >>sin <around*|(|\<vartheta\><rsub|3>|)>\<longrightarrow\>s<rsub|3>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
       >>cos <around*|(|\<vartheta\><rsub|2>+\<vartheta\><rsub|1>|)>\<longrightarrow\>c<rsub|12>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
       >>sin <around*|(|\<vartheta\><rsub|2>+\<vartheta\><rsub|1>|)>\<longrightarrow\>s<rsub|12>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
       >>cos <around*|(|\<vartheta\><rsub|3>+\<vartheta\><rsub|1>|)>\<longrightarrow\>c<rsub|13>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o29>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
       >>sin <around*|(|\<vartheta\><rsub|3>+\<vartheta\><rsub|1>|)>\<longrightarrow\>s<rsub|13>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o29>)
       >>cos <around*|(|\<vartheta\><rsub|3>+\<vartheta\><rsub|2>|)>\<longrightarrow\>c<rsub|23>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
       >>sin <around*|(|\<vartheta\><rsub|3>+\<vartheta\><rsub|2>|)>\<longrightarrow\>s<rsub|23>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o32>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
       >>cos <around*|(|\<vartheta\><rsub|3>+\<vartheta\><rsub|2>+\<vartheta\><rsub|1>|)>\<longrightarrow\>c<rsub|123>>>
 
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o33>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o32>)
       >>sin <around*|(|\<vartheta\><rsub|3>+\<vartheta\><rsub|2>+\<vartheta\><rsub|1>|)>\<longrightarrow\>s<rsub|123>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>34) >
+      <with|color|red|(<with|math-font-family|rm|%i>33) >
     <|unfolded-io>
       gfactor(letsimp(T))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o34>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o33>)
       >><frac|<around*|(|<around*|(|2*L<rsub|1>*\<omega\><rsub|1>*L<rsub|3>*\<omega\><rsub|3>+<around*|(|2*L<rsub|1>*\<omega\><rsub|1>*\<omega\><rsub|2>+2*L<rsub|1>*\<omega\><rsub|1><rsup|2>|)>*L<rsub|3>|)>*c<rsub|23>+L<rsub|3><rsup|2>*\<omega\><rsub|3><rsup|2>+<around*|(|<around*|(|2*L<rsub|2>*\<omega\><rsub|2>+2*\<omega\><rsub|1>*L<rsub|2>|)>*L<rsub|3>*c<rsub|3>+<around*|(|2*\<omega\><rsub|2>+2*\<omega\><rsub|1>|)>*L<rsub|3><rsup|2>|)>*\<omega\><rsub|3>+<around*|(|2*L<rsub|2>*\<omega\><rsub|2><rsup|2>+4*\<omega\><rsub|1>*L<rsub|2>*\<omega\><rsub|2>+2*\<omega\><rsub|1><rsup|2>*L<rsub|2>|)>*L<rsub|3>*c<rsub|3>+<around*|(|\<omega\><rsub|2><rsup|2>+2*\<omega\><rsub|1>*\<omega\><rsub|2>+\<omega\><rsub|1><rsup|2>|)>*L<rsub|3><rsup|2>+L<rsub|2><rsup|2>*\<omega\><rsub|2><rsup|2>+<around*|(|2*L<rsub|1>*\<omega\><rsub|1>*L<rsub|2>*c<rsub|2>+2*\<omega\><rsub|1>*L<rsub|2><rsup|2>|)>*\<omega\><rsub|2>+2*L<rsub|1>*\<omega\><rsub|1><rsup|2>*L<rsub|2>*c<rsub|2>+\<omega\><rsub|1><rsup|2>*L<rsub|2><rsup|2>+L<rsub|1><rsup|2>*\<omega\><rsub|1><rsup|2>|)>*m|2>>>
     </unfolded-io>
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>35) >
-    <|unfolded-io>
-      array(w,3)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
-      >>w>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>36) >
-    <|unfolded-io>
-      w
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o36>)
-      >>w>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>37) >
-    <|unfolded-io>
-      w[1
-    <|unfolded-io>
-      \;
-
-      incorrect syntax: Missing ]
-
-      w[1;
-
-      \ \ ^
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>37) >
-    <|unfolded-io>
-      w(1):1
-    <|unfolded-io>
-      \;
-
-      <math|<with|math-display|true|<text|<verbatim|a><verbatim|s><verbatim|s><verbatim|i><verbatim|g><verbatim|n><verbatim|m><verbatim|e><verbatim|n><verbatim|t><verbatim|:><verbatim|
-      ><verbatim|c><verbatim|a><verbatim|n><verbatim|n><verbatim|o><verbatim|t><verbatim|
-      ><verbatim|a><verbatim|s><verbatim|s><verbatim|i><verbatim|g><verbatim|n><verbatim|
-      ><verbatim|t><verbatim|o><verbatim| >>w<around*|(|1|)>>>
-
-      \ -- an error. To debug this try: debugmode(true);
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>38) >
-    <|unfolded-io>
-      w[1]:1
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o38>)
-      >>1>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>39) >
-    <|unfolded-io>
-      w
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o39>)
-      >>w>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>40) >
-    <|unfolded-io>
-      w[2]:2
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o40>)
-      >>2>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>41) >
-    <|unfolded-io>
-      w[3]:3
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o41>)
-      >>3>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>42) >
-    <|unfolded-io>
-      w
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o42>)
-      >>w>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>43) >
-    <|unfolded-io>
-      append(w,1)
-    <|unfolded-io>
-      \;
-
-      <math|<with|math-display|true|<text|<verbatim|a><verbatim|p><verbatim|p><verbatim|e><verbatim|n><verbatim|d><verbatim|:><verbatim|
-      ><verbatim|a><verbatim|r><verbatim|g><verbatim|u><verbatim|m><verbatim|e><verbatim|n><verbatim|t><verbatim|
-      ><verbatim|m><verbatim|u><verbatim|s><verbatim|t><verbatim|
-      ><verbatim|b><verbatim|e><verbatim| ><verbatim|a><verbatim|
-      ><verbatim|n><verbatim|o><verbatim|n><verbatim|-><verbatim|a><verbatim|t><verbatim|o><verbatim|m><verbatim|i><verbatim|c><verbatim|
-      ><verbatim|e><verbatim|x><verbatim|p><verbatim|r><verbatim|e><verbatim|s><verbatim|s><verbatim|i><verbatim|o><verbatim|n><verbatim|;><verbatim|
-      ><verbatim|f><verbatim|o><verbatim|u><verbatim|n><verbatim|d><verbatim|
-      >>w>>
-
-      \ -- an error. To debug this try: debugmode(true);
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>44) >
-    <|unfolded-io>
-      v:[]
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o44>)
-      >><around*|[||]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>45) >
-    <|unfolded-io>
-      append(v,[1])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o45>)
-      >><around*|[|1|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>46) >
-    <|unfolded-io>
-      M:identmatrix(3)
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o46>)
-      >><math-up|identmatrix><around*|(|3|)>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>47) >
-    <|unfolded-io>
-      M:ident(3)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o47>)
-      >><matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>48) >
-    <|unfolded-io>
-      append(v,[M[1,2]])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o48>)
-      >><around*|[|0|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>49) >
-    <|unfolded-io>
-      describe(matrixfor)
-    <|unfolded-io>
-      \ \ No exact match found for topic `matrixfor'.
-
-      \ \ Try `?? matrixfor' (inexact match) instead.
-
-      \;
-
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o49>)
-      >><math-bf|false>>>
-    </unfolded-io>
-
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>50) >
+      <with|color|red|(<with|math-font-family|rm|%i>34) >
     <|input>
       \;
     </input>
