@@ -29,7 +29,7 @@
     <|input>
       colsimp(cs):=block(
 
-      [csimp:[], v, bool, w:[]],
+      [csimp:[], v, bool],
 
       for v in cs do(
 
@@ -39,9 +39,9 @@
 
       \ \ \ \ \ \ \ \ if v[i,1] # 0 and bool = false then(
 
-      \ \ \ \ \ \ \ \ \ \ w:append(w,[v[i,1]]), bool: true,
+      \ \ \ \ \ \ \ \ \ \ bool: true,
 
-      \ \ \ \ \ \ \ \ \ \ v:ratsimp(v/w[i])
+      \ \ \ \ \ \ \ \ \ \ v:ratsimp(v/v[i,1])
 
       \ \ \ \ \ \ \ \ )
 
@@ -51,7 +51,7 @@
 
       ),
 
-      return([csimp,w])
+      return(csimp)
 
       )$
     </input>
@@ -96,7 +96,7 @@
       myEigens(A):=block(
 
       [II, sII, sIImA, pA, i, j, k, sz:size(A), specSz, adj, adji, imm, ker,
-      v, M, zeros, bool,w],
+      v, M, zeros, bool],
 
       \ \ \ \ \ if (sz[1] # sz[2]) and (sz[1] \<less\>2) then\ 
 
@@ -153,9 +153,9 @@
 
       \ \ \ \ \ ),\ 
 
-      \ \ \ \ \ \ [v,w]:colsimp(v),
+      \ \ \ \ \ v:colsimp(v),
 
-      \ \ \ \ \ return([map(rhs,eigs),v,w])
+      \ \ \ \ \ return([map(rhs,eigs),v])
 
       )$
     </input>
@@ -175,7 +175,7 @@
       myEigens(A)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><around*|[|<around*|[|1,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-1>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>|]>,<around*|[|-1,-1,-1|]>|]>>>
+      >><around*|[|<around*|[|1,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-1>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>|]>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -213,16 +213,8 @@
     <|unfolded-io>
       myEigens(M)
     <|unfolded-io>
-      <math|<with|math-display|true|<around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|-1.1>>|<row|<cell|0>>>>>|]>>>
-
-      \;
-
-      \ <math|<with|math-display|true|<around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>|]>>>
-
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><around*|[|<around*|[|<sqrt|2>,3,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>|]>|]>>>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >><around*|[|<around*|[|<sqrt|2>,3,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-<frac|11*<sqrt|2>+22|20>>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-<frac|15*<sqrt|2>-56|10>>>|<row|<cell|-<frac|<sqrt|2>-3|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>|]>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -284,7 +276,9 @@
     <|unfolded-io>
       z:toComplex(1,1)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><around*|[|<sqrt|2>,<frac|\<pi\>|4>,\<mathi\>+1,<sqrt|2>*\<mathe\><rsup|<frac|\<mathi\>*\<pi\>|4>>|]>>>
     </unfolded-io>
 
