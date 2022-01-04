@@ -23,7 +23,7 @@ myAtan2(y,x):=block(
     elseif x = 0 and -1 = y then return(-%pi/2),
     /*x != 0*/
     myAtan:simp(atan(y/x)), print(myAtan),
-    s:sin(myAtan), sp:sin(myAtan+%pi), 
+    s:sin(myAtan), sp:sin(myAtan+%pi),
     c:cos(myAtan), cp:cos(myAtan+%pi),
     /*x>0, y>0*/
     if c = x and s = y then return(myAtan)
@@ -32,7 +32,7 @@ myAtan2(y,x):=block(
     /*x<0, y>0*/
     elseif cp = x and s = y then return(myAtan+%pi)
     /*x>0, y<0*/
-    elseif c = x and sp = y then return(-myAtan)    
+    elseif c = x and sp = y then return(-myAtan)
 )$
 /*Prodotto Vettoriale*/
 vect_prod(A,B):=block([E, M, AxB, res],
@@ -40,18 +40,18 @@ vect_prod(A,B):=block([E, M, AxB, res],
 if ((length(A) # length(B)) or (length(A) < 3)) then
    error("Inserisci due vettori lunghi uguali")
 else(
-   /*Definisco vettore simbolico per i versori*/  
+   /*Definisco vettore simbolico per i versori*/
    E:matrix([e[x]],[e[y]],[e[z]]),
-   /*Definisco matrice per il prodotto vettoriale*/   
+   /*Definisco matrice per il prodotto vettoriale*/
    M:addrow(transpose(E),transpose(A),transpose(B)),
-   /*Calcolo il prodotto vettoriale. Letsimp necessario per 
+   /*Calcolo il prodotto vettoriale. Letsimp necessario per
    coprire anche i casi di vettori simbolici assunti come paralleli*/
    AxB:mySimp(determinant(M)),
    /*Verifico se i due vettori sono paralleli*/
    if AxB = 0 then
      res: true
-   else 
-     res: false),          
+   else
+     res: false),
  return([AxB, res])
  )$
 /*Verifica della proprietà di isometria*/
@@ -90,7 +90,7 @@ elseif nonscalarp(theta) and not(symbolp(theta))
 /*Ritorna la matrice di rotazione corrispondente*/
          if(a = x) then return(rot3X(theta)),
          if(a = y) then return(rot3Y(theta)),
-         if(a = z) then return(rot3Z(theta))        
+         if(a = z) then return(rot3Z(theta))
 )
 )$
 
@@ -114,19 +114,19 @@ myColspace(A):= block(
      if sz[1]#sz[2] or sz[1]=0 or sz[2]=0 then(
        error("Inserisci una matrice quadrata")
      ),
-/*Determino sottoinsieme di colonne lin. indip. di A.*/    
+/*Determino sottoinsieme di colonne lin. indip. di A.*/
      zeros:zeromatrix(sz[1],1),
      for i:1 thru sz[1] do(
        col:simp(col(A,i)),
        if col # zeros then (cs:adjoin(col, cs))
      ),
-/*Scalo le colonne per una loro componente non nulla*/        
+/*Scalo le colonne per una loro componente non nulla*/
     cs:args(cs),
     return(cs)
 )$
 myEigens(A):=block(
 [II, sII, sIImA, pA, i, j, k, sz:size(A), specSz, adj, adji, imm, ker, v, M, zeros, bool],
-     if (sz[1] # sz[2]) and (sz[1] <2) then 
+     if (sz[1] # sz[2]) and (sz[1] <2) then
        error("Matrice non quadrata o vettore in ingresso"),
 /* definisco una matrice identità delle dimensioni di A*/
      II: identfor(A),
@@ -137,7 +137,7 @@ myEigens(A):=block(
      eigs:solve(pA=0,s),
      specSz: length(eigs),
      adj:adjoint(sIImA),
-     v:[], 
+     v:[],
      zeros: zeromatrix(sz[1],sz[2]),
      for i:1 thru specSz do(
        adji: subst(eigs[i], adj),
@@ -152,7 +152,7 @@ myEigens(A):=block(
          immA:myColspace(adji),
 /*Tramite args()[1] prendiamo una colonna linearmente indipendente*/
          v:append(v,[args(immA)[1]]))
-     ), 
+     ),
      v:colsimp(v),
      return([map(rhs,eigs),v])
 )$
@@ -178,7 +178,7 @@ else(
 )$
 /*Generare una matrice di rotazione tramite angoli di Eulero*/
 euleroRot(axList, angle):=block(
-[axis:[x, y, z], R, isAxeList, i, sgn:1], 
+[axis:[x, y, z], R, isAxeList, i, sgn:1],
 /*Controllo che l'input sia una lista di 3 elementi*/
 for i:1 thru 3 do(isAxeList:member(axList[i],axis) and axList[1] = axList[3]),
 if length(axList) # 3 and not(nonscalarp(axList)) and not(isAxeList) then
@@ -192,7 +192,7 @@ else(
   /*x.y.-x-> z, -x.-y.x-> z*/
   if axList[1] = axis[1] and axList[2] = axis[2] then(
     R:rot3X(sgn*%pi/2).rot3Y(sgn*theta).rot3X(-sgn*%pi/2)
-  ), 
+  ),
   /*-x.z.x -> y, x.-z.-x -> y*/
   if axList[1] = axis[1] and axList[2] = axis[3] then(
     R:rot3X(-sgn*%pi/2).rot3Z(sgn*theta).rot3X(sgn*%pi/2)
@@ -200,11 +200,11 @@ else(
   /*-y.x.y -> z, y.-x.-y -> z*/
   if axList[1] = axis[2] and axList[2] = axis[1] then(
     R:rot3Y(-sgn*%pi/2).rot3X(sgn*theta).rot3Y(sgn*%pi/2)
-  ),    
+  ),
   /*y.z.-y -> x, -y.-z.y -> x*/
   if axList[1] = axis[2] and axList[2] = axis[3] then(
     R:rot3Y(sgn*%pi/2).rot3Z(sgn*theta).rot3Y(-sgn*%pi/2)
-  ),  
+  ),
   /*z.x.-z -> y, -z.-x.z -> y*/
   if axList[1] = axis[3] and axList[2] = axis[1] then(
     R:rot3Z(sgn*%pi/2).rot3X(sgn*theta).rot3Z(-sgn*%pi/2)
@@ -227,12 +227,12 @@ else(
 )$
 /*calcolare esponenziale di matrice*/
 expLaplace(A,t):=block(
-[sz, II, s, sIImA, sIImAT, i, iltA], 
+[sz, II, s, sIImA, sIImAT, i, iltA],
      /*Controlliamo che la matrice inserita sia quadrata*/
      sz:size(A),
      if(sz[1]#sz[2]) then error("Matrice non Quadrata"),
      II:ident(sz[1]),
-     sIImA:invert(s*II-A),     
+     sIImA:invert(s*II-A),
      iltA:zerofor(A),
      for i:1 thru sz[1] do(
        for j:1 thru sz[2] do(
@@ -251,7 +251,7 @@ expVect(A,t):=block(
       for i:1 thru sz[1] do(
         V:addcol(V, eigVec[i])
       ),
-      Vi:invert(V), 
+      Vi:invert(V),
       D:Vi.A.V,
       expD:D,
       for i:1 thru sz[1] do(
@@ -271,7 +271,7 @@ if nonscalarp(v) and sz[2] = 1  then(
   norm:sqrt(transpose(vv).vv),
   u:ratsimp(vv/norm)
 ),
-return([norm,u]) 
+return([norm,u])
 )$
 /*Rodrigues*/
 rodrigues(v,theta):=block(
@@ -290,7 +290,7 @@ rodrigues(v,theta):=block(
 /*data una matrice verificare che è antisimmetrica*/
 isAsim(M):=block(
 [sz:size(M), t, i, j, diagCheck, sideCheck, b],
-/*Verifichiamo che la matrice inserita sia quadrata*/        
+/*Verifichiamo che la matrice inserita sia quadrata*/
 if sz[1]#sz[2] or sz[1] < 2 or sz[2] < 2 then error("Inserire una matrice quadrata"),
 /*Per verificare che una qualsiasi matrice m x n quadrata sia antisimmetrica usiamo una tecnica ricorsiva.*/
 /*caso base:*/
@@ -311,11 +311,115 @@ if sz[1] = 2 then(
 /*Calcolo i = t mod(n)*/
     i:remainder(t,sz[1]),
     if i = 0 then i:n,
-    sideCheck: M[i,j] = -M[j,i],    
+    sideCheck: M[i,j] = -M[j,i],
     b: diagCheck and sideCheck,
  /*Se la condizione è violata esco, altrimenti rilancio con la sottomatrice ottenuta cancellando la prima riga e la prima colonna*/
-    if b = false then return(b) else return(isAsim(submatrix(i,M,j)))    
+    if b = false then return(b) else return(isAsim(submatrix(i,M,j)))
   )
 )
 )$
+/*Data una matrice antisimmetrica S(v) determinare il vettore v*/
+getAsimVect(S):=block(
+[v:zeromatrix(3,1)],
+/*Verifico che la matrice è antisimmetrica*/
+if isAsim(S) then(
+/*Mappo le componenti della matrice antisimmetrica nel vettore*/
+  v[1,1]:S[3,2],
+  v[2,1]:S[1,3],
+  v[3,1]:S[2,1],
+  return(v)
+) else (
+  error("La matrice non è antisimmetrica")
+)
+)$
+/*Prodotto vettoriale con matrice antisimmetrica*/
+antiSimProduct(v,w):=block(
+[S,Sw],
+ S:S(v),
+ Sw:S.w,
+ return(Sw)
+)$
+/*Data una matrice antisimmetrica calcolare la matrice di rotazione corrispondente*/
+rotExp(S,t):=block(
+[R],
+/*Verifichiamo che S sia antisimmetrica*/
+if isAsim(S) then(
+  R:expLaplace(S,t),
+  return(R)
+) else (
+  error("Inserire una matrice antisimmetrica")
+)
+)$
+/*Data matrice di rotazione calcolare asse*/
+getAxis(R):=block(
+[II, v, i, u, norm,c],algebraic:true,
+  /*Verifichiamo che la matrice data è di rotazione*/
+  if (isRot(R) = false) then (
+    error("La matrice inserita non è di rotazione.")
+  ) else (
+    /*Calcolo autovalori e autovettori*/
+    eigs:myEigens(R),
+    for i:1 thru length(eigs[1]) do(
+/*Cerco l'autovettore relativo all'autovalore 1. Unico per ipotesi.*/
+      if eigs[1][i] = 1 then( /*scorro autovalori per trovare lambda=1*/
+         v:simp(eigs[2][i]),          
+         [norm, u] : ratsimp(normalize(v)),
+         return([v, norm, u])
+      )
+    )
+  )       
+)$
+/*Data matrice di rotazione determinare angolo*/
+getAngle(R):=block(
+[Rplus, Rminus, S1, S2, dim, Rt, v, c, s, norm, u, angle,cc],
+        dim:size(R),
+        Rt:transpose(R),
+        I:ident(dim[1]),
+        Rminus:trigsimp((R-Rt)/2),
+        Rplus:trigsimp((R+Rt)/2-I),        
+        [v, norm, u]:getAxis(R),        
+        S1:S(u), s:0, c:0,
+        if(isRot(R) = false) then 
+        error("La matrice inserita non è di rotazione."),     
+        for i:1 thru dim[1] do(
+          for j:1 thru dim[2] do(
+           if(S1[i][j]#0) then
+             s:Rminus[i][j]/S1[i][j],
+             return(s)
+          )
+         ),
+         S2:S1.S1,
+         for i:1 thru dim[1] do(
+          for j:1 thru dim[2] do(
+           if(S2[i][j]#0) then
+             c:expand(1-Rplus[i][j]/S2[i][j]),
+             return(c)
+          )
+         ),
+        angle:simp(atan2(expand(s),expand(c))),
+        return(expand(angle/norm))
+)$
 /*Data Matrice antisimmetrica determinare asse ed angolo*/
+getRotData(R):=block(
+[angle, axes],
+        axes:getAxis(R),
+        angle:getAngle(R),
+        return([axes[1],angle])
+)$
+/********************UTILS*************************/
+/*Data una espressione determinare le sue parti*/
+exprbreak(expr):=block(
+[p, part_list:[], cond,idx:1],
+partswitch:true,
+cond:atom(expr),
+if cond then(return(expr))
+elseif operatorp(expr,[cos,sin]) then(p:args(expr),return(exprbreak(p)))
+ else (while true do(
+         p:part(expr,idx),
+         if p='end then (return()),res:[exprbreak(p)],
+        part_list:flatten(append(part_list,res)),
+idx:idx+1
+    ),
+    return(part_list)
+    )
+)$
