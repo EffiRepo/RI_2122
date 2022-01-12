@@ -3,7 +3,7 @@ algebraic:true$
 /*Semplificazione atan(tan(x))->x*/
 triginverses:all$
 /* Caricamento libreria per semplificazioni aggiuntive*/
-load("atrig1");
+/*load("atrig1");*/
 /*Funzioni per semplificare espressioni complesse*/
 mySimp(expr):=block(
 [res],
