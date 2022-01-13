@@ -6,20 +6,9 @@ triginverses:all$
 load("atrig1");
 /* Regole di semplificazione coseno e seno*/
 matchdeclare(a,lambda([x],is(x=cos)),b,symbolp,l,integerp)$
-defrule(r1,a(b[l]),c[l])$
-matchdeclare(d,lambda([x],is(x=sin)),f,symbolp,g,integerp)$
-defrule(r2,d(f[l]),s[l])$
-matchdeclare(d,lambda([x],is(x=sin)),w,symbolp,z,symbolp,u,integerp,i,integerp)$
-defrule(r3,d(w[u]+z[i]),s[u+10*i])$
-matchdeclare(d,lambda([x],is(x=cos)),w,symbolp,z,symbolp,u,integerp,i,integerp)$
-defrule(r4,d(w[u]+z[i]),c[u+10*i])$
-matchdeclare(d,lambda([x],is(x=cos)),s,symbolp,z,symbolp,r,symbolp,e,integerp,j,integerp,o,integerp)$
-defrule(r5,d(s[e]+z[j]+r[o]),c[e+10*j+100*o])$
-matchdeclare(d,lambda([x],is(x=sin)),c,symbolp,z,symbolp,r,symbolp,e,integerp,j,integerp,o,integerp)$
-defrule(r6,d(c[e]+z[j]+r[o]),s[e+10*j+100*o])$
-rename(expr):=block(
-  return (applyb1(expr,r1,r2,r3,r4,r5,r6))
-)$
+defrule(r1,a(b[l]),c[l])
+matchdeclare(d,lambda([x],is(x=sin)),f,symbolp,g,integerp)
+
 /*Funzioni per semplificare espressioni complesse*/
 mySimp(expr):=block(
 [res],
