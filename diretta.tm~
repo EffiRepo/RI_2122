@@ -352,8 +352,105 @@
       >><matrix|<tformat|<table|<row|<cell|c<rsub|6>*<around*|(|c<rsub|5>*<around*|(|c<rsub|1>*c<rsub|4>*c<rsub|32>-s<rsub|1>*s<rsub|4>|)>-c<rsub|1>*s<rsub|5>*s<rsub|32>|)>+s<rsub|6>*<around*|(|-c<rsub|1>*s<rsub|4>*c<rsub|32>-s<rsub|1>*c<rsub|4>|)>>|<cell|c<rsub|6>*<around*|(|-c<rsub|1>*s<rsub|4>*c<rsub|32>-s<rsub|1>*c<rsub|4>|)>-s<rsub|6>*<around*|(|c<rsub|5>*<around*|(|c<rsub|1>*c<rsub|4>*c<rsub|32>-s<rsub|1>*s<rsub|4>|)>-c<rsub|1>*s<rsub|5>*s<rsub|32>|)>>|<cell|c<rsub|1>*c<rsub|5>*s<rsub|32>+s<rsub|5>*<around*|(|c<rsub|1>*c<rsub|4>*c<rsub|32>-s<rsub|1>*s<rsub|4>|)>>|<cell|L<rsub|6>*<around*|(|c<rsub|1>*c<rsub|5>*s<rsub|32>+s<rsub|5>*<around*|(|c<rsub|1>*c<rsub|4>*c<rsub|32>-s<rsub|1>*s<rsub|4>|)>|)>+c<rsub|1>*L<rsub|4>*s<rsub|32>+c<rsub|1>*D<rsub|2>*c<rsub|2>>>|<row|<cell|c<rsub|6>*<around*|(|c<rsub|5>*<around*|(|s<rsub|1>*c<rsub|4>*c<rsub|32>+c<rsub|1>*s<rsub|4>|)>-s<rsub|1>*s<rsub|5>*s<rsub|32>|)>+s<rsub|6>*<around*|(|c<rsub|1>*c<rsub|4>-s<rsub|1>*s<rsub|4>*c<rsub|32>|)>>|<cell|c<rsub|6>*<around*|(|c<rsub|1>*c<rsub|4>-s<rsub|1>*s<rsub|4>*c<rsub|32>|)>-s<rsub|6>*<around*|(|c<rsub|5>*<around*|(|s<rsub|1>*c<rsub|4>*c<rsub|32>+c<rsub|1>*s<rsub|4>|)>-s<rsub|1>*s<rsub|5>*s<rsub|32>|)>>|<cell|s<rsub|1>*c<rsub|5>*s<rsub|32>+s<rsub|5>*<around*|(|s<rsub|1>*c<rsub|4>*c<rsub|32>+c<rsub|1>*s<rsub|4>|)>>|<cell|L<rsub|6>*<around*|(|s<rsub|1>*c<rsub|5>*s<rsub|32>+s<rsub|5>*<around*|(|s<rsub|1>*c<rsub|4>*c<rsub|32>+c<rsub|1>*s<rsub|4>|)>|)>+s<rsub|1>*L<rsub|4>*s<rsub|32>+s<rsub|1>*D<rsub|2>*c<rsub|2>>>|<row|<cell|c<rsub|6>*<around*|(|-c<rsub|4>*c<rsub|5>*s<rsub|32>-s<rsub|5>*c<rsub|32>|)>+s<rsub|4>*s<rsub|6>*s<rsub|32>>|<cell|s<rsub|4>*c<rsub|6>*s<rsub|32>-s<rsub|6>*<around*|(|-c<rsub|4>*c<rsub|5>*s<rsub|32>-s<rsub|5>*c<rsub|32>|)>>|<cell|c<rsub|5>*c<rsub|32>-c<rsub|4>*s<rsub|5>*s<rsub|32>>|<cell|L<rsub|6>*<around*|(|c<rsub|5>*c<rsub|32>-c<rsub|4>*s<rsub|5>*s<rsub|32>|)>+L<rsub|4>*c<rsub|32>-D<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>30) >
+    <|unfolded-io>
+      rot3Z(q[1]).rot3X(%pi/2).matrix([0], [0], [1])
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
+      >><matrix|<tformat|<table|<row|<cell|sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|-cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>32) >
+    <|unfolded-io>
+      ex:matrix([1],[0],[0])
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o32>)
+      >><matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>42) >
+    <|unfolded-io>
+      Sz:S(matrix([x],[y],[z]))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o42>)
+      >><matrix|<tformat|<table|<row|<cell|0>|<cell|-z>|<cell|y>>|<row|<cell|z>|<cell|0>|<cell|-x>>|<row|<cell|-y>|<cell|x>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>35) >
+    <|unfolded-io>
+      b:Sz.rot3Z(q[1]).rot3X(%pi/2).rot3Z(q[2]).ex
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
+      >><matrix|<tformat|<table|<row|<cell|-sin <around*|(|q<rsub|1>|)>*cos
+      <around*|(|q<rsub|2>|)>>>|<row|<cell|cos <around*|(|q<rsub|1>|)>*cos
+      <around*|(|q<rsub|2>|)>>>|<row|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>37) >
+    <|unfolded-io>
+      trigsimp(transpose(b).b)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o37>)
+      >>cos <around*|(|q<rsub|2>|)><rsup|2>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>38) >
+    <|unfolded-io>
+      transpose(rot3X(%pi/2)).Sz.rot3X(%pi/2)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o38>)
+      >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|-1>|<cell|0>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>39) >
+    <|unfolded-io>
+      S(transpose(rot3X(%pi/2)).matrix([0],[0],[1]))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o39>)
+      >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|-1>|<cell|0>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>44) >
+    <|unfolded-io>
+      S(rot3Z(q[2]).matrix([0],[1],[0]))
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o44>)
+      >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|cos
+      <around*|(|q<rsub|2>|)>>>|<row|<cell|0>|<cell|0>|<cell|sin
+      <around*|(|q<rsub|2>|)>>>|<row|<cell|-cos
+      <around*|(|q<rsub|2>|)>>|<cell|-sin
+      <around*|(|q<rsub|2>|)>>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>43) >
+    <|unfolded-io>
+      transpose(Sz).Sz
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o43>)
+      >><matrix|<tformat|<table|<row|<cell|z<rsup|2>+y<rsup|2>>|<cell|-x*y>|<cell|-x*z>>|<row|<cell|-x*y>|<cell|z<rsup|2>+x<rsup|2>>|<cell|-y*z>>|<row|<cell|-x*z>|<cell|-y*z>|<cell|y<rsup|2>+x<rsup|2>>>>>>>>
+    </unfolded-io>
+
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>23) >
+      <with|color|red|(<with|math-font-family|rm|%i>44) >
     <|input>
       \;
     </input>
