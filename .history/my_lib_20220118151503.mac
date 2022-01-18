@@ -468,41 +468,8 @@ Avz(theta,d):=block(
     z:matrix([0],[0],[1]),
     Av:Av(z,theta,d),
     return(Av)
-)$
-
-Avx(alpha,a):=block([x,Av],
-x:matrix([1],[0],[0]),
-Av:Av(x,alpha,a),
-return(Av)
-)$
-    /*Procedura per il calcolo della matrice di trasformazione ij*/
-Qij(thetai,di,alphai,ai):=block([Avz,Avx,Q],
-Avz:Avz(thetai,di),
-Avx:Avx(alphai,ai),
-Q:Avz.Avx,
-return(Q)
-)$
-/*Procedura Denavit-Hartenberg*/
-DH(M):=block([dim,Q:ident(4),Qlist:[],idx:1,i:1,term,term1],
-dim:size(M),
-for i:1 thru dim[1] do(
-  Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
-),
-while not emptyp(Qlist) do(
-  if i=dim[1] then(
-    idx:-1
-  ),
-  if M[i][3]=0 and i#dim[1] then(
-          term:pop(Qlist),
-          if emptyp(Qlist) then(
-            Q:trigreduce(Q.term)
-          )else(
-          term1:pop(Qlist),
-          Q:Q.trigreduce(term.term1)),i:i+1
-  )
-  else(Q:Q.pop(Qlist),i:i+1)
-),return(Q)
-)$
+    )
+    Avx(alpha,a):=block([x,Av],x:matrix([1],[0],[0]),Av:Av(x,alpha,a),return(Av))$
 /********************UTILS*************************/
 /*Data una espressione determinare le sue parti*/
 exprbreak(expr):=block(
