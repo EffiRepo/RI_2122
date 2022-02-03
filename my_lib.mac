@@ -238,13 +238,24 @@ else(
 )$
 /*Matrice antisimmetrica*/
 S(v):=block(
-[S],
-/*Controlliamo che v sia un vettore o una lista*/
-if not(nonscalarp(v)) or length(v) < 3 or listp(v) then
-  error("Inserire un vettore colonna di tre elementi")
-else(
-  S:matrix([0,-v[3,1],v[2,1]],[v[3,1],0,-v[1,1]],[-v[2,1],v[1,1],0])
-)
+[row, col, sizeV, i,j, res, temp],
+    [row,col]:size(v),
+    sizeV:max(row, col),
+    if matrixp(v) and (col = 1 or row = 1) and not(col=row) then(
+    if col > row then v:transpose(v),                           
+    res:zeromatrix(sizeV,sizeV),
+        for i:1 thru sizeV do(
+            for j:1 thru sizeV do(
+                if i=j then res[i][j]:0
+                elseif j>i then (
+                    temp:(-1)^(j-i)*v[sizeV-remainder(i+j,sizeV)][1],
+                    res[i][j]:temp,
+                    res[j][i]:-temp
+                )
+            )
+        )
+    ) else error("Insert a vector"),
+    return(res)
 )$
 /*calcolare esponenziale di matrice*/
 expLaplace(A,t):=block(
@@ -484,25 +495,27 @@ Q:Avz.Avx,
 return(Q)
 )$
 /*Procedura Denavit-Hartenberg*/
-DH(M):=block([dim,Q:ident(4),Qlist:[],idx:1,i:1,term,term1],
-dim:size(M),
-for i:1 thru dim[1] do(
-  Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
-),
-while not emptyp(Qlist) do(
-  if i=dim[1] then(
-    idx:-1
-  ),
-  if M[i][3]=0 and i#dim[1] then(
-          term:pop(Qlist),
-          if emptyp(Qlist) then(
-            Q:trigreduce(Q.term)
-          )else(
-          term1:pop(Qlist),
-          Q:Q.trigreduce(term.term1)),i:i+1
-  )
-  else(Q:Q.pop(Qlist),i:i+1)
-),return(Q)
+DH(M):=block(
+[dim, Q:ident(4), Qlist:[], idx:1, i:1, term, term1],
+    dim:size(M),
+    for i:1 thru dim[1] do(
+    Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
+    ),
+    while not emptyp(Qlist) do(
+        if i=dim[1] then(
+          idx:-1
+        ),
+        if M[i][3]=0 and i#dim[1] then(
+            term:pop(Qlist),
+            if emptyp(Qlist) then(
+                Q:trigreduce(Q.term)
+            )else(
+                term1:pop(Qlist),
+                Q:Q.trigreduce(term.term1)),i:i+1
+            )else(
+                Q:Q.pop(Qlist),i:i+1)
+    ),
+    return(Q)
 )$
 /********************UTILS*************************/
 /*Data una espressione determinare le sue parti*/
