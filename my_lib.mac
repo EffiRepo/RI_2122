@@ -537,7 +537,7 @@ idx:idx+1
 )$
 /*Ritorna le equazioni per la cinematica inversa*/
 getEq(M):=block(
-[x,y,x,dim:size(M),eq],
+[x,y,z,dim:size(M),eq],
 eq:[0,0,0],               
 if matrixp(M) and dim = [4,4] then(
   eq[1]:x-M[1,4]=0,
