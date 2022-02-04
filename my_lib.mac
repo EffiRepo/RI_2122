@@ -537,12 +537,12 @@ idx:idx+1
 )$
 /*Ritorna le equazioni per la cinematica inversa*/
 getEq(M):=block(
-[X,Y,Z,dim:size(M),eq],
+[x,y,x,dim:size(M),eq],
 eq:[0,0,0],               
 if matrixp(M) and dim = [4,4] then(
-  eq[1]:X-M[1,4]=0,
-  eq[2]:Y-M[2,4]=0,
-  eq[3]:Z-M[3,4]=0
+  eq[1]:x-M[1,4]=0,
+  eq[2]:y-M[2,4]=0,
+  eq[3]:z-M[3,4]=0
 ) else (
   error("insert DH matrix")
 ),
