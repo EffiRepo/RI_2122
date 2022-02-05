@@ -339,7 +339,7 @@
     diretta del robot.
 
     Ipotizziamo un robot con <math|L<rsub|1>=2,L<rsub|2>=3> che deve
-    raggiungere un punto <matrix|<tformat|<table|<row|<cell|2>>|<row|<cell|2>>|<row|<cell|1>>>>>
+    raggiungere un punto <math|<matrix|<tformat|<table|<row|<cell|x>>|<row|<cell|y>>|<row|<cell|z>>>>>=><matrix|<tformat|<table|<row|<cell|2>>|<row|<cell|2>>|<row|<cell|1>>>>>
 
     1) Verifica di <math|<matrix|<tformat|<table|<row|<cell|q<rsub|31>>>|<row|<cell|q<rsub|211>>>|<row|<cell|q<rsub|11>>>>>>>
 
@@ -474,12 +474,6 @@
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o46>)
       >><matrix|<tformat|<table|<row|<cell|<frac|2|3>>|<cell|<frac|1|<sqrt|2>>>|<cell|-<frac|1|3*<sqrt|2>>>|<cell|2>>|<row|<cell|<frac|2|3>>|<cell|-<frac|1|<sqrt|2>>>|<cell|-<frac|1|3*<sqrt|2>>>|<cell|2>>|<row|<cell|-<frac|1|3>>|<cell|0>|<cell|-<frac|2<rsup|<frac|3|2>>|3>>|<cell|1>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
-
-    <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>47) >
-    <|input>
-      \;
-    </input>
   </session>
 
   \;
