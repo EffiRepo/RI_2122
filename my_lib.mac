@@ -17,9 +17,13 @@ matchdeclare(d,lambda([x],is(x=cos)),s,symbolp,z,symbolp,r,symbolp,e,integerp,j,
 defrule(r5,d(s[e]+z[j]+r[o]),c[e+10*j+100*o])$
 matchdeclare(d,lambda([x],is(x=sin)),c,symbolp,z,symbolp,r,symbolp,e,integerp,j,integerp,o,integerp)$
 defrule(r6,d(c[e]+z[j]+r[o]),s[e+10*j+100*o])$
+matchdeclare(a,lambda([x],is(x=cos)),b,symbolp)$
+defrule(r7,a(b),c[b])$
+matchdeclare(a,lambda([x],is(x=sin)),b,symbolp)$
+defrule(r8,a(b),c[b])$
 rename(expr,i):=block(
-  if(i=0) then(return (applyb1(expr,r1,r2,r3,r4,r5,r6)))
-  elseif(i=1)then(return (applyb1(trigexpand(expr),r1,r2)))
+  if(i=0) then(return (applyb1(expr,r1,r2,r3,r4,r5,r6,r7,r8)))
+  elseif(i=1)then(return (applyb1(trigexpand(expr),r1,r2,r7,r8)))
 )$
 /*Funzioni per semplificare espressioni complesse*/
 mySimp(expr):=block(
