@@ -63,7 +63,7 @@
     <|input>
       DH(M):=block(
 
-      [dim, Q:ident(4), Qlist:[], idx:1, i:1, term, term1],
+      [dim, Q:ident(4), Qlist:[], idx:1, i:1, term, term1,Qm:[]],
 
       \ \ \ \ dim:size(M),
 
@@ -72,6 +72,8 @@
       \ \ \ \ Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
 
       \ \ \ \ ),
+
+      \ \ \ \ Qm:unique(append(Qm,[first(Qlist)])),
 
       \ \ \ \ while not emptyp(Qlist) do(
 
@@ -87,21 +89,27 @@
 
       \ \ \ \ \ \ \ \ \ \ \ \ if emptyp(Qlist) then(
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:trigreduce(Q.term)
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:trigreduce(Q.term),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Qm:unique(append(Qm,[Q]))
 
       \ \ \ \ \ \ \ \ \ \ \ \ )else(
 
       \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ term1:pop(Qlist),
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:Q.trigreduce(term.term1)),i:i+1
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:Q.trigreduce(term.term1)),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Qm:unique(append(Qm,[Q])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i:i+1
 
       \ \ \ \ \ \ \ \ \ \ \ \ )else(
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:Q.pop(Qlist),i:i+1)
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:Q.pop(Qlist),Qm:unique(append(Qm,[Q])),i:i+1)
 
       \ \ \ \ ),
 
-      \ \ \ \ return(Q)
+      \ \ \ \ return([Q,Qm])
 
       )$
     </input>
@@ -122,7 +130,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
-      rename(DH(dueDof),0)
+      rename(DH(dueDof)[1],0)
     <|unfolded-io>
       \;
 
@@ -148,7 +156,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
-      rename(DH(treDof),0)
+      rename(DH(treDof)[1],0)
     <|unfolded-io>
       \;
 
@@ -172,7 +180,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|unfolded-io>
-      rename(DH(cart),0)
+      rename(DH(cart)[1],0)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|2>>>|<row|<cell|1>|<cell|0>|<cell|0>|<cell|q<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
@@ -194,7 +202,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
-      rename(DH(cil),0)
+      rename(DH(cil)[1],0)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>>|<cell|0>|<cell|-s<rsub|1>>|<cell|-s<rsub|1>*q<rsub|3>>>|<row|<cell|s<rsub|1>>|<cell|0>|<cell|c<rsub|1>>|<cell|c<rsub|1>*q<rsub|3>>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
@@ -216,7 +224,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>15) >
     <|unfolded-io>
-      rename(DH(scara),0)
+      rename(DH(scara)[1],0)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|21>>|<cell|-s<rsub|21>>|<cell|0>|<cell|D<rsub|2>*c<rsub|21>+D<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|21>>|<cell|c<rsub|21>>|<cell|0>|<cell|D<rsub|2>*s<rsub|21>+D<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
@@ -238,7 +246,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|unfolded-io>
-      rename(DH(sfer),0)
+      rename(DH(sfer)[1],0)
     <|unfolded-io>
       \;
 
@@ -273,7 +281,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>20) >
     <|unfolded-io>
-      rename(DH(stanf),0)
+      rename(DH(stanf)[1],0)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|2>>|<cell|-s<rsub|1>>|<cell|c<rsub|1>*s<rsub|2>>|<cell|c<rsub|1>*s<rsub|2>*q<rsub|3>-s<rsub|1>*L<rsub|2>>>|<row|<cell|s<rsub|1>*c<rsub|2>>|<cell|c<rsub|1>>|<cell|s<rsub|1>*s<rsub|2>>|<cell|s<rsub|1>*s<rsub|2>*q<rsub|3>+c<rsub|1>*L<rsub|2>>>|<row|<cell|-s<rsub|2>>|<cell|0>|<cell|c<rsub|2>>|<cell|c<rsub|2>*q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
@@ -282,20 +290,10 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|unfolded-io>
-      rename(DH(stanf1))
+      rename(DH(stanf1)[1],0)
     <|unfolded-io>
-      \;
-
-      <math|<with|math-display|true|<text|<verbatim|T><verbatim|o><verbatim|o><verbatim|
-      ><verbatim|f><verbatim|e><verbatim|w><verbatim|
-      ><verbatim|a><verbatim|r><verbatim|g><verbatim|u><verbatim|m><verbatim|e><verbatim|n><verbatim|t><verbatim|s><verbatim|
-      ><verbatim|s><verbatim|u><verbatim|p><verbatim|p><verbatim|l><verbatim|i><verbatim|e><verbatim|d><verbatim|
-      ><verbatim|t><verbatim|o><verbatim|
-      >><math-up|rename><around*|(|<math-up|expr>,i|)><text|<verbatim|;><verbatim|
-      ><verbatim|f><verbatim|o><verbatim|u><verbatim|n><verbatim|d><verbatim|:><verbatim|
-      >><with|math-font-family|rm|errexp1>>>
-
-      \ -- an error. To debug this try: debugmode(true);
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      >><matrix|<tformat|<table|<row|<cell|s<rsub|1>>|<cell|c<rsub|1>*c<rsub|2>>|<cell|c<rsub|1>*s<rsub|2>>|<cell|c<rsub|1>*s<rsub|2>*q<rsub|3>-s<rsub|1>*L<rsub|2>>>|<row|<cell|-c<rsub|1>>|<cell|s<rsub|1>*c<rsub|2>>|<cell|s<rsub|1>*s<rsub|2>>|<cell|s<rsub|1>*s<rsub|2>*q<rsub|3>+c<rsub|1>*L<rsub|2>>>|<row|<cell|0>|<cell|-s<rsub|2>>|<cell|c<rsub|2>>|<cell|c<rsub|2>*q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\textput>
@@ -314,7 +312,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>23) >
     <|unfolded-io>
-      rename(DH(antrop),0)
+      rename(DH(antrop)[1],0)
     <|unfolded-io>
       \;
 
@@ -338,22 +336,12 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>25) >
     <|unfolded-io>
-      rename(DH(polsferico))
+      rename(DH(polsferico)[1],0)
     <|unfolded-io>
       \;
 
-      \;
-
-      \ <math|<with|math-display|true|<text|<verbatim|T><verbatim|o><verbatim|o><verbatim|
-      ><verbatim|f><verbatim|e><verbatim|w><verbatim|
-      ><verbatim|a><verbatim|r><verbatim|g><verbatim|u><verbatim|m><verbatim|e><verbatim|n><verbatim|t><verbatim|s><verbatim|
-      ><verbatim|s><verbatim|u><verbatim|p><verbatim|p><verbatim|l><verbatim|i><verbatim|e><verbatim|d><verbatim|
-      ><verbatim|t><verbatim|o><verbatim|
-      >><math-up|rename><around*|(|<math-up|expr>,i|)><text|<verbatim|;><verbatim|
-      ><verbatim|f><verbatim|o><verbatim|u><verbatim|n><verbatim|d><verbatim|:><verbatim|
-      >><with|math-font-family|rm|errexp1>>>
-
-      \ -- an error. To debug this try: debugmode(true);
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
+      >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|2>*c<rsub|3>-s<rsub|1>*s<rsub|3>>|<cell|-c<rsub|1>*c<rsub|2>*s<rsub|3>-s<rsub|1>*c<rsub|3>>|<cell|c<rsub|1>*s<rsub|2>>|<cell|c<rsub|1>*s<rsub|2>*L<rsub|3>>>|<row|<cell|c<rsub|1>*s<rsub|3>+s<rsub|1>*c<rsub|2>*c<rsub|3>>|<cell|c<rsub|1>*c<rsub|3>-s<rsub|1>*c<rsub|2>*s<rsub|3>>|<cell|s<rsub|1>*s<rsub|2>>|<cell|s<rsub|1>*s<rsub|2>*L<rsub|3>>>|<row|<cell|-s<rsub|2>*c<rsub|3>>|<cell|s<rsub|2>*s<rsub|3>>|<cell|c<rsub|2>>|<cell|c<rsub|2>*L<rsub|3>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\textput>
@@ -384,7 +372,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>27) >
     <|unfolded-io>
-      expand(rename(DH(puma),0))
+      expand(rename(DH(puma)[1],0))
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
       >><matrix|<tformat|<table|<row|<cell|-c<rsub|1>*s<rsub|5>*c<rsub|6>*s<rsub|32>-c<rsub|1>*s<rsub|4>*s<rsub|6>*c<rsub|32>+c<rsub|1>*c<rsub|4>*c<rsub|5>*c<rsub|6>*c<rsub|32>-s<rsub|1>*c<rsub|4>*s<rsub|6>-s<rsub|1>*s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|c<rsub|1>*s<rsub|5>*s<rsub|6>*s<rsub|32>-c<rsub|1>*c<rsub|4>*c<rsub|5>*s<rsub|6>*c<rsub|32>-c<rsub|1>*s<rsub|4>*c<rsub|6>*c<rsub|32>+s<rsub|1>*s<rsub|4>*c<rsub|5>*s<rsub|6>-s<rsub|1>*c<rsub|4>*c<rsub|6>>|<cell|c<rsub|1>*c<rsub|5>*s<rsub|32>+c<rsub|1>*c<rsub|4>*s<rsub|5>*c<rsub|32>-s<rsub|1>*s<rsub|4>*s<rsub|5>>|<cell|c<rsub|1>*c<rsub|5>*L<rsub|6>*s<rsub|32>+c<rsub|1>*L<rsub|4>*s<rsub|32>+c<rsub|1>*c<rsub|4>*s<rsub|5>*L<rsub|6>*c<rsub|32>-s<rsub|1>*s<rsub|4>*s<rsub|5>*L<rsub|6>+c<rsub|1>*D<rsub|2>*c<rsub|2>>>|<row|<cell|-s<rsub|1>*s<rsub|5>*c<rsub|6>*s<rsub|32>-s<rsub|1>*s<rsub|4>*s<rsub|6>*c<rsub|32>+s<rsub|1>*c<rsub|4>*c<rsub|5>*c<rsub|6>*c<rsub|32>+c<rsub|1>*c<rsub|4>*s<rsub|6>+c<rsub|1>*s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|s<rsub|1>*s<rsub|5>*s<rsub|6>*s<rsub|32>-s<rsub|1>*c<rsub|4>*c<rsub|5>*s<rsub|6>*c<rsub|32>-s<rsub|1>*s<rsub|4>*c<rsub|6>*c<rsub|32>-c<rsub|1>*s<rsub|4>*c<rsub|5>*s<rsub|6>+c<rsub|1>*c<rsub|4>*c<rsub|6>>|<cell|s<rsub|1>*c<rsub|5>*s<rsub|32>+s<rsub|1>*c<rsub|4>*s<rsub|5>*c<rsub|32>+c<rsub|1>*s<rsub|4>*s<rsub|5>>|<cell|s<rsub|1>*c<rsub|5>*L<rsub|6>*s<rsub|32>+s<rsub|1>*L<rsub|4>*s<rsub|32>+s<rsub|1>*c<rsub|4>*s<rsub|5>*L<rsub|6>*c<rsub|32>+c<rsub|1>*s<rsub|4>*s<rsub|5>*L<rsub|6>+s<rsub|1>*D<rsub|2>*c<rsub|2>>>|<row|<cell|s<rsub|4>*s<rsub|6>*s<rsub|32>-c<rsub|4>*c<rsub|5>*c<rsub|6>*s<rsub|32>-s<rsub|5>*c<rsub|6>*c<rsub|32>>|<cell|c<rsub|4>*c<rsub|5>*s<rsub|6>*s<rsub|32>+s<rsub|4>*c<rsub|6>*s<rsub|32>+s<rsub|5>*s<rsub|6>*c<rsub|32>>|<cell|c<rsub|5>*c<rsub|32>-c<rsub|4>*s<rsub|5>*s<rsub|32>>|<cell|-c<rsub|4>*s<rsub|5>*L<rsub|6>*s<rsub|32>+c<rsub|5>*L<rsub|6>*c<rsub|32>+L<rsub|4>*c<rsub|32>-D<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
@@ -408,7 +396,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>29) >
     <|unfolded-io>
-      expand(rename(DH(standfordC),0))
+      expand(rename(DH(standfordC)[1],0))
     <|unfolded-io>
       \;
 
@@ -464,22 +452,12 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>33) >
     <|unfolded-io>
-      DHcartPolso:rename(DH(cartPolso))
+      DHcartPolso:rename(DH(cartPolso)[1],0)
     <|unfolded-io>
       \;
 
-      \;
-
-      \ <math|<with|math-display|true|<text|<verbatim|T><verbatim|o><verbatim|o><verbatim|
-      ><verbatim|f><verbatim|e><verbatim|w><verbatim|
-      ><verbatim|a><verbatim|r><verbatim|g><verbatim|u><verbatim|m><verbatim|e><verbatim|n><verbatim|t><verbatim|s><verbatim|
-      ><verbatim|s><verbatim|u><verbatim|p><verbatim|p><verbatim|l><verbatim|i><verbatim|e><verbatim|d><verbatim|
-      ><verbatim|t><verbatim|o><verbatim|
-      >><math-up|rename><around*|(|<math-up|expr>,i|)><text|<verbatim|;><verbatim|
-      ><verbatim|f><verbatim|o><verbatim|u><verbatim|n><verbatim|d><verbatim|:><verbatim|
-      >><with|math-font-family|rm|errexp1>>>
-
-      \ -- an error. To debug this try: debugmode(true);
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o33>)
+      >><matrix|<tformat|<table|<row|<cell|-s<rsub|5>*c<rsub|6>>|<cell|s<rsub|5>*s<rsub|6>>|<cell|c<rsub|5>>|<cell|c<rsub|5>*L<rsub|6>+q<rsub|3>>>|<row|<cell|-c<rsub|4>*s<rsub|6>-s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|s<rsub|4>*c<rsub|5>*s<rsub|6>-c<rsub|4>*c<rsub|6>>|<cell|-s<rsub|4>*s<rsub|5>>|<cell|q<rsub|2>-s<rsub|4>*s<rsub|5>*L<rsub|6>>>|<row|<cell|c<rsub|4>*c<rsub|5>*c<rsub|6>-s<rsub|4>*s<rsub|6>>|<cell|-c<rsub|4>*c<rsub|5>*s<rsub|6>-s<rsub|4>*c<rsub|6>>|<cell|c<rsub|4>*s<rsub|5>>|<cell|c<rsub|4>*s<rsub|5>*L<rsub|6>+q<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
     <\textput>
@@ -487,7 +465,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>52) >
+      <with|color|red|(<with|math-font-family|rm|%i>36) >
     <|input>
       \;
     </input>
@@ -497,25 +475,46 @@
     <|unfolded-io>
       QQQ:[[q[4],L[4],%pi/2,0],[q[5],0,-%pi/2,0],[q[6],L[6],0,0]]
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o34>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o34>)
       >><around*|[|<around*|[|q<rsub|4>,L<rsub|4>,<frac|\<pi\>|2>,0|]>,<around*|[|q<rsub|5>,0,-<frac|\<pi\>|2>,0|]>,<around*|[|q<rsub|6>,L<rsub|6>,0,0|]>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>35) >
     <|unfolded-io>
-      sfrrr:DH(QQQ)
+      sfrrr:rename(DH(QQQ)[1],0)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
-      >><matrix|<tformat|<table|<row|<cell|cos <around*|(|q<rsub|4>|)>*cos
-      <around*|(|q<rsub|5>|)>*cos <around*|(|q<rsub|6>|)>-sin
-      <around*|(|q<rsub|4>|)>*sin <around*|(|q<rsub|6>|)>>|<cell|-cos
-      <around*|(|q<rsub|4>|)>*cos <around*|(|q<rsub|5>|)>*sin
-      <around*|(|q<rsub|6>|)>-sin <around*|(|q<rsub|4>|)>*cos
-      <around*|(|q<rsub|6>|)>>|<cell|-cos <around*|(|q<rsub|4>|)>*sin
-      <around*|(|q<rsub|5>|)>>|<cell|-L<rsub|6>*cos
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
+      >><matrix|<tformat|<table|<row|<cell|c<rsub|4>*c<rsub|5>*c<rsub|6>-s<rsub|4>*s<rsub|6>>|<cell|-c<rsub|4>*c<rsub|5>*s<rsub|6>-s<rsub|4>*c<rsub|6>>|<cell|-c<rsub|4>*s<rsub|5>>|<cell|-c<rsub|4>*s<rsub|5>*L<rsub|6>>>|<row|<cell|c<rsub|4>*s<rsub|6>+s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|c<rsub|4>*c<rsub|6>-s<rsub|4>*c<rsub|5>*s<rsub|6>>|<cell|-s<rsub|4>*s<rsub|5>>|<cell|-s<rsub|4>*s<rsub|5>*L<rsub|6>>>|<row|<cell|s<rsub|5>*c<rsub|6>>|<cell|-s<rsub|5>*s<rsub|6>>|<cell|c<rsub|5>>|<cell|c<rsub|5>*L<rsub|6>+L<rsub|4>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>36) >
+    <|unfolded-io>
+      DH(QQQ)[2]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o36>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|4>|)>>|<cell|0>|<cell|sin
+      <around*|(|q<rsub|4>|)>>|<cell|0>>|<row|<cell|sin
+      <around*|(|q<rsub|4>|)>>|<cell|0>|<cell|-cos
+      <around*|(|q<rsub|4>|)>>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>|<cell|L<rsub|4>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|4>|)>*cos <around*|(|q<rsub|5>|)>>|<cell|-sin
+      <around*|(|q<rsub|4>|)>>|<cell|-cos <around*|(|q<rsub|4>|)>*sin
+      <around*|(|q<rsub|5>|)>>|<cell|0>>|<row|<cell|sin
+      <around*|(|q<rsub|4>|)>*cos <around*|(|q<rsub|5>|)>>|<cell|cos
+      <around*|(|q<rsub|4>|)>>|<cell|-sin <around*|(|q<rsub|4>|)>*sin
+      <around*|(|q<rsub|5>|)>>|<cell|0>>|<row|<cell|sin
+      <around*|(|q<rsub|5>|)>>|<cell|0>|<cell|cos
+      <around*|(|q<rsub|5>|)>>|<cell|L<rsub|4>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|4>|)>*cos <around*|(|q<rsub|5>|)>*cos
+      <around*|(|q<rsub|6>|)>-sin <around*|(|q<rsub|4>|)>*sin
+      <around*|(|q<rsub|6>|)>>|<cell|-cos <around*|(|q<rsub|4>|)>*cos
+      <around*|(|q<rsub|5>|)>*sin <around*|(|q<rsub|6>|)>-sin
+      <around*|(|q<rsub|4>|)>*cos <around*|(|q<rsub|6>|)>>|<cell|-cos
+      <around*|(|q<rsub|4>|)>*sin <around*|(|q<rsub|5>|)>>|<cell|-L<rsub|6>*cos
       <around*|(|q<rsub|4>|)>*sin <around*|(|q<rsub|5>|)>>>|<row|<cell|cos
       <around*|(|q<rsub|4>|)>*sin <around*|(|q<rsub|6>|)>+sin
       <around*|(|q<rsub|4>|)>*cos <around*|(|q<rsub|5>|)>*cos
@@ -527,11 +526,11 @@
       <around*|(|q<rsub|5>|)>*cos <around*|(|q<rsub|6>|)>>|<cell|-sin
       <around*|(|q<rsub|5>|)>*sin <around*|(|q<rsub|6>|)>>|<cell|cos
       <around*|(|q<rsub|5>|)>>|<cell|L<rsub|6>*cos
-      <around*|(|q<rsub|5>|)>+L<rsub|4>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+      <around*|(|q<rsub|5>|)>+L<rsub|4>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>36) >
+      <with|color|red|(<with|math-font-family|rm|%i>37) >
     <|input>
       \;
     </input>

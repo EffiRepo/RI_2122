@@ -500,11 +500,12 @@ return(Q)
 )$
 /*Procedura Denavit-Hartenberg*/
 DH(M):=block(
-[dim, Q:ident(4), Qlist:[], idx:1, i:1, term, term1],
+[dim, Q:ident(4), Qlist:[], idx:1, i:1, term, term1,Qm:[]],
     dim:size(M),
     for i:1 thru dim[1] do(
     Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
     ),
+    Qm:unique(append(Qm,[first(Qlist)])),
     while not emptyp(Qlist) do(
         if i=dim[1] then(
           idx:-1
@@ -512,27 +513,33 @@ DH(M):=block(
         if M[i][3]=0 and i#dim[1] then(
             term:pop(Qlist),
             if emptyp(Qlist) then(
-                Q:trigreduce(Q.term)
+                Q:trigreduce(Q.term),
+                Qm:unique(append(Qm,[Q]))
             )else(
                 term1:pop(Qlist),
-                Q:Q.trigreduce(term.term1)),i:i+1
+                Q:Q.trigreduce(term.term1)),
+                Qm:unique(append(Qm,[Q])),
+                i:i+1
             )else(
-                Q:Q.pop(Qlist),i:i+1)
+                Q:Q.pop(Qlist),Qm:unique(append(Qm,[Q])),i:i+1)
     ),
-    return(Q)
+    return([Q,Qm])
 )$
 /********************UTILS*************************/
 /*Data una espressione determinare le sue parti*/
-exprbreak(expr):=block(
-[p, part_list:[], cond,idx:1],
+exprbreak(expr,flag):=block(
+[p, part_list:[], cond,idx:1,f:flag],
 partswitch:true,
 cond:atom(expr),
-if cond then(return(expr))
-elseif operatorp(expr,[cos,sin]) then(p:args(expr),print(p),return(exprbreak(p)))
-elseif subvarp(expr) then (return(expr)) 
+if scalarp(expr) and f=1 then(return(0))
+elseif cond then (return(expr)) 
+elseif operatorp(expr,[cos,sin]) then(p:args(expr),return(exprbreak(p,f)))
+elseif (subvarp(expr) or symbolp(expr)) then (return(expr))
+
  else (while true do(
+         
          p:part(expr,idx),
-         if p='end then (return()),res:[exprbreak(p)],
+         if p='end then (return()),res:[exprbreak(p,f)],
         part_list:flatten(append(part_list,res)),
 idx:idx+1
     ),
