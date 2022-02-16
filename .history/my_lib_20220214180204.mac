@@ -505,25 +505,23 @@ DH(M):=block(
     for i:1 thru dim[1] do(
     Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
     ),
+    Qm:unique(append(Qm,[first(Qlist)])),
     while not emptyp(Qlist) do(
         if i=dim[1] then(
           idx:-1
         ),
         if M[i][3]=0 and i#dim[1] then(
             term:pop(Qlist),
-            if i=1 then Qm:append(Qm,[term]),
             if emptyp(Qlist) then(
-                Q:trigreduce(Q.term)
-            )
-            else(
+                Q:trigreduce(Q.term),
+                Qm:unique(append(Qm,[Q]))
+            )else(
                 term1:pop(Qlist),
-                Q:Q.trigreduce(term.term1)
-            ),
+                Q:Q.trigreduce(term.term1)),
+                Qm:unique(append(Qm,[Q])),
                 i:i+1
-        )else(
-                Q:Q.pop(Qlist),i:i+1
-        ),
-        Qm:append(Qm,[Q])
+            )else(
+                Q:Q.pop(Qlist),Qm:unique(append(Qm,[Q])),i:i+1)
     ),
     return([Q,Qm])
 )$

@@ -59,57 +59,67 @@
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
+      <with|color|red|(<with|math-font-family|rm|%i>40) >
     <|input>
       DH(M):=block(
 
       [dim, Q:ident(4), Qlist:[], idx:1, i:1, term, term1,Qm:[]],
 
-      \ \ \ \ dim:size(M),
+      <nbsp> <nbsp> dim:size(M),
 
-      \ \ \ \ for i:1 thru dim[1] do(
+      <nbsp> <nbsp> for i:1 thru dim[1] do(
 
-      \ \ \ \ Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
+      <nbsp> <nbsp> Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
 
-      \ \ \ \ ),
+      <nbsp> <nbsp> ),
 
-      \ \ \ \ Qm:unique(append(Qm,[first(Qlist)])),
+      \ \ \ \ 
 
-      \ \ \ \ while not emptyp(Qlist) do(
+      <nbsp> <nbsp> while not emptyp(Qlist) do(
 
-      \ \ \ \ \ \ \ \ if i=dim[1] then(
+      <nbsp> <nbsp> <nbsp> <nbsp> if i=dim[1] then(
 
-      \ \ \ \ \ \ \ \ \ \ idx:-1
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> idx:-1
 
-      \ \ \ \ \ \ \ \ ),
+      <nbsp> <nbsp> <nbsp> <nbsp> ),
 
-      \ \ \ \ \ \ \ \ if M[i][3]=0 and i#dim[1] then(
+      <nbsp> <nbsp> <nbsp> <nbsp> if M[i][3]=0 and i#dim[1] then(
 
-      \ \ \ \ \ \ \ \ \ \ \ \ term:pop(Qlist),
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> term:pop(Qlist),
 
-      \ \ \ \ \ \ \ \ \ \ \ \ if emptyp(Qlist) then(
+      \ \ \ \ \ \ \ \ \ \ \ \ if i=1 then Qm:append(Qm,[term]),
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:trigreduce(Q.term),
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> if emptyp(Qlist) then(
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Qm:unique(append(Qm,[Q]))
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp>
+      Q:trigreduce(Q.term)
 
-      \ \ \ \ \ \ \ \ \ \ \ \ )else(
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> )
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ term1:pop(Qlist),
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> else(
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:Q.trigreduce(term.term1)),
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp>
+      term1:pop(Qlist),
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Qm:unique(append(Qm,[Q])),
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp>
+      Q:Q.trigreduce(term.term1)
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i:i+1
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> ),
 
-      \ \ \ \ \ \ \ \ \ \ \ \ )else(
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> i:i+1
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Q:Q.pop(Qlist),Qm:unique(append(Qm,[Q])),i:i+1)
+      <nbsp> <nbsp> <nbsp> <nbsp> )else(
 
-      \ \ \ \ ),
+      <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp> <nbsp>
+      Q:Q.pop(Qlist),i:i+1
 
-      \ \ \ \ return([Q,Qm])
+      <nbsp> <nbsp> <nbsp> <nbsp> ),
+
+      <nbsp> <nbsp> <nbsp> <nbsp> Qm:append(Qm,[Q])
+
+      <nbsp> <nbsp> ),
+
+      <nbsp> <nbsp> return([Q,Qm])
 
       )$
     </input>
@@ -119,23 +129,47 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
+      <with|color|red|(<with|math-font-family|rm|%i>41) >
     <|unfolded-io>
       dueDof:[[q[1],0,0,L[1]],[q[2],0,0,L[2]]];
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o41>)
       >><around*|[|<around*|[|q<rsub|1>,0,0,L<rsub|1>|]>,<around*|[|q<rsub|2>,0,0,L<rsub|2>|]>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
+      <with|color|red|(<with|math-font-family|rm|%i>42) >
     <|unfolded-io>
       rename(DH(dueDof)[1],0)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o42>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|21>>|<cell|-s<rsub|21>>|<cell|0>|<cell|L<rsub|2>*c<rsub|21>+L<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|21>>|<cell|c<rsub|21>>|<cell|0>|<cell|L<rsub|2>*s<rsub|21>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>43) >
+    <|unfolded-io>
+      DH(dueDof)[2]
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o43>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|1>*cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
+      <around*|(|q<rsub|1>|)>>|<cell|cos <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|1>*sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|2>*cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|2>*sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -143,25 +177,57 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>8) >
+      <with|color|red|(<with|math-font-family|rm|%i>44) >
     <|unfolded-io>
       treDof:[[q[1],0,0,L[1]],[q[2],0,0,L[2]],[q[3],0,0,L[3]]];
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o44>)
       >><around*|[|<around*|[|q<rsub|1>,0,0,L<rsub|1>|]>,<around*|[|q<rsub|2>,0,0,L<rsub|2>|]>,<around*|[|q<rsub|3>,0,0,L<rsub|3>|]>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
+      <with|color|red|(<with|math-font-family|rm|%i>45) >
     <|unfolded-io>
       rename(DH(treDof)[1],0)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o45>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|123>>|<cell|-s<rsub|123>>|<cell|0>|<cell|L<rsub|3>*c<rsub|123>+L<rsub|2>*c<rsub|21>+L<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|123>>|<cell|c<rsub|123>>|<cell|0>|<cell|L<rsub|3>*s<rsub|123>+L<rsub|2>*s<rsub|21>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>46) >
+    <|unfolded-io>
+      DH(treDof)[2]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o46>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|1>*cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
+      <around*|(|q<rsub|1>|)>>|<cell|cos <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|1>*sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|2>*cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|2>*sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|3>+q<rsub|2>+q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|3>+q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|3>*cos
+      <around*|(|q<rsub|3>+q<rsub|2>+q<rsub|1>|)>+L<rsub|2>*cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
+      <around*|(|q<rsub|3>+q<rsub|2>+q<rsub|1>|)>>|<cell|cos
+      <around*|(|q<rsub|3>+q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|3>*sin
+      <around*|(|q<rsub|3>+q<rsub|2>+q<rsub|1>|)>+L<rsub|2>*sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -169,21 +235,30 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
+      <with|color|red|(<with|math-font-family|rm|%i>47) >
     <|unfolded-io>
       cart:[[0,q[1],-%pi/2,0],[-%pi/2,q[2],-%pi/2,0],[0,q[3],0,0]]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o47>)
       >><around*|[|<around*|[|0,q<rsub|1>,-<frac|\<pi\>|2>,0|]>,<around*|[|-<frac|\<pi\>|2>,q<rsub|2>,-<frac|\<pi\>|2>,0|]>,<around*|[|0,q<rsub|3>,0,0|]>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
+      <with|color|red|(<with|math-font-family|rm|%i>48) >
     <|unfolded-io>
       rename(DH(cart)[1],0)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o48>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|2>>>|<row|<cell|1>|<cell|0>|<cell|0>|<cell|q<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>49) >
+    <|unfolded-io>
+      DH(cart)[2]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o49>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|1>|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|2>>>|<row|<cell|1>|<cell|0>|<cell|0>|<cell|q<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|2>>>|<row|<cell|1>|<cell|0>|<cell|0>|<cell|q<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -191,20 +266,22 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>50) >
     <|unfolded-io>
       cil:[[q[1],L[1],0,0],[0,q[2],-%pi/2,0],[0,q[3],0,0]]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o50>)
       >><around*|[|<around*|[|q<rsub|1>,L<rsub|1>,0,0|]>,<around*|[|0,q<rsub|2>,-<frac|\<pi\>|2>,0|]>,<around*|[|0,q<rsub|3>,0,0|]>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>51) >
     <|unfolded-io>
       rename(DH(cil)[1],0)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o51>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>>|<cell|0>|<cell|-s<rsub|1>>|<cell|-s<rsub|1>*q<rsub|3>>>|<row|<cell|s<rsub|1>>|<cell|0>|<cell|c<rsub|1>>|<cell|c<rsub|1>*q<rsub|3>>>|<row|<cell|0>|<cell|-1>|<cell|0>|<cell|q<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
     </unfolded-io>
 
@@ -213,21 +290,51 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
+      <with|color|red|(<with|math-font-family|rm|%i>52) >
     <|unfolded-io>
       scara:[[q[1],L[1],0,D[1]],[q[2],0,0,D[2]],[0,q[3],0,0]]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o52>)
       >><around*|[|<around*|[|q<rsub|1>,L<rsub|1>,0,D<rsub|1>|]>,<around*|[|q<rsub|2>,0,0,D<rsub|2>|]>,<around*|[|0,q<rsub|3>,0,0|]>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
+      <with|color|red|(<with|math-font-family|rm|%i>53) >
     <|unfolded-io>
       rename(DH(scara)[1],0)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o53>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|21>>|<cell|-s<rsub|21>>|<cell|0>|<cell|D<rsub|2>*c<rsub|21>+D<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|21>>|<cell|c<rsub|21>>|<cell|0>|<cell|D<rsub|2>*s<rsub|21>+D<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>54) >
+    <|unfolded-io>
+      DH(scara)[2]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o54>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|D<rsub|1>*cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
+      <around*|(|q<rsub|1>|)>>|<cell|cos <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|D<rsub|1>*sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|D<rsub|2>*cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+D<rsub|1>*cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|D<rsub|2>*sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+D<rsub|1>*sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|-sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|D<rsub|2>*cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+D<rsub|1>*cos
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|cos
+      <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|D<rsub|2>*sin
+      <around*|(|q<rsub|2>+q<rsub|1>|)>+D<rsub|1>*sin
+      <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -529,8 +636,19 @@
       <around*|(|q<rsub|5>|)>+L<rsub|4>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
     </unfolded-io>
 
-    <\input>
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>37) >
+    <|unfolded-io>
+      derivate(cos(q[1]+q[2]))
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o37>)
+      >><math-up|derivate><around*|(|cos <around*|(|q<rsub|2>+q<rsub|1>|)>|)>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>38) >
     <|input>
       \;
     </input>
