@@ -517,9 +517,9 @@ DH(M):=block(
             )
             else(
                 term1:pop(Qlist),
-                Q:Q.trigreduce(term.term1)
-            ),
-                i:i+1
+                Q:Q.trigreduce(term.term1),
+                i:i+2
+            )
         )else(
                 Q:Q.pop(Qlist),i:i+1
         ),
@@ -527,6 +527,141 @@ DH(M):=block(
     ),
     return([Q,Qm])
 )$
+inerzia(j):=block(
+[II],
+II:matrix([x[i],0,0],
+[0,y[i],0],
+[0,0,z[i]]),
+II:subst(j,i,II),
+return(II)
+)$
+baricentro(row):=block(
+[bc],
+bc:addrow(addcol(ident(3),transpose(row)),[0,0,0,1]),
+return(bc)
+)$
+formaQuad(func,n):=block(
+[B],
+B:zeromatrix(n,n),
+/*Derivoduevolte:ottengoiterminiquadraticinellevelocità*/
+for k:1thru n do(
+B[k,k]:diff(func,v[k],2)),
+/*Derivoiterminimisti:*/
+/*ottengoiterminisopraesottoladiagonaleprincipale.*/
+for i:1 thru n do(
+for j:i+1 thru n do(
+B[i,j]:1/2*diff(diff(func,v[j]),v[i]),
+B[j,i]:B[i,j]
+)
+),
+return(B)
+)$
+gradient(varp,n):=block([variables:[],M,symbols:[v,a]],
+  for i:1 thru n do(
+    if part(varp[i],0)#v then 
+    (variables:append(variables,[varp[i]])
+    )
+  ),
+  variables:flatten(variables),
+  n:length(variables),
+  M:zeromatrix(n,2),
+  for i:1 thru n do(
+    for j:1 thru 2 do(
+        if part(varp[i],1)#end then(
+        if j=1 then M[i][j]:v[part(varp[i],1)],
+        if j=2 then M[i][j]:a[part(varp[i],1)]
+        )
+        else(if j=1 then M[i][j]:v,
+        if j=2 then M[i][j]:a
+        )
+      )
+  ),
+  return(M)
+  )$
+  derivate(f):=block(
+        [df:0,varp:[],sizeVar:0,derivSym:zeromatrix(1,1),var:0,index:0,symb:0,partswitch:true],
+        varp:unique(flatten([exprbreak(f,1)])),
+        sizeVar:length(varp),
+        for i:1 thru sizeVar do(
+          if not (subvarp(varp[i]) or symbolp(varp[i]) or part(varp[i],0)=q or part(varp[i],0)=v) then varp[i]:[]
+        ),
+         varp:flatten(varp),
+         sizeVar:length(varp),
+         derivSym:gradient(varp,sizeVar),
+          for i:1 thru sizeVar do(
+             var:varp[i],
+             index:part(var,1),
+             symb:part(var,0),
+             if index#end then(
+             if symb=q then df:df+diff(f,var)*derivSym[i,1]
+             elseif symb=v then df:df+diff(f,var)*derivSym[i,2])
+             else(
+                 if var=q then df:df+diff(f,var)*v
+                 elseif var=v then df:df+diff(f,var)*a
+                )
+        ),
+        return(df)
+ )$
+ matrixDot(m):=block([sizeM:size(m),dotM:zerofor(m)],
+  for i:1 thru sizeM[1] do (
+  for j:1 thru sizeM[2] do(
+  dotM[i,j]:derivate(m[i][j])
+  )
+  ),
+  return(dotM)
+)$
+Ulink(Qh,M):=block(
+[g,U,d],
+/*Approssimoaccelerazionegravitazionalea10m/s^2*/
+g:[0,0,10],
+d:submatrix(4,Qh,1,2,3),
+U:-M*g.d,
+return(U)
+)$
+Tlink(Qh,dof,M):=block(
+[Tr,Tt,w,wt,II,R,Rt,Rd,Sw,result,dd,ddt],
+R:submatrix(4,Qh,4),
+d:submatrix(4,Qh,1,2,3),
+Rd:matrixDot(R),
+dd:matrixDot(d),
+Sw:trigsimp(Rd.transpose(R)),
+w:matrix([Sw[3][2]],[Sw[1][3]],[Sw[2][1]]),
+wt:transpose(w),
+dd:trigsimp(trigreduce(trigexpand(dd))),
+ddt:transpose(dd),
+II:inerzia(dof),
+Tt:1/2*M*trigsimp(trigreduce(trigexpand(ddt.dd))),
+Tr:1/2*trigsimp(trigreduce(trigexpand(wt.R.II.transpose(R).w))),
+result:[Tr,Tt,II],
+return(result)
+)$
+stampa(T,U,Ttot,Utot,dof):=block([dof:size(U)[2],Tr:T,Ur:U],
+   for i:1 thru dof do(
+        print("Link",i),
+        print("Energica Cinetica di Rotazione:",Tr[i][1]),
+        print("Energia Cinetica di Traslazione:",Tr[i][2]),
+        print("Matrice di Inerzia:",Tr[i][3]),
+        print("Energia Potenziale:",Ur[i]),
+        print("Br:",formaQuad(Tr[i][1],dof)),
+        print("Bt:",formaQuad(Tr[i][2],dof))
+   ),
+    print("Energia Cinetica Complessiva:",Ttot),
+    print("Energia Potenziale Complessiva:",Utot)
+)$
+energia(tab,M,Trs,flag):=block(
+  [T:[],U:[],Q:[],Qbc:[],i,rowList,Qdr:0,Ttot:0,Utot:0],
+rowList:args(DH),
+dof:size(rowList)[1],
+[Qdr,Q]:DH(tab),
+for i:1 thru size(Q)[2] do (
+   Qbc:append(Qbc,[Q[i].baricentro(Trs[i])]),
+   T:append(T,[Tlink(Qbc[i],i,M[i])]),
+   U:append(U,[Ulink(Qbc[i],M[i])]),
+   Ttot:expand(trigreduce(expand(Ttot+T[i][1]+T[i][2]))),
+   Utot:expand(trigreduce(expand(Utot+U[i])))
+),if flag=1 then stampa(rename(T,0),rename(U,0),rename(Ttot,0),rename(Utot,0),size(Q)[2]),
+   return([Ttot,Utot])
+   )$
 /********************UTILS*************************/
 /*Data una espressione determinare le sue parti*/
 exprbreak(expr,flag):=block(
@@ -539,7 +674,6 @@ elseif operatorp(expr,[cos,sin]) then(p:args(expr),return(exprbreak(p,f)))
 elseif (subvarp(expr) or symbolp(expr)) then (return(expr))
 
  else (while true do(
-         
          p:part(expr,idx),
          if p='end then (return()),res:[exprbreak(p,f)],
         part_list:flatten(append(part_list,res)),
@@ -551,7 +685,7 @@ idx:idx+1
 /*Ritorna le equazioni per la cinematica inversa*/
 getEq(M):=block(
 [x,y,z,dim:size(M),eq],
-eq:[0,0,0],               
+eq:[0,0,0],
 if matrixp(M) and dim = [4,4] then(
   eq[1]:x-M[1,4]=0,
   eq[2]:y-M[2,4]=0,
