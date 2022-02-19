@@ -37,9 +37,9 @@
       il sistema di riferimento <math|Q<rsub|i j>> nel baricentro del link
     </textput>
 
-    <\unfolded-io>
+    <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
-    <|unfolded-io>
+    <|input>
       baricentro(row):=block(
 
       [bc],
@@ -48,11 +48,8 @@
 
       return(bc)
 
-      )
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
-      >><math-up|baricentro><around*|(|<math-up|row>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|bc>|]>,<math-up|bc>:<math-up|addrow><around*|(|<math-up|addcol><around*|(|<math-up|ident><around*|(|3|)>,<math-up|transpose><around*|(|<math-up|row>|)>|)>,<around*|[|0,0,0,1|]>|)>,<math-up|return><around*|(|<math-up|bc>|)>|)>>>
-    </unfolded-io>
+      )$
+    </input>
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
@@ -192,9 +189,7 @@
 
       \;
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><math-up|derivate><around*|(|f|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|df>:0,<math-up|varp>:<around*|[||]>,<math-up|sizeVar>:0,<math-up|derivSym>:<math-up|zeromatrix><around*|(|1,1|)>,<math-up|var>:0,<math-up|index>:0,<math-up|symb>:0,<math-up|partswitch>:<math-bf|true>|]>,<math-up|varp>:<math-up|unique><around*|(|<math-up|flatten><around*|(|<around*|[|<math-up|exprbreak><around*|(|f,1|)>|]>|)>|)>,<math-up|sizeVar>:<math-up|length><around*|(|<math-up|varp>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em><math-up|sizeVar><space|0.27em><math-bf|do><space|0.27em><math-bf|if><space|0.27em>\<neg\><around*|(|<math-up|subvarp><around*|(|<math-up|varp><rsub|i>|)>\<vee\><math-up|symbolp><around*|(|<math-up|varp><rsub|i>|)>\<vee\><math-up|part><around*|(|<math-up|varp><rsub|i>,0|)>=q\<vee\><math-up|part><around*|(|<math-up|varp><rsub|i>,0|)>=v|)><space|0.27em><math-bf|then><space|0.27em><math-up|varp><rsub|i>:<around*|[||]>,<math-up|varp>:<math-up|flatten><around*|(|<math-up|varp>|)>,<math-up|sizeVar>:<math-up|length><around*|(|<math-up|varp>|)>,<math-up|derivSym>:<math-up|gradient><around*|(|<math-up|varp>,<math-up|sizeVar>|)>,<math-bf|for><space|0.27em>i<space|0.27em><math-bf|thru><space|0.27em><math-up|sizeVar><space|0.27em><math-bf|do><space|0.27em><around*|(|<math-up|var>:<math-up|varp><rsub|i>,<math-up|index>:<math-up|part><around*|(|<math-up|var>,1|)>,<math-up|symb>:<math-up|part><around*|(|<math-up|var>,0|)>,<math-bf|if><space|0.27em><math-up|index>\<neq\><math-up|end><space|0.27em><math-bf|then><space|0.27em><math-bf|if><space|0.27em><math-up|symb>=q<space|0.27em><math-bf|then><space|0.27em><math-up|df>:<math-up|df>+<math-up|diff><around*|(|f,<math-up|var>|)>*<math-up|derivSym><rsub|i,1><space|0.27em><math-bf|elseif><space|0.27em><math-up|symb>=v<space|0.27em><math-bf|then><space|0.27em><math-up|df>:<math-up|df>+<math-up|diff><around*|(|f,<math-up|var>|)>*<math-up|derivSym><rsub|i,2><space|0.27em><math-bf|else><space|0.27em><around*|(|<math-bf|if><space|0.27em><math-up|var>=q<space|0.27em><math-bf|then><space|0.27em><math-up|df>:<math-up|df>+<math-up|diff><around*|(|f,<math-up|var>|)>*v<space|0.27em><math-bf|elseif><space|0.27em><math-up|var>=v<space|0.27em><math-bf|then><space|0.27em><math-up|df>:<math-up|df>+<math-up|diff><around*|(|f,<math-up|var>|)>*a|)>|)>,<math-up|return><around*|(|<math-up|df>|)>|)>>>
     </unfolded-io>
 
@@ -281,7 +276,7 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|input>
-      stampa(T,U,Ttot,Utot,dof):=block([dof:size(U)[2],Tr:T,Ur:U],
+      stampa(T,U,Ttot,Utot,size):=block([dof:size(U)[2],Tr:T,Ur:U],
 
       \ \ \ for i:1 thru dof do(
 
@@ -295,9 +290,9 @@
 
       \ \ \ \ \ \ \ \ print("Energia Potenziale:",Ur[i]),
 
-      \ \ \ \ \ \ \ \ print("Br:",formaQuad(Tr[i][1],dof)),
+      \ \ \ \ \ \ \ \ print("Br:",formaQuad(Tr[i][1],size)),
 
-      \ \ \ \ \ \ \ \ print("Bt:",formaQuad(Tr[i][2],dof))
+      \ \ \ \ \ \ \ \ print("Bt:",formaQuad(Tr[i][2],size))
 
       \ \ \ ),
 
@@ -335,7 +330,7 @@
 
       ),if flag=1 then stampa(rename(T,0),rename(U,0),rename(Ttot,0),rename(Utot,0),size(Q)[2]),
 
-      \ \ \ return(rename([formaQuad(Ttot,size(Q)[2]),Utot],0))
+      \ \ \ return(rename(expand([formaQuad(Ttot,size(Q)[2]),Utot]),0))
 
       \ \ \ )$
     </input>
@@ -461,7 +456,7 @@
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|z<rsub|2>+L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>+L<rsub|1><rsup|2>*M<rsub|2>+z<rsub|1>+<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|<frac|z<rsub|2>+<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>|2>>>|<row|<cell|<frac|z<rsub|2>+<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>|2>>|<cell|z<rsub|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>,0|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|z<rsub|2>+L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>+L<rsub|1><rsup|2>*M<rsub|2>+z<rsub|1>+<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|<frac|z<rsub|2>|2>+<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>|4>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|8>>>|<row|<cell|<frac|z<rsub|2>|2>+<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>|4>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|8>>|<cell|z<rsub|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>,0|]>>>
     </unfolded-io>
 
     <\textput>
@@ -752,7 +747,7 @@
       >-10*M<rsub|3>*q<rsub|3>-5*L<rsub|3>*M<rsub|3>-10*L<rsub|1>*M<rsub|3>-10*L<rsub|1>*M<rsub|2>-5*L<rsub|1>*M<rsub|1>>>
 
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|z<rsub|3>+L<rsub|3><rsup|2>*M<rsub|3>+2*D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+D<rsub|1><rsup|2>*M<rsub|3>+z<rsub|2>+D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>+D<rsub|1><rsup|2>*M<rsub|2>+z<rsub|1>+<frac|D<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|<frac|z<rsub|3>+L<rsub|3><rsup|2>*M<rsub|3>+D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+z<rsub|2>+<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>|2>>|<cell|0>>|<row|<cell|<frac|z<rsub|3>+L<rsub|3><rsup|2>*M<rsub|3>+D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+z<rsub|2>+<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>|2>>|<cell|z<rsub|3>+L<rsub|3><rsup|2>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+z<rsub|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|M<rsub|3>>>>>>,-10*M<rsub|3>*q<rsub|3>-5*L<rsub|3>*M<rsub|3>-10*L<rsub|1>*M<rsub|3>-10*L<rsub|1>*M<rsub|2>-5*L<rsub|1>*M<rsub|1>|]>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|z<rsub|3>+L<rsub|3><rsup|2>*M<rsub|3>+2*D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+D<rsub|1><rsup|2>*M<rsub|3>+z<rsub|2>+D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>+D<rsub|1><rsup|2>*M<rsub|2>+z<rsub|1>+<frac|D<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|<frac|z<rsub|3>|2>+<frac|L<rsub|3><rsup|2>*M<rsub|3>|2>+<frac|D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>|2>+D<rsub|2>*L<rsub|3>*M<rsub|3>+<frac|D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|3>|2>+<frac|z<rsub|2>|2>+<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>|4>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|8>>|<cell|0>>|<row|<cell|<frac|z<rsub|3>|2>+<frac|L<rsub|3><rsup|2>*M<rsub|3>|2>+<frac|D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>|2>+D<rsub|2>*L<rsub|3>*M<rsub|3>+<frac|D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|3>|2>+<frac|z<rsub|2>|2>+<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>|4>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|8>>|<cell|z<rsub|3>+L<rsub|3><rsup|2>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+z<rsub|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|M<rsub|3>>>>>>,-10*M<rsub|3>*q<rsub|3>-5*L<rsub|3>*M<rsub|3>-10*L<rsub|1>*M<rsub|3>-10*L<rsub|1>*M<rsub|2>-5*L<rsub|1>*M<rsub|1>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
@@ -765,72 +760,62 @@
       <math|<with|math-display|true|<text|Energica Cinetica di Rotazione:
       ><frac|v<rsub|1><rsup|2>*y<rsub|1>|2>>>
 
-      <math|<with|math-display|true|<text|Energia Cinetica di Traslazione:
-      >0>>
-
-      \;
-
-      \ <math|<with|math-display|true|<text|Matrice di Inerzia:
-      ><matrix|<tformat|<table|<row|<cell|x<rsub|1>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|1>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|z<rsub|1>>>>>>>>
-
-      \;
-
-      \ <math|<with|math-display|true|<text|Energia Potenziale:
-      >-5*L<rsub|1>*M<rsub|1>>>
-
-      <math|<with|math-display|true|<text|Br:
-      ><matrix|<tformat|<table|<row|<cell|y<rsub|1>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
-
-      \;
-
-      \ <math|<with|math-display|true|<text|Bt:
-      ><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
-
-      <math|<with|math-display|true|<text|Link >2>>
-
-      <math|<with|math-display|true|<text|Energica Cinetica di Rotazione:
-      ><frac|<around*|(|v<rsub|1><rsup|2>*z<rsub|2>-v<rsub|1><rsup|2>*x<rsub|2>|)>*cos
-      <around*|(|2*q<rsub|2>|)>+v<rsub|1><rsup|2>*z<rsub|2>+2*v<rsub|2><rsup|2>*y<rsub|2>+v<rsub|1><rsup|2>*x<rsub|2>|4>>>
-
       \;
 
       \ <math|<with|math-display|true|<text|Energia Cinetica di Traslazione:
-      ><frac|D<rsub|2><rsup|2>*M<rsub|2>*<around*|(|v<rsub|1><rsup|2>*cos
-      <around*|(|2*q<rsub|2>|)>+2*v<rsub|2><rsup|2>+v<rsub|1><rsup|2>|)>|16>>>
+      >0>>
 
-      \;
+      <math|<with|math-display|true|<text|Matrice di Inerzia:
+      ><matrix|<tformat|<table|<row|<cell|x<rsub|1>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|1>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|z<rsub|1>>>>>>>>
 
-      \ <math|<with|math-display|true|<text|Matrice di Inerzia:
-      ><matrix|<tformat|<table|<row|<cell|x<rsub|2>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|z<rsub|2>>>>>>>>
-
-      \;
-
-      \ <math|<with|math-display|true|<text|Energia Potenziale:
-      >-10*M<rsub|2>*<around*|(|<frac|D<rsub|2>*s<rsub|2>|2>+L<rsub|1>|)>>>
+      <math|<with|math-display|true|<text|Energia Potenziale:
+      >-5*L<rsub|1>*M<rsub|1>>>
 
       \;
 
       \ <math|<with|math-display|true|<text|Br:
-      ><matrix|<tformat|<table|<row|<cell|<frac|<around*|(|2*z<rsub|2>-2*x<rsub|2>|)>*cos
-      <around*|(|2*q<rsub|2>|)>+2*z<rsub|2>+2*x<rsub|2>|4>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
+      ><matrix|<tformat|<table|<row|<cell|y<rsub|1>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
+
+      <math|<with|math-display|true|<text|Bt:
+      ><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|Bt:
-      ><matrix|<tformat|<table|<row|<cell|<frac|D<rsub|2><rsup|2>*M<rsub|2>*<around*|(|2*cos
-      <around*|(|2*q<rsub|2>|)>+2|)>|16>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
-
-      \;
-
-      \ <math|<with|math-display|true|<text|Link >3>>
+      \ <math|<with|math-display|true|<text|Link >2>>
 
       \;
 
       \ <math|<with|math-display|true|<text|Energica Cinetica di Rotazione:
+      ><frac|<around*|(|v<rsub|1><rsup|2>*z<rsub|2>-v<rsub|1><rsup|2>*x<rsub|2>|)>*cos
+      <around*|(|2*q<rsub|2>|)>+v<rsub|1><rsup|2>*z<rsub|2>+2*v<rsub|2><rsup|2>*y<rsub|2>+v<rsub|1><rsup|2>*x<rsub|2>|4>>>
+
+      <math|<with|math-display|true|<text|Energia Cinetica di Traslazione:
+      ><frac|D<rsub|2><rsup|2>*M<rsub|2>*<around*|(|v<rsub|1><rsup|2>*cos
+      <around*|(|2*q<rsub|2>|)>+2*v<rsub|2><rsup|2>+v<rsub|1><rsup|2>|)>|16>>>
+
+      <math|<with|math-display|true|<text|Matrice di Inerzia:
+      ><matrix|<tformat|<table|<row|<cell|x<rsub|2>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|z<rsub|2>>>>>>>>
+
+      <math|<with|math-display|true|<text|Energia Potenziale:
+      >-10*M<rsub|2>*<around*|(|<frac|D<rsub|2>*s<rsub|2>|2>+L<rsub|1>|)>>>
+
+      <math|<with|math-display|true|<text|Br:
+      ><matrix|<tformat|<table|<row|<cell|<frac|<around*|(|2*z<rsub|2>-2*x<rsub|2>|)>*cos
+      <around*|(|2*q<rsub|2>|)>+2*z<rsub|2>+2*x<rsub|2>|4>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
+
+      <math|<with|math-display|true|<text|Bt:
+      ><matrix|<tformat|<table|<row|<cell|<frac|D<rsub|2><rsup|2>*M<rsub|2>*<around*|(|2*cos
+      <around*|(|2*q<rsub|2>|)>+2|)>|16>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
+
+      <math|<with|math-display|true|<text|Link >3>>
+
+      <math|<with|math-display|true|<text|Energica Cinetica di Rotazione:
       ><frac|<around*|(|v<rsub|1><rsup|2>*z<rsub|3>-v<rsub|1><rsup|2>*x<rsub|3>|)>*cos
       <around*|(|2*q<rsub|2>|)>+v<rsub|1><rsup|2>*z<rsub|3>+2*v<rsub|2><rsup|2>*y<rsub|3>+v<rsub|1><rsup|2>*x<rsub|3>|4>>>
 
-      <math|<with|math-display|true|<text|Energia Cinetica di Traslazione:
+      \;
+
+      \ <math|<with|math-display|true|<text|Energia Cinetica di Traslazione:
       ><frac|M<rsub|3>*<around*|(|D<rsub|2>*<around*|(|8*v<rsub|1><rsup|2>*q<rsub|3>*sin
       <around*|(|2*q<rsub|2>|)>-4*v<rsub|1><rsup|2>*L<rsub|3>*sin
       <around*|(|2*q<rsub|2>|)>-16*v<rsub|2>*v<rsub|3>|)>+q<rsub|3>*<around*|(|4*v<rsub|1><rsup|2>*L<rsub|3>*cos
@@ -839,21 +824,21 @@
       <around*|(|2*q<rsub|2>|)>+8*v<rsub|2><rsup|2>+4*v<rsub|1><rsup|2>|)>-v<rsub|1><rsup|2>*L<rsub|3><rsup|2>*cos
       <around*|(|2*q<rsub|2>|)>+8*v<rsub|3><rsup|2>+<around*|(|2*v<rsub|2><rsup|2>+v<rsub|1><rsup|2>|)>*L<rsub|3><rsup|2>|)>|16>>>
 
-      \;
-
-      \ <math|<with|math-display|true|<text|Matrice di Inerzia:
+      <math|<with|math-display|true|<text|Matrice di Inerzia:
       ><matrix|<tformat|<table|<row|<cell|x<rsub|3>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|3>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|z<rsub|3>>>>>>>>
 
-      \;
-
-      \ <math|<with|math-display|true|<text|Energia Potenziale:
+      <math|<with|math-display|true|<text|Energia Potenziale:
       >-10*M<rsub|3>*<around*|(|-c<rsub|2>*q<rsub|3>+<frac|c<rsub|2>*L<rsub|3>|2>+D<rsub|2>*s<rsub|2>+L<rsub|1>|)>>>
 
-      <math|<with|math-display|true|<text|Br:
+      \;
+
+      \ <math|<with|math-display|true|<text|Br:
       ><matrix|<tformat|<table|<row|<cell|<frac|<around*|(|2*z<rsub|3>-2*x<rsub|3>|)>*cos
       <around*|(|2*q<rsub|2>|)>+2*z<rsub|3>+2*x<rsub|3>|4>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|3>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
 
-      <math|<with|math-display|true|<text|Bt:
+      \;
+
+      \ <math|<with|math-display|true|<text|Bt:
       ><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|3>*<around*|(|D<rsub|2>*<around*|(|16*q<rsub|3>*sin
       <around*|(|2*q<rsub|2>|)>-8*L<rsub|3>*sin
       <around*|(|2*q<rsub|2>|)>|)>+q<rsub|3>*<around*|(|8*L<rsub|3>*cos
@@ -882,7 +867,13 @@
 
       \ <math|<with|math-display|true|<text|Energia Potenziale Complessiva:
       >10*c<rsub|2>*M<rsub|3>*q<rsub|3>-5*c<rsub|2>*L<rsub|3>*M<rsub|3>-10*D<rsub|2>*s<rsub|2>*M<rsub|3>-10*L<rsub|1>*M<rsub|3>-5*D<rsub|2>*M<rsub|2>*s<rsub|2>-10*L<rsub|1>*M<rsub|2>-5*L<rsub|1>*M<rsub|1>>>
+    </unfolded-io>
 
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
+    <|unfolded-io>
+      [T,U]:energia(DH[6],M,Trsz[6],1)
+    <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|D<rsub|2>*M<rsub|3>*q<rsub|3>*sin
       <around*|(|2*q<rsub|2>|)>-<frac|D<rsub|2>*L<rsub|3>*M<rsub|3>*sin
@@ -901,7 +892,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|unfolded-io>
-      [T,U]:energia(DH[6],M,Trsz[6],1)
+      [T,U]:energia(DH[7],M,Trsz[7],1)
     <|unfolded-io>
       \;
 
@@ -1020,13 +1011,42 @@
       <around*|(|2*q<rsub|2>|)>|2>-<frac|L<rsub|3><rsup|2>*M<rsub|3>*cos
       <around*|(|2*q<rsub|2>|)>|8>+<frac|z<rsub|2>*cos
       <around*|(|2*q<rsub|2>|)>|2>-<frac|x<rsub|2>*cos
-      <around*|(|2*q<rsub|2>|)>|2>+<frac|z<rsub|3>|2>+<frac|x<rsub|3>|2>+<frac|M<rsub|3>*q<rsub|3><rsup|2>|2>-<frac|L<rsub|3>*M<rsub|3>*q<rsub|3>|2>+<frac|L<rsub|3><rsup|2>*M<rsub|3>|8>+L<rsub|2><rsup|2>*M<rsub|3>+<frac|z<rsub|2>|2>+<frac|x<rsub|2>|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>+y<rsub|1>>|<cell|<frac|<frac|L<rsub|2>*c<rsub|2>*L<rsub|3>*M<rsub|3>|2>-L<rsub|2>*c<rsub|2>*M<rsub|3>*q<rsub|3>|2>>|<cell|-<frac|L<rsub|2>*s<rsub|2>*M<rsub|3>|2>>>|<row|<cell|<frac|<frac|L<rsub|2>*c<rsub|2>*L<rsub|3>*M<rsub|3>|2>-L<rsub|2>*c<rsub|2>*M<rsub|3>*q<rsub|3>|2>>|<cell|y<rsub|3>+M<rsub|3>*q<rsub|3><rsup|2>-L<rsub|3>*M<rsub|3>*q<rsub|3>+<frac|L<rsub|3><rsup|2>*M<rsub|3>|4>+y<rsub|2>>|<cell|0>>|<row|<cell|-<frac|L<rsub|2>*s<rsub|2>*M<rsub|3>|2>>|<cell|0>|<cell|M<rsub|3>>>>>>,-10*c<rsub|2>*M<rsub|3>*q<rsub|3>+5*c<rsub|2>*L<rsub|3>*M<rsub|3>-10*L<rsub|1>*M<rsub|3>-10*L<rsub|1>*M<rsub|2>-5*L<rsub|1>*M<rsub|1>|]>>>
+      <around*|(|2*q<rsub|2>|)>|2>+<frac|z<rsub|3>|2>+<frac|x<rsub|3>|2>+<frac|M<rsub|3>*q<rsub|3><rsup|2>|2>-<frac|L<rsub|3>*M<rsub|3>*q<rsub|3>|2>+<frac|L<rsub|3><rsup|2>*M<rsub|3>|8>+L<rsub|2><rsup|2>*M<rsub|3>+<frac|z<rsub|2>|2>+<frac|x<rsub|2>|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>+y<rsub|1>>|<cell|<frac|L<rsub|2>*c<rsub|2>*L<rsub|3>*M<rsub|3>|4>-<frac|L<rsub|2>*c<rsub|2>*M<rsub|3>*q<rsub|3>|2>>|<cell|-<frac|L<rsub|2>*s<rsub|2>*M<rsub|3>|2>>>|<row|<cell|<frac|L<rsub|2>*c<rsub|2>*L<rsub|3>*M<rsub|3>|4>-<frac|L<rsub|2>*c<rsub|2>*M<rsub|3>*q<rsub|3>|2>>|<cell|y<rsub|3>+M<rsub|3>*q<rsub|3><rsup|2>-L<rsub|3>*M<rsub|3>*q<rsub|3>+<frac|L<rsub|3><rsup|2>*M<rsub|3>|4>+y<rsub|2>>|<cell|0>>|<row|<cell|-<frac|L<rsub|2>*s<rsub|2>*M<rsub|3>|2>>|<cell|0>|<cell|M<rsub|3>>>>>>,-10*c<rsub|2>*M<rsub|3>*q<rsub|3>+5*c<rsub|2>*L<rsub|3>*M<rsub|3>-10*L<rsub|1>*M<rsub|3>-10*L<rsub|1>*M<rsub|2>-5*L<rsub|1>*M<rsub|1>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
+      <with|color|red|(<with|math-font-family|rm|%i>29) >
     <|unfolded-io>
-      [T,U]:energia(DH[7],M,Trsz[7],1)
+      test:matrix([q[1],0,-%pi/2,0],[0,q[2],0,0])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o29>)
+      >><matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|0>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|2>>|<cell|0>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>30) >
+    <|unfolded-io>
+      M:[0,m[2]]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
+      >><around*|[|0,m<rsub|2>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>31) >
+    <|unfolded-io>
+      zeromatrix(2,2)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
+      >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>36) >
+    <|unfolded-io>
+      energia(test,M,zeromatrix(2,3),1)
     <|unfolded-io>
       <math|<with|math-display|true|<text|Link >1>>
 
@@ -1043,8 +1063,7 @@
 
       \;
 
-      \ <math|<with|math-display|true|<text|Energia Potenziale:
-      >-5*L<rsub|1>*M<rsub|1>>>
+      \ <math|<with|math-display|true|<text|Energia Potenziale: >0>>
 
       <math|<with|math-display|true|<text|Br:
       ><matrix|<tformat|<table|<row|<cell|y<rsub|1>>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>>>
@@ -1059,71 +1078,44 @@
       \;
 
       \ <math|<with|math-display|true|<text|Energica Cinetica di Rotazione:
-      ><frac|<around*|(|v<rsub|1><rsup|2>*y<rsub|2>-v<rsub|1><rsup|2>*x<rsub|2>|)>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>+2*z<rsub|2>*v<rsub|3><rsup|2>+4*v<rsub|2>*z<rsub|2>*v<rsub|3>+2*v<rsub|2><rsup|2>*z<rsub|2>+v<rsub|1><rsup|2>*y<rsub|2>+v<rsub|1><rsup|2>*x<rsub|2>|4>>>
+      ><frac|v<rsub|1><rsup|2>*y<rsub|2>|2>>>
 
       \;
 
       \ <math|<with|math-display|true|<text|Energia Cinetica di Traslazione:
-      ><frac|M<rsub|2>*<around*|(|D<rsub|3><rsup|2>*<around*|(|4*v<rsub|1><rsup|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>+8*v<rsub|3><rsup|2>+16*v<rsub|2>*v<rsub|3>+8*v<rsub|2><rsup|2>+4*v<rsub|1><rsup|2>|)>+D<rsub|2><rsup|2>*<around*|(|v<rsub|1><rsup|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>-4*v<rsub|1><rsup|2>*cos
-      <around*|(|q<rsub|3>+2*q<rsub|2>|)>+4*v<rsub|1><rsup|2>*cos
-      <around*|(|2*q<rsub|2>|)>+2*v<rsub|3><rsup|2>+c<rsub|3>*<around*|(|-8*v<rsub|2>*v<rsub|3>-8*v<rsub|2><rsup|2>-4*v<rsub|1><rsup|2>|)>+4*v<rsub|2>*v<rsub|3>+10*v<rsub|2><rsup|2>+5*v<rsub|1><rsup|2>|)>+D<rsub|2>*D<rsub|3>*<around*|(|-4*v<rsub|1><rsup|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>+8*v<rsub|1><rsup|2>*cos
-      <around*|(|q<rsub|3>+2*q<rsub|2>|)>-8*v<rsub|3><rsup|2>+c<rsub|3>*<around*|(|16*v<rsub|2>*v<rsub|3>+16*v<rsub|2><rsup|2>+8*v<rsub|1><rsup|2>|)>-16*v<rsub|2>*v<rsub|3>-8*v<rsub|2><rsup|2>-4*v<rsub|1><rsup|2>|)>|)>|16>>>
+      ><frac|m<rsub|2>*<around*|(|v<rsub|2><rsup|2>+v<rsub|1><rsup|2>*q<rsub|2><rsup|2>|)>|2>>>
 
-      \;
-
-      \ <math|<with|math-display|true|<text|Matrice di Inerzia:
+      <math|<with|math-display|true|<text|Matrice di Inerzia:
       ><matrix|<tformat|<table|<row|<cell|x<rsub|2>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|y<rsub|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|z<rsub|2>>>>>>>>
 
-      \;
-
-      \ <math|<with|math-display|true|<text|Energia Potenziale:
-      >-10*M<rsub|2>*<around*|(|D<rsub|3>*s<rsub|32>-<frac|D<rsub|2>*s<rsub|32>|2>+D<rsub|2>*s<rsub|2>+L<rsub|1>|)>>>
+      <math|<with|math-display|true|<text|Energia Potenziale: >0>>
 
       <math|<with|math-display|true|<text|Br:
-      ><matrix|<tformat|<table|<row|<cell|<frac|<around*|(|2*y<rsub|2>-2*x<rsub|2>|)>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>+2*y<rsub|2>+2*x<rsub|2>|4>>|<cell|0>>|<row|<cell|0>|<cell|z<rsub|2>>>>>>>>
+      ><matrix|<tformat|<table|<row|<cell|y<rsub|2>>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>>>
 
       <math|<with|math-display|true|<text|Bt:
-      ><matrix|<tformat|<table|<row|<cell|<frac|M<rsub|2>*<around*|(|D<rsub|3><rsup|2>*<around*|(|8*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>+8|)>+D<rsub|2><rsup|2>*<around*|(|2*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>-8*cos
-      <around*|(|q<rsub|3>+2*q<rsub|2>|)>+8*cos
-      <around*|(|2*q<rsub|2>|)>-8*c<rsub|3>+10|)>+D<rsub|2>*D<rsub|3>*<around*|(|-8*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>+16*cos
-      <around*|(|q<rsub|3>+2*q<rsub|2>|)>+16*c<rsub|3>-8|)>|)>|16>>|<cell|0>>|<row|<cell|0>|<cell|<frac|M<rsub|2>*<around*|(|D<rsub|2>*D<rsub|3>*<around*|(|32*c<rsub|3>-16|)>+D<rsub|2><rsup|2>*<around*|(|20-16*c<rsub|3>|)>+16*D<rsub|3><rsup|2>|)>|16>>>>>>>>
+      ><matrix|<tformat|<table|<row|<cell|m<rsub|2>*q<rsub|2><rsup|2>>|<cell|0>>|<row|<cell|0>|<cell|m<rsub|2>>>>>>>>
 
       <math|<with|math-display|true|<text|Energia Cinetica Complessiva:
-      ><frac|v<rsub|1><rsup|2>*M<rsub|2>*D<rsub|3><rsup|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|4>-<frac|v<rsub|1><rsup|2>*D<rsub|2>*M<rsub|2>*D<rsub|3>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|4>+<frac|v<rsub|1><rsup|2>*y<rsub|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|4>-<frac|v<rsub|1><rsup|2>*x<rsub|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|4>+<frac|v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*M<rsub|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|16>+<frac|v<rsub|1><rsup|2>*D<rsub|2>*M<rsub|2>*D<rsub|3>*cos
-      <around*|(|q<rsub|3>+2*q<rsub|2>|)>|2>-<frac|v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*M<rsub|2>*cos
-      <around*|(|q<rsub|3>+2*q<rsub|2>|)>|4>+<frac|v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*M<rsub|2>*cos
-      <around*|(|2*q<rsub|2>|)>|4>+<frac|M<rsub|2>*D<rsub|3><rsup|2>*v<rsub|3><rsup|2>|2>-<frac|D<rsub|2>*M<rsub|2>*D<rsub|3>*v<rsub|3><rsup|2>|2>+<frac|z<rsub|2>*v<rsub|3><rsup|2>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>*v<rsub|3><rsup|2>|8>+D<rsub|2>*M<rsub|2>*v<rsub|2>*D<rsub|3>*c<rsub|3>*v<rsub|3>-<frac|D<rsub|2><rsup|2>*M<rsub|2>*v<rsub|2>*c<rsub|3>*v<rsub|3>|2>+M<rsub|2>*v<rsub|2>*D<rsub|3><rsup|2>*v<rsub|3>-D<rsub|2>*M<rsub|2>*v<rsub|2>*D<rsub|3>*v<rsub|3>+v<rsub|2>*z<rsub|2>*v<rsub|3>+<frac|D<rsub|2><rsup|2>*M<rsub|2>*v<rsub|2>*v<rsub|3>|4>+D<rsub|2>*M<rsub|2>*v<rsub|2><rsup|2>*D<rsub|3>*c<rsub|3>+<frac|v<rsub|1><rsup|2>*D<rsub|2>*M<rsub|2>*D<rsub|3>*c<rsub|3>|2>-<frac|D<rsub|2><rsup|2>*M<rsub|2>*v<rsub|2><rsup|2>*c<rsub|3>|2>-<frac|v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*M<rsub|2>*c<rsub|3>|4>+<frac|M<rsub|2>*v<rsub|2><rsup|2>*D<rsub|3><rsup|2>|2>+<frac|v<rsub|1><rsup|2>*M<rsub|2>*D<rsub|3><rsup|2>|4>-<frac|D<rsub|2>*M<rsub|2>*v<rsub|2><rsup|2>*D<rsub|3>|2>-<frac|v<rsub|1><rsup|2>*D<rsub|2>*M<rsub|2>*D<rsub|3>|4>+<frac|v<rsub|2><rsup|2>*z<rsub|2>|2>+<frac|v<rsub|1><rsup|2>*y<rsub|2>|4>+<frac|v<rsub|1><rsup|2>*x<rsub|2>|4>+<frac|5*D<rsub|2><rsup|2>*M<rsub|2>*v<rsub|2><rsup|2>|8>+<frac|5*v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*M<rsub|2>|16>+<frac|v<rsub|1><rsup|2>*y<rsub|1>|2>>>
+      ><frac|v<rsub|1><rsup|2>*y<rsub|2>|2>+<frac|m<rsub|2>*v<rsub|2><rsup|2>|2>+<frac|v<rsub|1><rsup|2>*m<rsub|2>*q<rsub|2><rsup|2>|2>+<frac|v<rsub|1><rsup|2>*y<rsub|1>|2>>>
 
-      <math|<with|math-display|true|<text|Energia Potenziale Complessiva:
-      >-10*M<rsub|2>*D<rsub|3>*s<rsub|32>+5*D<rsub|2>*M<rsub|2>*s<rsub|32>-10*D<rsub|2>*M<rsub|2>*s<rsub|2>-10*L<rsub|1>*M<rsub|2>-5*L<rsub|1>*M<rsub|1>>>
+      \;
 
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|<frac|M<rsub|2>*D<rsub|3><rsup|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|2>-<frac|D<rsub|2>*M<rsub|2>*D<rsub|3>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|2>+<frac|y<rsub|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|2>-<frac|x<rsub|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>*cos
-      <around*|(|2*q<rsub|3>+2*q<rsub|2>|)>|8>+D<rsub|2>*M<rsub|2>*D<rsub|3>*cos
-      <around*|(|q<rsub|3>+2*q<rsub|2>|)>-<frac|D<rsub|2><rsup|2>*M<rsub|2>*cos
-      <around*|(|q<rsub|3>+2*q<rsub|2>|)>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>*cos
-      <around*|(|2*q<rsub|2>|)>|2>+D<rsub|2>*M<rsub|2>*D<rsub|3>*c<rsub|3>-<frac|D<rsub|2><rsup|2>*M<rsub|2>*c<rsub|3>|2>+<frac|M<rsub|2>*D<rsub|3><rsup|2>|2>-<frac|D<rsub|2>*M<rsub|2>*D<rsub|3>|2>+<frac|y<rsub|2>|2>+<frac|x<rsub|2>|2>+<frac|5*D<rsub|2><rsup|2>*M<rsub|2>|8>+y<rsub|1>>|<cell|0>>|<row|<cell|0>|<cell|2*D<rsub|2>*M<rsub|2>*D<rsub|3>*c<rsub|3>-D<rsub|2><rsup|2>*M<rsub|2>*c<rsub|3>+M<rsub|2>*D<rsub|3><rsup|2>-D<rsub|2>*M<rsub|2>*D<rsub|3>+z<rsub|2>+<frac|5*D<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>,-10*M<rsub|2>*D<rsub|3>*s<rsub|32>+5*D<rsub|2>*M<rsub|2>*s<rsub|32>-10*D<rsub|2>*M<rsub|2>*s<rsub|2>-10*L<rsub|1>*M<rsub|2>-5*L<rsub|1>*M<rsub|1>|]>>>
+      \ <math|<with|math-display|true|<text|Energia Potenziale Complessiva:
+      >0>>
+
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o36>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|y<rsub|2>+m<rsub|2>*q<rsub|2><rsup|2>+y<rsub|1>>|<cell|0>>|<row|<cell|0>|<cell|m<rsub|2>>>>>>,0|]>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>21) >
+      <with|color|red|(<with|math-font-family|rm|%i>36) >
+    <|input>
+      \;
+    </input>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>32) >
     <|input>
       \;
     </input>
@@ -1134,7 +1126,7 @@
   <\collection>
     <associate|page-height|auto>
     <associate|page-medium|paper>
-    <associate|page-type|a2>
+    <associate|page-type|a0>
     <associate|page-width|auto>
   </collection>
 </initial>

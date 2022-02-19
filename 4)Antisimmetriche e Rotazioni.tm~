@@ -1139,11 +1139,11 @@
 
       \ \ \ \ I:ident(dim[1]),
 
-      \ \ \ \ cay:(I+S).invert(I-S),
+      \ \ \ \ cay:(I+S).invert(I-S), culo\ 
 
       \ \ \ \ return(cay))
 
-      \ \ \ \ else(error("La matrice non è antisimmetrica"))
+      \ \ \ \ else(error("La matrice non è antisimmetrica culo"))
 
       )$
     </input>
@@ -1162,7 +1162,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>47) >
     <|unfolded-io>
-      cayley(S)
+      cayley culo(S)
     <|unfolded-io>
       \;
 
@@ -1173,7 +1173,7 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>48) >
     <|input>
-      invCayley(R):=block([I,S,v,norm,cosTheta,sinTheta,theta,cond],
+      invCayley(R):=block([I,S,v,norm,cosTheta,sinTheta,theta,cond,culo],
 
       \ \ \ if isRot(R) then(
 
@@ -1241,235 +1241,8 @@
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>+1|)>>>|<cell|0>>>>>,-<frac|2*<sqrt|321>*\<pi\>+9*<sqrt|321>|60>|]>>>
     </unfolded-io>
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
-    <|unfolded-io>
-      R:rot3Z(theta)
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><matrix|<tformat|<table|<row|<cell|cos
-      <around*|(|\<vartheta\>|)>>|<cell|-sin
-      <around*|(|\<vartheta\>|)>>|<cell|0>>|<row|<cell|sin
-      <around*|(|\<vartheta\>|)>>|<cell|cos
-      <around*|(|\<vartheta\>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
-    <|unfolded-io>
-      w:matrix([a],[b],[c])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><matrix|<tformat|<table|<row|<cell|a>>|<row|<cell|b>>|<row|<cell|c>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>47) >
-    <|unfolded-io>
-      eq:(ident(3)-R)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o47>)
-      >><matrix|<tformat|<table|<row|<cell|1-cos
-      <around*|(|\<vartheta\>|)>>|<cell|sin
-      <around*|(|\<vartheta\>|)>>|<cell|0>>|<row|<cell|-sin
-      <around*|(|\<vartheta\>|)>>|<cell|1-cos
-      <around*|(|\<vartheta\>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>27) >
-    <|unfolded-io>
-      for i:1 thru 3 do(
-
-      \ \ print(eq[1][i])
-
-      \ \ if(eq[1][i])#0 or (eq[2][i])#0 (eq[3][i])#0 then(
-
-      \ \ v:matrix(eq[1][i],eq[2][i],eq[3][i]),
-
-      \ \ \ \ \ \ \ \ \ \ return(v)
-
-      )
-
-      )
-    <|unfolded-io>
-      \;
-
-      incorrect syntax: if is not an infix operator
-
-      rint(eq[1][i]) \ \ if(
-
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ^
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>42) >
-    <|unfolded-io>
-      v:matrix([1-cos (theta)], [-sin (theta)], [0])
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o42>)
-      >><matrix|<tformat|<table|<row|<cell|1-cos
-      <around*|(|\<vartheta\>|)>>>|<row|<cell|-sin
-      <around*|(|\<vartheta\>|)>>>|<row|<cell|0>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>43) >
-    <|unfolded-io>
-      norma:sqrt(transpose(v).v)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o43>)
-      >><sqrt|sin <around*|(|\<vartheta\>|)><rsup|2>+<around*|(|1-cos
-      <around*|(|\<vartheta\>|)>|)><rsup|2>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>44) >
-    <|unfolded-io>
-      v:v/norma
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o44>)
-      >><matrix|<tformat|<table|<row|<cell|<frac|1-cos
-      <around*|(|\<vartheta\>|)>|<sqrt|sin
-      <around*|(|\<vartheta\>|)><rsup|2>+<around*|(|1-cos
-      <around*|(|\<vartheta\>|)>|)><rsup|2>>>>>|<row|<cell|-<frac|sin
-      <around*|(|\<vartheta\>|)>|<sqrt|sin
-      <around*|(|\<vartheta\>|)><rsup|2>+<around*|(|1-cos
-      <around*|(|\<vartheta\>|)>|)><rsup|2>>>>>|<row|<cell|0>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>46) >
-    <|unfolded-io>
-      expand(transpose(v).v)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o46>)
-      >><frac|sin <around*|(|\<vartheta\>|)><rsup|2>|sin
-      <around*|(|\<vartheta\>|)><rsup|2>+cos
-      <around*|(|\<vartheta\>|)><rsup|2>-2*cos
-      <around*|(|\<vartheta\>|)>+1>+<frac|cos
-      <around*|(|\<vartheta\>|)><rsup|2>|sin
-      <around*|(|\<vartheta\>|)><rsup|2>+cos
-      <around*|(|\<vartheta\>|)><rsup|2>-2*cos
-      <around*|(|\<vartheta\>|)>+1>-<frac|2*cos
-      <around*|(|\<vartheta\>|)>|sin <around*|(|\<vartheta\>|)><rsup|2>+cos
-      <around*|(|\<vartheta\>|)><rsup|2>-2*cos
-      <around*|(|\<vartheta\>|)>+1>+<frac|1|sin
-      <around*|(|\<vartheta\>|)><rsup|2>+cos
-      <around*|(|\<vartheta\>|)><rsup|2>-2*cos
-      <around*|(|\<vartheta\>|)>+1>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>54) >
-    <|unfolded-io>
-      eqs:eq.matrix([a],[b],[c])
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o54>)
-      >><matrix|<tformat|<table|<row|<cell|b*sin
-      <around*|(|\<vartheta\>|)>+a*<around*|(|1-cos
-      <around*|(|\<vartheta\>|)>|)>>>|<row|<cell|b*<around*|(|1-cos
-      <around*|(|\<vartheta\>|)>|)>-a*sin
-      <around*|(|\<vartheta\>|)>>>|<row|<cell|0>>>>>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>62) >
-    <|unfolded-io>
-      solve([eqs[1][1]=0,eqs[2][1]=0,eqs[3][1]=0])
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o62>)
-      >><around*|[|<around*|[|b=0,\<vartheta\>=<with|math-font-family|rm|%r5>,a=0|]>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>58) >
-    <|unfolded-io>
-      eqs[3][1]
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o58>)
-      >>0>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>63) >
-    <|unfolded-io>
-      myColspace(R)
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o63>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
-      <around*|(|\<vartheta\>|)>>>|<row|<cell|sin
-      <around*|(|\<vartheta\>|)>>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|-sin
-      <around*|(|\<vartheta\>|)>>>|<row|<cell|cos
-      <around*|(|\<vartheta\>|)>>>|<row|<cell|0>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>64) >
-    <|unfolded-io>
-      getAxis(R)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o64>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>,1,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>78) >
-    <|unfolded-io>
-      v:expand(trigreduce(expand(nullspace(ident(3)-R))))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|Proviso:
-      ><math-up|notequal><around*|(|1-cos
-      <around*|(|\<vartheta\>|)>,0|)>\<wedge\><math-up|notequal><around*|(|sin
-      <around*|(|\<vartheta\>|)><rsup|2>+cos
-      <around*|(|\<vartheta\>|)><rsup|2>-2*cos
-      <around*|(|\<vartheta\>|)>+1,0|)>>>
-
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o78>)
-      >><math-up|span><around*|(|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|2-2*cos
-      <around*|(|\<vartheta\>|)>>>>>>|)>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>79) >
-    <|unfolded-io>
-      v:args(v)
-    <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o79>)
-      >><around*|[|<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|2-2*cos
-      <around*|(|\<vartheta\>|)>>>>>>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>75) >
-    <|unfolded-io>
-      norma:sqrt(transpose(v).v)
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o75>)
-      >>2-2*cos <around*|(|\<vartheta\>|)>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>76) >
-    <|unfolded-io>
-      axes:v/norma
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o76>)
-      >><matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>>>
-    </unfolded-io>
-
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>77) >
+      <with|color|red|(<with|math-font-family|rm|%i>51) >
     <|input>
       \;
     </input>
