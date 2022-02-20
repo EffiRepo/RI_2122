@@ -557,48 +557,69 @@ B[j,i]:B[i,j]
 ),
 return(B)
 )$
-gradient(varp,n):=block([variables:[],M,symbols:[v,a]],
+
+  
+gradient(varp):=block([variables:[],M,v,a,dof:[],nMax:0,idx:0],
+  n:size(varp)[2],
+  if not emptyp(varp) then(
   for i:1 thru n do(
-    if part(varp[i],0)#v then 
-    (variables:append(variables,[varp[i]])
+    if part(varp[i],1)=end then (variables:append(variables,[varp[i]]),
+                          dof:append(dof,[length(dof)+1]))
+    elseif part(varp[i],0)=q then 
+    (
+    variables:append(variables,[varp[i]]),
+    dof:append(dof,[part(varp[i],1)])
     )
+    elseif part(varp[i],0)=v then
+    (
+    variables:append(variables,[subvar(q,part(varp[i],1))]),
+    dof:append(dof,[part(varp[i],1)])
+     )
+    
   ),
   variables:flatten(variables),
-  n:length(variables),
-  M:zeromatrix(n,2),
+  nMax:lmax(dof),
+  M:zeromatrix(nMax,2),
   for i:1 thru n do(
-    for j:1 thru 2 do(
-        if part(varp[i],1)#end then(
-        if j=1 then M[i][j]:v[part(varp[i],1)],
-        if j=2 then M[i][j]:a[part(varp[i],1)]
+         idx:part(varp[i],1),
+        if idx#end then(
+         M[idx][1]:v[idx],
+         M[idx][2]:a[idx]
         )
-        else(if j=1 then M[i][j]:v,
-        if j=2 then M[i][j]:a
+        elseif idx=end then(
+         M[i][1]:v[varp[i]],
+         M[i][2]:a[varp[i]]
         )
-      )
+  ))
+  else(
+    M:zeromatrix(1,2)   
   ),
   return(M)
   )$
+  
   derivate(f):=block(
         [df:0,varp:[],sizeVar:0,derivSym:zeromatrix(1,1),var:0,index:0,symb:0,partswitch:true],
         varp:unique(flatten([exprbreak(f,1)])),
         sizeVar:length(varp),
         for i:1 thru sizeVar do(
-          if not (subvarp(varp[i]) or symbolp(varp[i]) or part(varp[i],0)=q or part(varp[i],0)=v) then varp[i]:[]
+          if numberp(varp[i]) then varp[i]:[]
+          elseif not ((subvarp(varp[i]) or symbolp(varp[i])) 
+                      and (part(varp[i],0)=q or part(varp[i],0)=v) 
+                      or part(varp[i],0)=end ) then varp[i]:[]
         ),
          varp:flatten(varp),
          sizeVar:length(varp),
-         derivSym:gradient(varp,sizeVar),
+         derivSym:gradient(varp),
           for i:1 thru sizeVar do(
              var:varp[i],
              index:part(var,1),
              symb:part(var,0),
              if index#end then(
-             if symb=q then df:df+diff(f,var)*derivSym[i,1]
-             elseif symb=v then df:df+diff(f,var)*derivSym[i,2])
+             if symb=q then df:df+diff(f,var)*derivSym[index,1]
+             elseif symb=v then df:df+diff(f,var)*derivSym[index,2])
              else(
-                 if var=q then df:df+diff(f,var)*v
-                 elseif var=v then df:df+diff(f,var)*a
+                 if var=q then df:df+diff(f,var)*derivSym[i,1]
+                 elseif var=v then df:df+diff(f,var)*derivSym[i,2]
                 )
         ),
         return(df)
