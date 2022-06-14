@@ -536,6 +536,90 @@ II:matrix([x[i],0,0],
 II:subst(j,i,II),
 return(II)
 )$
+grad(expr):=block(
+  [var:[],i,n,idx,l:0,const:[q,v,x,y,z,theta,phi,omega],J,f:[]],
+  f:flatten(append(f,[expr])),
+  l:length(f),
+  for i:1 thru l do (
+    if subvarp(f[i]) then (
+          if member(part(f[i],0),const)then 
+             (var:append(var,[f[i]]))
+          )
+    elseif member(f[i],const) then (
+          if symbolp(f[i]) then(
+              var:append(var,[f[i]])
+          )
+          elseif lowercasep(string(f[i])) then(
+                 var:append(var,[f[i]])
+           )
+          )
+  ),
+  var:flatten(var),
+  n: length(var),
+  if n=1 and not subvarp(var[1]) then(
+
+   if member(var[1],[q,v,x,y,z]) then(
+       J:matrix([v,a])
+   )
+   elseif member(var[1],[theta,phi,omega]) then(
+      J:matrix([omega,alpha])
+   )
+  )
+  else(
+      J:zeromatrix(n,2),
+      for i:1 thru n do (
+        if subvarp(var[i]) then (
+          idx:part(var[i],1),
+          if part(var[i],0)=q or part(var[i],0)=v then(
+            J[i,1]:v[idx],
+            J[i,2]:a[idx]
+          )
+          elseif part(var[i],0)=theta or part(var[i],0)=omega then(
+            J[i,1]:omega[idx],
+            J[i,2]:alpha[idx]
+          )
+        )
+        else(
+            J[i,1]:v[var[i]],
+            J[i,2]:a[var[i]]
+        )
+      )
+  ),
+  return([J,var])
+)$
+derivate(f):=block(
+  [df:0,varp:[],sizeVar:0,derivSym:zeromatrix(1,1),
+   var:0,index:0,symb:0,partswitch:true,J,vars:[]],
+  varp:unique(flatten([exprbreak(f,1)])),
+  sizeVar:length(varp),
+  for i:1 thru sizeVar do(
+    if numberp(varp[i]) then varp[i]:[]
+    elseif not ((subvarp(varp[i]) or symbolp(varp[i])) 
+                and (part(varp[i],0)=q or part(varp[i],0)=v) 
+                or part(varp[i],0)=end) then (varp[i]:[])
+  ),
+   varp:flatten(varp),
+   derivSym:grad(varp),
+   J:grad(varp)[1],
+   vars:grad(varp)[2],
+   sizeVar:length(vars),
+   for i:1 thru sizeVar do(
+       var:vars[i],
+       if symbolp(var) then(
+         if member(var,[omega,v]) then (df:df+diff(f,var)*J[i,2])
+         elseif member(var,[q,phi,x,y,z,theta]) then
+             df:df+diff(f,var)*J[i,1]
+       )else(
+       index:part(var,1),
+       symb:part(var,0),
+       if member(symb,[q,x,y,z,phi,theta]) then 
+           df:df+diff(f,var)*J[i,1]
+       elseif member(symb,[v,omega]) then 
+           df:df+diff(f,var)*J[i,2]
+       )    
+  ),
+  return(df)         
+)$
 baricentro(row):=block(
 [bc],
 bc:addrow(addcol(ident(3),transpose(row)),[0,0,0,1]),
@@ -558,72 +642,7 @@ B[j,i]:B[i,j]
 return(B)
 )$
 
-  
-gradient(varp):=block([variables:[],M,v,a,dof:[],nMax:0,idx:0],
-  n:size(varp)[2],
-  if not emptyp(varp) then(
-  for i:1 thru n do(
-    if part(varp[i],1)=end then (variables:append(variables,[varp[i]]),
-                          dof:append(dof,[length(dof)+1]))
-    elseif part(varp[i],0)=q then 
-    (
-    variables:append(variables,[varp[i]]),
-    dof:append(dof,[part(varp[i],1)])
-    )
-    elseif part(varp[i],0)=v then
-    (
-    variables:append(variables,[subvar(q,part(varp[i],1))]),
-    dof:append(dof,[part(varp[i],1)])
-     )
-    
-  ),
-  variables:flatten(variables),
-  nMax:lmax(dof),
-  M:zeromatrix(nMax,2),
-  for i:1 thru n do(
-         idx:part(varp[i],1),
-        if idx#end then(
-         M[idx][1]:v[idx],
-         M[idx][2]:a[idx]
-        )
-        elseif idx=end then(
-         M[i][1]:v[varp[i]],
-         M[i][2]:a[varp[i]]
-        )
-  ))
-  else(
-    M:zeromatrix(1,2)   
-  ),
-  return(M)
-  )$
-  
-  derivate(f):=block(
-        [df:0,varp:[],sizeVar:0,derivSym:zeromatrix(1,1),var:0,index:0,symb:0,partswitch:true],
-        varp:unique(flatten([exprbreak(f,1)])),
-        sizeVar:length(varp),
-        for i:1 thru sizeVar do(
-          if numberp(varp[i]) then varp[i]:[]
-          elseif not ((subvarp(varp[i]) or symbolp(varp[i])) 
-                      and (part(varp[i],0)=q or part(varp[i],0)=v) 
-                      or part(varp[i],0)=end ) then varp[i]:[]
-        ),
-         varp:flatten(varp),
-         sizeVar:length(varp),
-         derivSym:gradient(varp),
-          for i:1 thru sizeVar do(
-             var:varp[i],
-             index:part(var,1),
-             symb:part(var,0),
-             if index#end then(
-             if symb=q then df:df+diff(f,var)*derivSym[index,1]
-             elseif symb=v then df:df+diff(f,var)*derivSym[index,2])
-             else(
-                 if var=q then df:df+diff(f,var)*derivSym[i,1]
-                 elseif var=v then df:df+diff(f,var)*derivSym[i,2]
-                )
-        ),
-        return(df)
- )$
+
  matrixDot(m):=block([sizeM:size(m),dotM:zerofor(m)],
   for i:1 thru sizeM[1] do (
   for j:1 thru sizeM[2] do(
@@ -684,6 +703,27 @@ for i:1 thru size(Q)[2] do (
 ),if flag=1 then stampa(rename(T,0),rename(U,0),rename(Ttot,0),rename(Utot,0),size(Q)[2]),
    return([Ttot,Utot])
    )$
+
+euleroLagrange(DH,M,F,u,Trsz):=block(
+    [T,U,l,dFdq,dldq,dldv,dtdldv,eq:[],solEL:[],a,v,q],
+    /*T:energiacinetica,U:energiapotenzialegravitazionale*/
+    /*F:attritostatico,dLdq:derivatadiLrispettoq*/
+    /*dLddq:derivatadiLrispettoaqpunto,e:energia*/
+    /*q:variabilidigiunto*/
+    /*EL:equazionieulerolagrange*/
+    [T,U]:energia(DH,M,Trsz,0),
+    l:T-U,
+    dof:size(DH)[1],
+    for i:1 thru dof do(
+    dldv:diff(l,v[i]),
+    dldq:diff(l,q[i]),
+    dFdv:diff(F,v[i]),
+    dtdldv:derivate(dldv),
+    eq:append(eq,dtdldv-dldq+dFdv-u[i]),
+    solEL:append(solEL,solve(eq[i],a[i]))
+    ),
+    return(rename([eq,solEL],0))
+)$
 /********************UTILS*************************/
 /*Data una espressione determinare le sue parti*/
 exprbreak(expr,flag):=block(
