@@ -629,7 +629,7 @@ formaQuad(func,n):=block(
 [B],
 B:zeromatrix(n,n),
 /*Derivoduevolte:ottengoiterminiquadraticinellevelocità*/
-for k:1thru n do(
+for k:1 thru n do(
 B[k,k]:diff(func,v[k],2)),
 /*Derivoiterminimisti:*/
 /*ottengoiterminisopraesottoladiagonaleprincipale.*/

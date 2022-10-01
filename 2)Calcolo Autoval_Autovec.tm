@@ -1,4 +1,4 @@
-<TeXmacs|1.99.18>
+<TeXmacs|2.1.2>
 
 <style|<tuple|generic|italian|maxima>>
 
@@ -81,8 +81,6 @@
 
       \ \ \ \ \ ),
 
-      /*Scalo le colonne per una loro componente non nulla*/ \ \ \ \ \ \ \ 
-
       \ \ \ \ cs:args(cs),
 
       \ \ \ \ return(cs)
@@ -153,6 +151,8 @@
 
       \ \ \ \ \ ),\ 
 
+      /*Scalo le colonne per una loro componente non nulla*/ \ \ \ \ \ \ \ 
+
       \ \ \ \ \ v:colsimp(v),
 
       \ \ \ \ \ return([map(rhs,eigs),v])
@@ -161,20 +161,20 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
     <|unfolded-io>
       A:matrix([2,1,0],[0, 1, 0],[0,0,2])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
       >><matrix|<tformat|<table|<row|<cell|2>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|2>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>5) >
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
       myEigens(A)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
       >><around*|[|<around*|[|1,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-1>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>|]>|]>>>
     </unfolded-io>
 
@@ -185,11 +185,11 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>6) >
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
       eigenvectors(A)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><around*|[|<around*|[|<around*|[|1,2|]>,<around*|[|1,2|]>|]>,<around*|[|<around*|[|<around*|[|1,-1,0|]>|]>,<around*|[|<around*|[|1,0,0|]>,<around*|[|0,0,1|]>|]>|]>|]>>>
     </unfolded-io>
 

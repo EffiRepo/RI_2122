@@ -1,11 +1,9 @@
-<TeXmacs|1.99.18>
+<TeXmacs|2.1.2>
 
-<style|<tuple|generic|italian|maxima>>
+<style|<tuple|generic|italian|framed-session|maxima>>
 
 <\body>
-  <\doc-data|<doc-title|\UProcedure\U>>
-    \;
-  </doc-data|<\doc-subtitle>
+  <doc-data|<doc-title|\UProcedure\U>|<\doc-subtitle>
     Calcolo Vettoriale in <math|<with|font|Bbb|R<rsup|3>>> e Rotazioni in
     <math|<with|font|Bbb|R<rsup|2>>>
 
@@ -94,7 +92,7 @@
       AxB:vect_prod(A,B)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
-      >><around*|[|<around*|(|a<rsub|1>*b<rsub|2>-b<rsub|1>*a<rsub|2>|)>*e<rsub|z>+<around*|(|b<rsub|1>*a<rsub|3>-a<rsub|1>*b<rsub|3>|)>*e<rsub|y>+<around*|(|a<rsub|2>*b<rsub|3>-b<rsub|2>*a<rsub|3>|)>*e<rsub|x>,<math-bf|false>|]>>>
+      >><around*|[|a<rsub|1>*b<rsub|2>*e<rsub|z>-b<rsub|1>*a<rsub|2>*e<rsub|z>-a<rsub|1>*b<rsub|3>*e<rsub|y>+b<rsub|1>*a<rsub|3>*e<rsub|y>+a<rsub|2>*b<rsub|3>*e<rsub|x>-b<rsub|2>*a<rsub|3>*e<rsub|x>,<math-bf|false>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -114,7 +112,9 @@
 
       let(B[3,1],alpha*A[3,1])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >>b<rsub|1>\<longrightarrow\>A<rsub|1,1>*\<alpha\>>>
 
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
@@ -147,10 +147,17 @@
     <|unfolded-io>
       vect_prod(A, B)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><around*|[|0,<math-bf|true>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>10) >
+    <|unfolded-io>
+      vect_prod<around*|(|matrix([1.5],[theta*sqrt<around*|(|2|)>],[8.4]),matrix([7.5],[9.1],[%pi])|)>
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+      >><around*|[|-<frac|375*2<rsup|<frac|3|2>>*\<vartheta\>*e<rsub|z>-1365*e<rsub|z>+150*\<pi\>*e<rsub|y>-6300*e<rsub|y>-25*2<rsup|<frac|5|2>>*\<pi\>*\<vartheta\>*e<rsub|x>+7644*e<rsub|x>|100>,<math-bf|false>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -160,9 +167,9 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>10) >
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
     <|input>
-      anticomm(A,C):=block(
+      anticomm(A,C):=block(<around*|[|AxC,CxA,cond1,cond2|]>,
 
       /*Definisco i due prodotti vettoriali*/
 
@@ -170,33 +177,64 @@
 
       CxA:vect_prod(C,A)[1],print("CxA = ",CxA),
 
-      if (mySimp(AxC) = mySimp(-CxA)) then true else false
+      cond1:mySimp<around|(|AxC|)> = mySimp<around|(|CxA|)>,
+
+      cond2:mySimp<around*|(|AxC|)>=mySimp<around*|(|-CxA|)>,
+
+      if <around|(|cond1|)> then <around*|(|print<around*|(|"AxC=CxA"|)>|)>
+
+      else if<around*|(|cond2|)> then print<around*|(|"AxC=-CxA"|)>
 
       )$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>11) >
+      <with|color|red|(<with|math-font-family|rm|%i>12) >
     <|unfolded-io>
       C:matrix([c[1]],[c[2]],[c[3]])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
       >><matrix|<tformat|<table|<row|<cell|c<rsub|1>>>|<row|<cell|c<rsub|2>>>|<row|<cell|c<rsub|3>>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
       anticomm(A,C)
     <|unfolded-io>
       <math|<with|math-display|true|<text|AxC =
-      ><around*|(|a<rsub|1>*c<rsub|2>-c<rsub|1>*a<rsub|2>|)>*e<rsub|z>+<around*|(|c<rsub|1>*a<rsub|3>-a<rsub|1>*c<rsub|3>|)>*e<rsub|y>+<around*|(|a<rsub|2>*c<rsub|3>-c<rsub|2>*a<rsub|3>|)>*e<rsub|x>>>
+      >a<rsub|1>*c<rsub|2>*e<rsub|z>-c<rsub|1>*a<rsub|2>*e<rsub|z>-a<rsub|1>*c<rsub|3>*e<rsub|y>+c<rsub|1>*a<rsub|3>*e<rsub|y>+a<rsub|2>*c<rsub|3>*e<rsub|x>-c<rsub|2>*a<rsub|3>*e<rsub|x>>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|CxA =
+      >-<around*|(|a<rsub|1>*c<rsub|2>*e<rsub|z>-c<rsub|1>*a<rsub|2>*e<rsub|z>-a<rsub|1>*c<rsub|3>*e<rsub|y>+c<rsub|1>*a<rsub|3>*e<rsub|y>+a<rsub|2>*c<rsub|3>*e<rsub|x>-c<rsub|2>*a<rsub|3>*e<rsub|x>|)>>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|AxC=-CxA >>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      >AxC=-CxA >>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
+    <|unfolded-io>
+      anticomm<around*|(|matrix([1.5],[theta*sqrt<around*|(|2|)>],[8.4]),matrix([7.5],[9.1],[%pi])|)>
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|AxC =
+      >-<frac|375*2<rsup|<frac|3|2>>*\<vartheta\>*e<rsub|z>-1365*e<rsub|z>+150*\<pi\>*e<rsub|y>-6300*e<rsub|y>-25*2<rsup|<frac|5|2>>*\<pi\>*\<vartheta\>*e<rsub|x>+7644*e<rsub|x>|100>>>
 
       <math|<with|math-display|true|<text|CxA =
-      ><around*|(|c<rsub|1>*a<rsub|2>-a<rsub|1>*c<rsub|2>|)>*e<rsub|z>+<around*|(|a<rsub|1>*c<rsub|3>-c<rsub|1>*a<rsub|3>|)>*e<rsub|y>+<around*|(|c<rsub|2>*a<rsub|3>-a<rsub|2>*c<rsub|3>|)>*e<rsub|x>>>
+      ><frac|375*2<rsup|<frac|3|2>>*\<vartheta\>*e<rsub|z>-1365*e<rsub|z>+150*\<pi\>*e<rsub|y>-6300*e<rsub|y>-25*2<rsup|<frac|5|2>>*\<pi\>*\<vartheta\>*e<rsub|x>+7644*e<rsub|x>|100>>>
 
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
-      >><math-bf|true>>>
+      <math|<with|math-display|true|<text|AxC=-CxA >>>
+
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      >AxC=-CxA >>>
     </unfolded-io>
 
     <section|Matrici di Rotazione>
@@ -213,7 +251,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>15) >
     <|input>
       rot2(alpha):=mySimp(matrix([cos(alpha), -sin(alpha)],[sin(alpha),
       cos(alpha)]))$
@@ -274,14 +312,13 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
+      <with|color|red|(<with|math-font-family|rm|%i>16) >
     <|unfolded-io>
-      R[1]:rot2(alpha[1]); R[2]:rot2(alpha[2]);
-      R[1+2]:rot2(alpha[1]+alpha[2])
+      R[1]:rot2(alpha[1]); R[2]:rot2(alpha[2]); R[12]:rot2(alpha[1]+alpha[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\><rsub|1>|)>>|<cell|-sin
       <around*|(|\<alpha\><rsub|1>|)>>>|<row|<cell|sin
@@ -290,7 +327,7 @@
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\><rsub|2>|)>>|<cell|-sin
       <around*|(|\<alpha\><rsub|2>|)>>>|<row|<cell|sin
@@ -299,7 +336,7 @@
 
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\><rsub|2>+\<alpha\><rsub|1>|)>>|<cell|-sin
       <around*|(|\<alpha\><rsub|2>+\<alpha\><rsub|1>|)>>>|<row|<cell|sin
@@ -308,11 +345,11 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>17) >
+      <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|unfolded-io>
       rot2(0.4*sqrt(3))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|<frac|2*<sqrt|3>|5>|)>>|<cell|-sin
       <around*|(|<frac|2*<sqrt|3>|5>|)>>>|<row|<cell|sin
@@ -326,11 +363,11 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
     <|unfolded-io>
-      if R[1+2] = trigreduce(R[1].R[2]) then true else false
+      if R[12] = trigreduce(R[1].R[2]) then true else false
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
       >><math-bf|true>>>
     </unfolded-io>
 
@@ -352,51 +389,51 @@
     che permette di tornare indietro.\ 
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>19) >
+      <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|input>
       inverse_check(alpha):=block(check1:false, check2:false, check3:false,
 
-      /*Definiamo p, ph, R, Rt*/
+      print("Definiamo p, ph, R, Rt"),
 
       ph:matrix([x[h]],[y[h]]),
 
-      R:rot2(alpha), print("R(alpha) =", R),
+      R:rot2(alpha), print("R(",alpha,") =", R),
 
-      Rt:transpose(R), print("R(alpha)^T =", Rt),
+      Rt:transpose(R), print("R(",alpha,")^T =", Rt),
 
       p:R.ph, print("p = ",p),
 
-      /*Definisco prodotto matriciale R.Rt*/
+      print("Definisco prodotto matriciale R.Rt"),
 
       R_Rt:trigsimp(R.Rt),
 
-      /*Controllo che la trasposta è l'inversa di R*/
+      print("Controllo che la trasposta è l'inversa di R"),
 
       if expand(trigreduce((R(alpha).Rt))) = matrix([1,0],[0,1]) then\ 
 
-      \ \ \ check1:true, print("R(alpha) . R(alpha)^T =",R_Rt),
+      \ \ \ check1:true, print("R(",alpha,") . R(",alpha,")^T =",R_Rt),
 
-      /*Definisco R(-alpha)*/
+      print("Definisco R(",-alpha,")"),
 
-      Ra: rot2(-alpha), print("R(-alpha) =", Ra),
+      Ra: rot2(-alpha), print("R(",-alpha,") =", Ra),
 
-      /*Definisco prodotto matriciale R.Rt*/
+      print("Definisco prodotto matriciale R.Rt"),
 
       R_Ra:trigsimp(R.Ra),
 
-      /*Controllo che la rotazione opposta è l'inversa di R*/
+      print("Controllo che la rotazione opposta è l'inversa di R"),
 
       if expand(trigreduce((R(-alpha).R(alpha)))) = matrix([1,0],[0,1]) then\ 
 
-      \ \ \ check2:true, print("R(alpha) . R(-alpha) =",R_Ra),
+      \ \ \ check2:true, print("R(",alpha,") . R(",-alpha,") =",R_Ra),
 
-      /*Proviamo che possiamo passare da un S.d.R. all'altro*/
+      print("Proviamo che possiamo passare da un S.d.R. all'altro"),
 
       phh: trigsimp(Ra.p),
 
       if (phh[1] = ph) then
 
-      \ \ check3: true, print("R(-alpha) . p = ", phh),\ 
+      \ \ check3: true, print("R(",-alpha,") . p = ", phh),\ 
 
       if ((check1 = check2) and (check1 = check3)) then
 
@@ -406,51 +443,162 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
     <|unfolded-io>
       inverse_check(alpha)$
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|R(alpha) =
+      \ <math|<with|math-display|true|<text|Definiamo p, ph, R, Rt >>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|R( >\<alpha\><text|) =
       ><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\>|)>>|<cell|-sin
       <around*|(|\<alpha\>|)>>>|<row|<cell|sin
       <around*|(|\<alpha\>|)>>|<cell|cos <around*|(|\<alpha\>|)>>>>>>>>
 
-      \;
-
-      \ <math|<with|math-display|true|<text|R(alpha)<rsup|T> =
+      <math|<with|math-display|true|<text|R( >\<alpha\><text|)<rsup|T> =
       ><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\>|)>>|<cell|sin <around*|(|\<alpha\>|)>>>|<row|<cell|-sin
       <around*|(|\<alpha\>|)>>|<cell|cos <around*|(|\<alpha\>|)>>>>>>>>
 
-      \;
-
-      \ <math|<with|math-display|true|<text|p =
+      <math|<with|math-display|true|<text|p =
       ><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\>|)>*x<rsub|h>-sin
       <around*|(|\<alpha\>|)>*y<rsub|h>>>|<row|<cell|cos
       <around*|(|\<alpha\>|)>*y<rsub|h>+sin
       <around*|(|\<alpha\>|)>*x<rsub|h>>>>>>>>
 
-      <math|<with|math-display|true|<text|R(alpha) . R(alpha)<rsup|T> =
-      ><matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>>>
+      <math|<with|math-display|true|<text|Definisco prodotto matriciale R.Rt
+      >>>
 
-      <math|<with|math-display|true|<text|R(-alpha) =
+      \;
+
+      \ <math|<with|math-display|true|<text|Controllo che la trasposta è
+      l'inversa di R >>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|R( >\<alpha\>*<text|) . R(
+      >\<alpha\><text|)<rsup|T> = ><matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>>>
+
+      <math|<with|math-display|true|<text|Definisco R( >-\<alpha\><text|) >>>
+
+      <math|<with|math-display|true|<text|R( >-\<alpha\><text|) =
       ><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<alpha\>|)>>|<cell|sin <around*|(|\<alpha\>|)>>>|<row|<cell|-sin
       <around*|(|\<alpha\>|)>>|<cell|cos <around*|(|\<alpha\>|)>>>>>>>>
 
-      <math|<with|math-display|true|<text|R(alpha) . R(-alpha) =
-      ><matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>>>
-
-      <math|<with|math-display|true|<text|R(-alpha) . p =
-      ><matrix|<tformat|<table|<row|<cell|x<rsub|h>>>|<row|<cell|y<rsub|h>>>>>>>>
+      <math|<with|math-display|true|<text|Definisco prodotto matriciale R.Rt
+      >>>
 
       \;
 
-      \ <math|<with|math-display|true|<text|Come volevasi dimostrare >>>
+      \ <math|<with|math-display|true|<text|Controllo che la rotazione
+      opposta è l'inversa di R >>>
+
+      <math|<with|math-display|true|<text|R( >\<alpha\><text|) . R(
+      >-\<alpha\><text|) = ><matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|Proviamo che possiamo passare da
+      un S.d.R. all'altro >>>
+
+      <math|<with|math-display|true|<text|R( >-\<alpha\><text|) . p =
+      ><matrix|<tformat|<table|<row|<cell|x<rsub|h>>>|<row|<cell|y<rsub|h>>>>>>>>
+
+      <math|<with|math-display|true|<text|Come volevasi dimostrare >>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>27) >
+    <|unfolded-io>
+      inverse_check(theta*sqrt<around*|(|2|)>*0.1534768)
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|Definiamo p, ph, R, Rt >>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|R(
+      >0.1534768*<sqrt|2>*\<vartheta\><text|) =
+      ><matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>|<cell|-sin
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>|<row|<cell|sin
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>|<cell|cos
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>>>>>>
+
+      <math|<with|math-display|true|<text|R(
+      >0.1534768*<sqrt|2>*\<vartheta\><text|)<rsup|T> =
+      ><matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>|<cell|sin
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>|<row|<cell|-sin
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>|<cell|cos
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>>>>>>
+
+      <math|<with|math-display|true|<text|p =
+      ><matrix|<tformat|<table|<row|<cell|x<rsub|h>*cos
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>-y<rsub|h>*sin
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>|<row|<cell|x<rsub|h>*sin
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>+y<rsub|h>*cos
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>>>>>>
+
+      <math|<with|math-display|true|<text|Definisco prodotto matriciale R.Rt
+      >>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|Controllo che la trasposta è
+      l'inversa di R >>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|R(
+      >0.1534768*<sqrt|2>*\<vartheta\>*<text|) . R(
+      >0.1534768*<sqrt|2>*\<vartheta\><text|)<rsup|T> =
+      ><matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>>>
+
+      <math|<with|math-display|true|<text|Definisco R(
+      >-0.1534768*<sqrt|2>*\<vartheta\><text|) >>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|R(
+      >-0.1534768*<sqrt|2>*\<vartheta\><text|) =
+      ><matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>|<cell|sin
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>|<row|<cell|-sin
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>|<cell|cos
+      <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>>>>>>
+
+      <math|<with|math-display|true|<text|Definisco prodotto matriciale R.Rt
+      >>>
+
+      \;
+
+      \ <math|<with|math-display|true|<text|Controllo che la rotazione
+      opposta è l'inversa di R >>>
+
+      <math|<with|math-display|true|<text|R(
+      >0.1534768*<sqrt|2>*\<vartheta\><text|) . R(
+      >-0.1534768*<sqrt|2>*\<vartheta\><text|) =
+      ><matrix|<tformat|<table|<row|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|1>>>>>>>
+
+      <math|<with|math-display|true|<text|Proviamo che possiamo passare da un
+      S.d.R. all'altro >>>
+
+      <math|<with|math-display|true|<text|R(
+      >-0.1534768*<sqrt|2>*\<vartheta\><text|) . p =
+      ><matrix|<tformat|<table|<row|<cell|x<rsub|h>>>|<row|<cell|y<rsub|h>>>>>>>>
+
+      <math|<with|math-display|true|<text|Come volevasi dimostrare >>>
+
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
+      >Come volevasi dimostrare >>>
     </unfolded-io>
 
     <\textput>
@@ -467,7 +615,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>21) >
+      <with|color|red|(<with|math-font-family|rm|%i>24) >
     <|input>
       isRot(R):=block(
 
@@ -501,13 +649,11 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>22) >
+      <with|color|red|(<with|math-font-family|rm|%i>25) >
     <|unfolded-io>
       R:rot2(sqrt(2)/2*alpha)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o22>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|<frac|\<alpha\>|<sqrt|2>>|)>>|<cell|-sin
       <around*|(|<frac|\<alpha\>|<sqrt|2>>|)>>>|<row|<cell|sin
@@ -516,18 +662,16 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>23) >
+      <with|color|red|(<with|math-font-family|rm|%i>26) >
     <|unfolded-io>
       isRot(R)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
       >><math-bf|true>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>24) >
+      <with|color|red|(<with|math-font-family|rm|%i>27) >
     <|input>
       \;
     </input>
@@ -536,6 +680,7 @@
 
 <\initial>
   <\collection>
+    <associate|info-flag|minimal>
     <associate|page-medium|papyrus>
   </collection>
 </initial>
