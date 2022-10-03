@@ -1,4 +1,4 @@
-<TeXmacs|1.99.18>
+<TeXmacs|2.1.2>
 
 <style|<tuple|generic|italian|maxima>>
 
@@ -367,34 +367,32 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>25) >
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
     <|unfolded-io>
-      M2:nautRot([z,x,y],ratsimp([%pi/3,%pi/6,0.1]))
+      M2:nautRot([z,x,y],ratsimp([%pi/3,%pi/6,0.1*sqrt(%pi/16)*0.754]))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
       >><matrix|<tformat|<table|<row|<cell|<frac|cos
-      <around*|(|<frac|1|10>|)>|2>-<frac|<sqrt|3>*sin
-      <around*|(|<frac|1|10>|)>|4>>|<cell|-<frac|3|4>>|<cell|<frac|sin
-      <around*|(|<frac|1|10>|)>|2>+<frac|<sqrt|3>*cos
-      <around*|(|<frac|1|10>|)>|4>>>|<row|<cell|<frac|sin
-      <around*|(|<frac|1|10>|)>|4>+<frac|<sqrt|3>*cos
-      <around*|(|<frac|1|10>|)>|2>>|<cell|<frac|<sqrt|3>|4>>|<cell|<frac|<sqrt|3>*sin
-      <around*|(|<frac|1|10>|)>|2>-<frac|cos
-      <around*|(|<frac|1|10>|)>|4>>>|<row|<cell|-<frac|<sqrt|3>*sin
-      <around*|(|<frac|1|10>|)>|2>>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>*cos
-      <around*|(|<frac|1|10>|)>|2>>>>>>>>
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|2>-<frac|<sqrt|3>*sin
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|4>>|<cell|-<frac|3|4>>|<cell|<frac|sin
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|2>+<frac|<sqrt|3>*cos
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|4>>>|<row|<cell|<frac|sin
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|4>+<frac|<sqrt|3>*cos
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|2>>|<cell|<frac|<sqrt|3>|4>>|<cell|<frac|<sqrt|3>*sin
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|2>-<frac|cos
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|4>>>|<row|<cell|-<frac|<sqrt|3>*sin
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|2>>|<cell|<frac|1|2>>|<cell|<frac|<sqrt|3>*cos
+      <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|2>>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>26) >
+      <with|color|red|(<with|math-font-family|rm|%i>9) >
     <|unfolded-io>
       isRot(M2)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><math-bf|true>>>
     </unfolded-io>
 
@@ -584,6 +582,7 @@
 <\initial>
   <\collection>
     <associate|page-medium|paper>
+    <associate|page-orientation|landscape>
   </collection>
 </initial>
 

@@ -284,10 +284,12 @@ expVect(A,t):=block(
 /*Definiamo una matrice vuota pronta a contenere vettori colonna di dimensione 3*/
       V:zeromatrix(sz[1],0),
       eigVec:myEigens(A)[2],
+      /*Controlliamo la presenza di eventuali blocchi di Jordan e andiamo in recovery usando expLaplace*/
+      if(length(eigVec)#3) then return(expLaplace(A,t)),
       for i:1 thru sz[1] do(
         V:addcol(V, eigVec[i])
       ),
-      Vi:invert(V),
+      Vi:invert(V), 
       D:Vi.A.V,
       expD:D,
       for i:1 thru sz[1] do(
@@ -302,7 +304,7 @@ normalize(v):=block(
 sz:size(v),
 /*Mi assicuro che v sia un vettore colonna*/
 if nonscalarp(v) and sz[2] = 1  then(
-  vv:ratsimp(v),  norm:sqrt(transpose(vv).vv),
+  vv:ratsimp(v),
   /*Applico una semplificazione numerica, dividendo il vettore per una sua componente non nulla, al fine di migliorare l'output*/
   norm:sqrt(transpose(vv).vv),
   u:ratsimp(vv/norm)
@@ -324,36 +326,14 @@ rodrigues(v,theta):=block(
  return((rodr))
 )$
 /*data una matrice verificare che è antisimmetrica*/
-isAsim(M):=block(
-[sz:size(M), t, i, j, diagCheck, sideCheck, b],
-/*Verifichiamo che la matrice inserita sia quadrata*/
-if sz[1]#sz[2] or sz[1] < 2 or sz[2] < 2 then error("Inserire una matrice quadrata"),
-/*Per verificare che una qualsiasi matrice m x n quadrata sia antisimmetrica usiamo una tecnica ricorsiva.*/
-/*caso base:*/
-if sz[1] = 2 then(
-/*Controllo che la diagonale sia tutta nulla*/
-  diagCheck: M[1,1] = M[2,2] and M[1,1] = 0,
-/*Controllo che gli elementi fuori diagonale
-  siano uguali a meno del segno*/
-  sideCheck: M[1,2] = -M[2,1],
-/*Uniamo le due condizioni necessarie*/
-  b: diagCheck and sideCheck,
-  return(is(b))
-) else (
-/*caso generale*/
-  j:1,
-  diagCheck: M[j,j] = 0,
-  for t:1 thru sz[1] do(
-/*Calcolo i = t mod(n)*/
-    i:remainder(t,sz[1]),
-    if i = 0 then i:n,
-    sideCheck: M[i,j] = -M[j,i],
-    b: diagCheck and sideCheck,
- /*Se la condizione è violata esco, altrimenti rilancio con la sottomatrice ottenuta cancellando la prima riga e la prima colonna*/
-    if b = false then return(b) else return(isAsim(submatrix(i,M,j)))
-  )
-)
+isAsim(S):=block(
+[st, sz: size(S), sum],
+if sz[1]#sz[2] then error("Inserire una matrice quadrata"),     
+st: transpose(S),
+if st = -S then return(true)
+else return(false)                  
 )$
+
 /*Data una matrice antisimmetrica S(v) determinare il vettore v*/
 getAsimVect(S):=block(
 [v:zeromatrix(3,1)],
