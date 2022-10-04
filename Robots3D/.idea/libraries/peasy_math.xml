@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="peasy-math">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/peasycam/peasy-math.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/peasycam/peasycam.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
