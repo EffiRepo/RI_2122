@@ -54,6 +54,7 @@ public class ProcessingMain extends PApplet {
     private int gomitoG;
     private float sumGrad;
     private boolean toShow=true;
+    private boolean warningShow;
 
     @Override
     public void settings() {
@@ -166,6 +167,7 @@ public class ProcessingMain extends PApplet {
         q3G = qGradient[2];
 
         background(187, 222, 251);
+
         /*
         GUI Init
         */
@@ -174,8 +176,19 @@ public class ProcessingMain extends PApplet {
         fill(255);
         stroke(0);
         strokeWeight(1);
-        text(TITLE,-80+width/2f,-400+height/2f);
+        textAlign(CENTER);
+        text(TITLE,width/2f,height/8f);
+           /*
+        Not Reachable Point
+         */
+        if(warningShow){
+            textSize(40);
+            fill(255,0,0,255);
+            textAlign(CENTER);
+            text("PUNTO NON RAGGIUNGIBILE",width/2f,height/4f);
+        }
         translate(width/2f,height/2f);
+
 
         /*
         Operational Space
@@ -339,17 +352,17 @@ public class ProcessingMain extends PApplet {
             toShow=!toShow;
 
         }else if(key == 'N'|| key=='n'){
-            kN+=0.01;
+            kN+=0.001;
         }else if(key == 'J'|| key=='j'){
-            kN-=0.01;
+            kN-=0.001;
         }else if(key == 'G'|| key=='g'){
-            kG+=0.01;
+            kG+=0.001;
         }else if(key == 'V'|| key=='v'){
-            kG-=0.01;
+            kG-=0.001;
         }else if(key == 'B'|| key=='b'){
-            kP+=0.01;
+            kP+=0.001;
         }else if(key == 'H'|| key=='h'){
-            kP-=0.01;
+            kP-=0.001;
         }
     }
     @Override
@@ -372,12 +385,13 @@ public class ProcessingMain extends PApplet {
                 sqrt(abs(pow(xpolso, 2)+pow(ypolso, 2)))>abs(link2-link1)) {
             target.getChild(0).setFill(color(118, 255, 3,50));
             target.getChild(1).setFill(color(118, 255, 3,50));
+            warningShow=false;
 
             println("Punto raggiungibile");
         } else {
             target.getChild(0).setFill(color(229, 57, 53,50));
             target.getChild(1).setFill(color(229, 57, 53,50));
-
+            warningShow=true;
             println("Punto non raggiungibile");
         }
 
@@ -421,13 +435,13 @@ public class ProcessingMain extends PApplet {
         float Q1=(s_12*yTarget+c_12*xTarget+link3*s_3*phi+ v *s_3-link3*c_3-link1*c_2-link2)/(link1*s_2);
         float Q2=-((link2*s_12+link1*s_1)*yTarget+(link2*c_12+link1*c_1)*xTarget+(link1*link3*s_23+link2*link3*s_3)*phi+((-link1*q2-link1*q1)*link3-link1*link3*q3)*s_23-link1*link3*c_23+((-link2*q2-q1*link2)*link3-link2*link3*q3)*s_3-link2*link3*c_3-2*link1*link2*c_2-link2*link2-link1*link1)/(link1*link2*s_2);
         float Q3=(s_1*yTarget+c_1*xTarget+(link3*s_23+link2*s_2)*phi+ v *s_23-link3*c_23+(-link2*q3-link2*q2-q1*link2)*s_2-link2*c_2-link1)/(link2*s_2);
-        if(abs(k*Q1)>0.01) {
+        if(abs(k*Q1)>0.001) {
             Oscilloscope.getInstance().addPoint("EN", Q1, 0);
         }
-        if(abs(k*Q2)>0.01) {
+        if(abs(k*Q2)>0.001) {
             Oscilloscope.getInstance().addPoint("EN", Q2, 1);
         }
-        if(abs(k*Q3)>0.01) {
+        if(abs(k*Q3)>0.001) {
             Oscilloscope.getInstance().addPoint("EN", Q3, 2);
         }
         q1=q1+k*Q1;
