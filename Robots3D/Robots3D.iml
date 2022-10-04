@@ -13,5 +13,7 @@
     <orderEntry type="library" name="peasy-math" level="project" />
     <orderEntry type="library" name="apache.commons.math3" level="project" />
     <orderEntry type="library" name="apache.ignite.slf4j" level="project" />
+    <orderEntry type="library" name="slf4j.nop" level="project" />
+    <orderEntry type="library" name="jboss.slf4j.logging" level="project" />
   </component>
 </module>

@@ -1,7 +1,12 @@
 package main;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import processing.core.PApplet;
+import processing.core.PShape;
 
+import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +14,9 @@ import static java.lang.Math.abs;
 import static main.Colors.*;
 import static processing.core.PApplet.*;
 import static processing.core.PConstants.CLOSE;
-import static processing.core.PConstants.PI;
+
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+
 public abstract class Robot implements PropertyChangeListener{
     // theta
     protected float[] q = new float[]{0, 0, 0, 0, 0, 0};
@@ -40,10 +45,12 @@ public abstract class Robot implements PropertyChangeListener{
     protected float a6 = 0f;
     protected float[] a = new float[]{a1, a2, a3, a4, a5, a6};
     protected int[][] ELBOW;
+    protected boolean start;
+    protected float[] theta = new float[]{0,0,0,0,0,0};
 
-    public abstract void setTable(float[] q, float[] d, float[] alpha, float[] a);
+    public abstract void setTable(float[] q);
     public float[][] getTable(){
-        return new float[][]{this.q, this.d, this.alpha, this.a};
+        return new float[][]{this.theta, this.d, this.alpha, this.a};
     }
     protected float[][] table;
     protected Reference frameZero;
@@ -57,7 +64,12 @@ public abstract class Robot implements PropertyChangeListener{
     protected int sphereRadius;
     protected int boxSize;
     protected boolean toShow;
+    protected float k = (float) 0.01;
+    protected float[] qRef;
     protected PApplet p3d;
+    protected PShape gripper;
+    protected static final Logger LOGGER = LoggerFactory.getLogger(Robot.class.getName());
+    protected static final int M  = 3;
     protected Robot(PApplet p3d){
         this.p3d = p3d;
         this.frameZero = new Reference(p3d);
@@ -65,25 +77,52 @@ public abstract class Robot implements PropertyChangeListener{
         baseColor = colorWrap(DARK_RED);
         baseR1 = 50;
         baseR2 = 50;
-        baseH = 30;
+        baseH = 15;
         sides = 20;
-        sphereRadius = 25;
-        boxSize = 40;
+        sphereRadius = 20;
+        boxSize = 20;
+        qRef = q.clone();
         robotColor = new int[]{colorWrap(ORANGE),colorWrap(MAGENTA)};
         this.toShow = true;
         table =  new float[][]{this.q, this.d, this.alpha, this.a};
         frames = new ArrayList<>();
         frames.add(frameZero);
     }
+
+    protected void loadGripper() {
+        File file = p3d.sketchFile("models/r6c.obj");
+        String objPath = file.getAbsolutePath();
+        gripper = p3d.loadShape(objPath);
+        gripper.scale(0.3f);
+        gripper.setFill(colorWrap(DARK_RED));
+    }
+
     protected void draw(){
         // set origin
         p3d.translate(frameZero.getOrigin().x,frameZero.getOrigin().y,frameZero.getOrigin().z);
-        //drawCylinder(sides, baseR1, baseR2, baseH);
+        p3d.fill(baseColor);
+        drawCylinder(sides, baseR1, baseR2, baseH);
         frameZero.show(toShow);
+        // draw robot
+        p3d.pushMatrix();
+        float[] qNew = qProp(qRef,k);
+        setTable(qNew);
+        for (int i = 0; i < q.length; i++) {
+            dh(table[0][i], table[1][i], table[2][i], table[3][i], i);
+        }
+        p3d.popMatrix();
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        String eventName = evt.getPropertyName();
+        switch (eventName){
+            case "QUPDATE" -> {
+                qRef = (float[]) evt.getNewValue();
+            }
+        }
+    }
     protected void drawCylinder( int sides, float r1, float r2, float h) {
-        p3d.fill(baseColor);
         p3d.noStroke();
         float angle = 360f / sides;
         float halfHeight = h / 2;
@@ -115,15 +154,51 @@ public abstract class Robot implements PropertyChangeListener{
         }
         p3d.endShape(CLOSE);
     }
+
     public int colorWrap(Colors color){
         int[] colorVector = color.getColor();
         return this.p3d.color(colorVector[0],colorVector[1],colorVector[2],colorVector[3]);
     }
-    protected abstract void dh(float theta, float d, float alpha, float a, int i);
+
+    protected void link(float theta, float d, float alpha, float a, boolean isTerm, boolean isHorz, float angle){
+        p3d.rotateZ(theta);
+        p3d.fill(colorWrap(VIOLET));
+        p3d.sphere(sphereRadius);
+        p3d.translate(0, 0, d/2);
+        p3d.pushMatrix();
+        p3d.fill(colorWrap(DARK_YELLOW));
+//        if(isHorz)
+//            p3d.rotateY(angle);
+        drawCylinder(sides, boxSize / 2f, boxSize / 2f, d);
+        p3d.popMatrix();
+        p3d.translate(0, 0, d/2);
+        if (isTerm){
+            p3d.fill(colorWrap(DARK_RED));
+            p3d.sphere(sphereRadius/2f);
+            p3d.shape(gripper);
+        } else {
+            p3d.fill(colorWrap(VIOLET));
+            p3d.sphere(sphereRadius);
+        }
+        p3d.rotateX(alpha);
+        p3d.translate(a/2, 0, 0);
+        p3d.pushMatrix();
+        if(isHorz)
+            p3d.rotateY(angle);
+        p3d.fill(colorWrap(DARK_YELLOW));
+        drawCylinder(sides, boxSize / 2f, boxSize / 2f, a);
+        p3d.popMatrix();
+        p3d.translate(a/2, 0, 0);
+    }
+
+    protected void dh(float theta, float d, float alpha, float a, int i){
+        if( i <= table[0].length  )
+            frames.add(i+1,new Reference(p3d));
+    }
 
     public float[] qProp(float[] qRef, float k) {
         float[] qNew = this.q;
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < qRef.length; i++) {
             float diff = qRef[i] - qNew[i];
             if (abs(diff) != 0) {
                 qNew[i] = qNew[i] + k * (diff);
@@ -131,6 +206,8 @@ public abstract class Robot implements PropertyChangeListener{
         }
         return qNew;
     }
+
+    protected abstract void reset();
 
     public float[] getQ() {
         return q;
@@ -159,13 +236,29 @@ public abstract class Robot implements PropertyChangeListener{
     public float[] getA() {
         return a;
     }
-
     public void setA(float[] a) {
         this.a = a;
     }
 
-    public void setTable(float[][] table) {
-        this.table = table;
+    protected void setTable(float[][] table){ this.table = table; }
+
+    public boolean isToShow() {
+        return toShow;
     }
 
+    public void setToShow(boolean toShow) {
+        this.toShow = toShow;
+    }
+
+    public float[] getTheta() {
+        return theta;
+    }
+    public void setTheta(float[] theta) {
+        this.theta = theta;
+    }
+    public void turnFrames(){
+        for (Reference r : frames){
+            r.show(!toShow);
+        }
+    }
 }

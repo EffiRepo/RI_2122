@@ -1,10 +1,16 @@
 package main;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import peasy.PeasyCam;
 import processing.core.PApplet;
 import processing.opengl.PGL;
 import processing.opengl.PGraphics3D;
 import processing.opengl.PJOGL;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 
 import static main.Colors.ACID_GREEN;
 import static main.Colors.MAGENTA;
@@ -14,9 +20,25 @@ public class Base3D extends PApplet {
     private final int bgColor = colorWrap(ACID_GREEN);
     private static final int NX = 1;
     private static final int NY = 1;
+    private float shifting = 2.2f;
+    private float[] qRef;
     PeasyCam[] cameras = new PeasyCam[NX * NY];
     private Robot robot;
+    PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
+    public void notifyPropertyChange(String propertyName, Object oldValue, Object newValue) {
+        /*
+         * Just a wrapper for the fire property change method.
+         */
+        changes.firePropertyChange(propertyName, oldValue, newValue);
+    }
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        changes.addPropertyChangeListener(l);
+    }
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        changes.removePropertyChangeListener(l);
+    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(Base3D.class.getName());
     public Base3D(){
         // empty constructor
     }
@@ -36,6 +58,7 @@ public class Base3D extends PApplet {
         rectMode(CENTER);
         ellipseMode(RADIUS);
         sphereDetail(30);
+        robot.loadGripper();
         /* From PeasyCam documentation */
         int padding = 10;
         int tileX = floor((width - padding));
@@ -93,6 +116,11 @@ public class Base3D extends PApplet {
 
     public void setRobot(Robot robot) {
         this.robot = robot;
+        this.qRef = robot.getQ().clone();
+        // assert there aren't any listeners on this robot instance
+        removePropertyChangeListener(this.robot);
+        // add new listener
+        addPropertyChangeListener(this.robot);
     }
 
     private void cameraSetup(PeasyCam camera){
@@ -138,12 +166,48 @@ public class Base3D extends PApplet {
         int[] colorVector = color.getColor();
         return color(colorVector[0],colorVector[1],colorVector[2],colorVector[3]);
     }
-    private float shifting = 0.2f;
-    private float k = (float) 0.01;
 
+    @Override
     public void keyPressed(){
+        qUpdate(key);
         switch(key){
-            case 1 ->
+            case 'r' -> { // show frames
+                robot.toShow = !robot.toShow;
+                robot.turnFrames();
+            }
+            case ENTER ->{// reset joints
+                robot.reset();
+            }
         }
+    }
+    private void qUpdate(char key) {
+        switch(key){
+            case '1' -> {
+                robot.qRef[0] = robot.getQ()[0] + shifting;
+            }
+            case '2' -> {
+                robot.qRef[1] = robot.getQ()[1] + shifting;
+            }
+            case '3' -> {
+                robot.qRef[2] = robot.getQ()[2] + shifting;
+            }
+            case '4' -> {
+                if(qRef.length >3)
+                    robot.qRef[3] = robot.getQ()[3] + shifting;
+            }
+            case '5' -> {
+                if(qRef.length >3)
+                    robot.qRef[4] = robot.getQ()[4] + shifting;
+            }
+            case '6' -> {
+                if(qRef.length >3)
+                    robot.qRef[5] = robot.getQ()[5] + shifting;
+            }
+            default -> {
+                LOGGER.info("default key");
+            }
+        }
+        notifyPropertyChange("QUPDATE",null,qRef);
+        LOGGER.info("{}",robot.getQ());
     }
 }
