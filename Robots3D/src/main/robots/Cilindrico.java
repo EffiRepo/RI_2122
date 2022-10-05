@@ -35,7 +35,7 @@ public class Cilindrico extends Robot {
         setD(new float[]{100, q[1], q[2]});
         setAlpha(new float[]{0, -PI / 2, 0});
         setA(new float[]{0, 0, 0});
-        setTable(qProp(qRef, kp));
+        setTable(new float[][]{theta, d, alpha, a});
     }
 
     @Override

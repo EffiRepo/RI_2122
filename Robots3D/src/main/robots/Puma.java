@@ -39,6 +39,7 @@ public class Puma extends Robot {
         setD(new float[]{100,0,0,80,0,60});
         setAlpha(new float[]{-PI/2,0,PI/2,-PI/2,PI/2,0});
         setA(new float[]{0,80,0,0,0,0});
-        setTable(qProp(qRef, kp));
+        setTable(new float[][]{theta,d,alpha,a});
+
     }
 }

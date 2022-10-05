@@ -40,6 +40,6 @@ public class Antropomorfo extends Robot {
         setD(new float[]{100,0,0});
         setAlpha(new float[]{PI/2,0,0});
         setA(new float[]{0,80,50});
-        setTable(qProp(qRef, kp));
+        setTable(new float[][]{theta, d, alpha, a});
     }
 }

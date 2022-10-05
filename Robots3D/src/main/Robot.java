@@ -1,5 +1,6 @@
 package main;
 
+import main.plot.Oscilloscope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import processing.core.PApplet;
@@ -212,6 +213,7 @@ public abstract class Robot implements PropertyChangeListener{
         for (int i = 0; i < qRef.length; i++) {
             float diff = qRef[i] - qNew[i];
             if (abs(diff) != 0) {
+                if(abs(diff) > 1e-3) Oscilloscope.getInstance().addPoint("E",diff,i);
                 qNew[i] = qNew[i] + k * (diff);
             }
         }
@@ -278,7 +280,7 @@ public abstract class Robot implements PropertyChangeListener{
     }
 
     public void setKp(float kp) {
-        this.kp = kp;
+        this.kp = (float) Math.min(Math.max(0.01, kp), 0.09);
     }
 
     public float[] getqRef() {

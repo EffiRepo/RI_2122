@@ -1,5 +1,6 @@
 package main;
 
+import main.plot.Oscilloscope;
 import main.robots.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ public class Base3D extends PApplet {
     private final int bgColor = colorWrap(ACID_GREEN);
     private static final int NX = 1;
     private static final int NY = 1;
+    private final Oscilloscope oscilloscope;
     private float shifting = 1.4f;
     private float dZ;
     private float dY;
@@ -31,6 +33,7 @@ public class Base3D extends PApplet {
     PeasyCam[] cameras = new PeasyCam[NX * NY];
     private Robot robot;
     PropertyChangeSupport changes = new PropertyChangeSupport(this);
+    private boolean showPlt=true;
 
     public void notifyPropertyChange(String propertyName, Object oldValue, Object newValue) {
         /*
@@ -52,6 +55,8 @@ public class Base3D extends PApplet {
     private int listSize;
     private int listIndex = 0;
     private Menu helper;
+    private Menu legend;
+
     public Base3D() {
         // empty constructor
         robotList.addAll(List.of(
@@ -61,6 +66,8 @@ public class Base3D extends PApplet {
                 )
         );
         listSize = robotList.size();
+        this.oscilloscope = Oscilloscope.getInstance();
+
     }
 
 
@@ -99,6 +106,13 @@ public class Base3D extends PApplet {
                 cameras[id].setViewport(cx, cy, cw, ch); // this is the key of this whole demo
             }
         }
+        /*
+        Plot Initialization
+         */
+        Oscilloscope.getInstance().addPlot("E",40,40,400,250);
+        Oscilloscope.getInstance().setPlotBuffer("E",6);
+        legend = new Menu(150,
+                30, this);
     }
 
     @Override
@@ -123,7 +137,9 @@ public class Base3D extends PApplet {
         // HUD
         cameras[0].beginHUD();
         // insert code here
-        helper.draw();
+        helper.drawHelper();
+        oscilloscope.drawPlots();
+        legend.drawPlotInfo(this.robot.q.length);
         cameras[0].endHUD();
 
         popMatrix();
@@ -212,8 +228,9 @@ public class Base3D extends PApplet {
             }
             case ENTER -> {// reset joints
                 robot.reset();
+                oscilloscope.resetPlot();
                 robot.getFrames().get(0).setOrigin(0, 0, -230);
-                notifyPropertyChange("QUPDATE", null, robot.qRef);
+//                notifyPropertyChange("QUPDATE", null, robot.qRef);
             }
             case CODED -> {
                 if (keyCode == UP) {
@@ -231,10 +248,17 @@ public class Base3D extends PApplet {
                 }
             }
             case 'h' -> helper.show();
-            case 'k' -> robot.setKp(robot.getKp()+0.1f);
-            case 'j' -> robot.setKp(robot.getKp()-0.1f);
-            case 'g' -> {/**/}
-            case 's' -> setRobot();
+            case 'k' -> robot.setKp(robot.getKp()+0.01f);
+            case 'j' -> robot.setKp(robot.getKp()-0.01f);
+            case 'g' -> {
+                legend.show();
+                oscilloscope.allVisible(showPlt);
+                showPlt=!showPlt;
+            }
+            case 's' -> {
+                setRobot();
+                oscilloscope.resetPlot();
+            }
             default -> {/**/}
         }
     }

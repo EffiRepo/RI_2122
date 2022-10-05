@@ -43,7 +43,7 @@ public class Cartesiano extends Robot {
         setD(q);
         setAlpha(new float[]{-PI/2,-PI/2,0});
         setA(new float[]{0,0,0});
-        setTable(qProp(qRef, kp));
+        setTable(new float[][]{theta, d, alpha, a});
     }
 
     @Override
