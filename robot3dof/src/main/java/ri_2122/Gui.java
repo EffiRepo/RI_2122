@@ -1,10 +1,7 @@
 package ri_2122;
 
-import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PGraphics;
 import processing.core.PShape;
-
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 

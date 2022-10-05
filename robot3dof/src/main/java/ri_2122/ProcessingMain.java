@@ -5,9 +5,7 @@ import org.slf4j.LoggerFactory;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PShape;
-
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class ProcessingMain extends PApplet {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProcessingMain.class.getSimpleName());

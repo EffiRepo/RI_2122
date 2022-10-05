@@ -4,7 +4,6 @@ import static ri_2122.Main.PROCESSING_MAIN;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-
 import java.util.*;
 
 public class Plot{

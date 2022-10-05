@@ -3,16 +3,7 @@ package ri_2122;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
-import java.util.List;
-
-import static ri_2122.Main.PROCESSING_MAIN;
 
 public class Oscilloscope {
     private static final Logger LOGGER = LoggerFactory.getLogger(Oscilloscope.class.getName());
