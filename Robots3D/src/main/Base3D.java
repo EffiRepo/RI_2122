@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import peasy.PeasyCam;
 import processing.core.PApplet;
+import processing.core.PVector;
 import processing.opengl.PGL;
 import processing.opengl.PGraphics3D;
 import processing.opengl.PJOGL;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
+import java.util.Arrays;
 
 import static main.Colors.ACID_GREEN;
 import static main.Colors.MAGENTA;
@@ -20,7 +20,12 @@ public class Base3D extends PApplet {
     private final int bgColor = colorWrap(ACID_GREEN);
     private static final int NX = 1;
     private static final int NY = 1;
-    private float shifting = 2.2f;
+    private float shifting = 1.4f;
+    private float dZ;
+    private float dY;
+    private float dX;
+
+
     private float[] qRef;
     PeasyCam[] cameras = new PeasyCam[NX * NY];
     private Robot robot;
@@ -32,21 +37,25 @@ public class Base3D extends PApplet {
          */
         changes.firePropertyChange(propertyName, oldValue, newValue);
     }
+
     public void addPropertyChangeListener(PropertyChangeListener l) {
         changes.addPropertyChangeListener(l);
     }
+
     public void removePropertyChangeListener(PropertyChangeListener l) {
         changes.removePropertyChangeListener(l);
     }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Base3D.class.getName());
-    public Base3D(){
+
+    public Base3D() {
         // empty constructor
     }
 
 
     @Override
-    public void settings(){
-        size(1280,720,P3D);
+    public void settings() {
+        size(1280, 720, P3D);
         pixelDensity(1);
         smooth(8);
     }
@@ -68,8 +77,8 @@ public class Base3D extends PApplet {
         int cw = tileX - padding;
         int ch = tileY - padding;
         // create new viewport for each camera
-        for(int y = 0; y < NY; y++){
-            for(int x = 0; x < NX; x++){
+        for (int y = 0; y < NY; y++) {
+            for (int x = 0; x < NX; x++) {
                 int id = y * NX + x;
                 int cx = offX + x * tileX;
                 int cy = offY + y * tileY;
@@ -80,7 +89,7 @@ public class Base3D extends PApplet {
     }
 
     @Override
-    public void draw(){
+    public void draw() {
         setGLGraphicsViewport(0, 0, width, height);
         background(colorWrap(MAGENTA));
         /*Render the scene*/
@@ -98,15 +107,15 @@ public class Base3D extends PApplet {
         /* RENDERING END */
         // HUD
         cameras[0].beginHUD();
-            // insert code here
+        // insert code here
         cameras[0].endHUD();
 
         popMatrix();
         popStyle();
     }
 
-    public void run(String className){
-        String[] processingArgs = {"main"+className};
+    public void run(String className) {
+        String[] processingArgs = {"main" + className};
         PApplet.runSketch(processingArgs, this);
     }
 
@@ -117,13 +126,17 @@ public class Base3D extends PApplet {
     public void setRobot(Robot robot) {
         this.robot = robot;
         this.qRef = robot.getQ().clone();
+        PVector origin = this.robot.getFrames().get(0).getOrigin();
+        dX = origin.x;
+        dY = origin.y;
+        dZ = origin.z;
         // assert there aren't any listeners on this robot instance
         removePropertyChangeListener(this.robot);
         // add new listener
         addPropertyChangeListener(this.robot);
     }
 
-    private void cameraSetup(PeasyCam camera){
+    private void cameraSetup(PeasyCam camera) {
 
         int[] viewport = camera.getViewport();
         int w = viewport[2];
@@ -151,8 +164,8 @@ public class Base3D extends PApplet {
         rotateZ(-PI / 2);
 
 
-
     }
+
     public void setGLGraphicsViewport(int x, int y, int w, int h) {
         /*From PeasyCam Documentation*/
         PGraphics3D pg = (PGraphics3D) this.g;
@@ -162,52 +175,54 @@ public class Base3D extends PApplet {
         pgl.scissor(x, y, w, h);
         pgl.viewport(x, y, w, h);
     }
-    public int colorWrap(Colors color){
+
+    public int colorWrap(Colors color) {
         int[] colorVector = color.getColor();
-        return color(colorVector[0],colorVector[1],colorVector[2],colorVector[3]);
+        return color(colorVector[0], colorVector[1], colorVector[2], colorVector[3]);
     }
 
     @Override
-    public void keyPressed(){
+    public void keyPressed() {
         qUpdate(key);
-        switch(key){
+        switch (key) {
             case 'r' -> { // show frames
                 robot.toShow = !robot.toShow;
                 robot.turnFrames();
             }
-            case ENTER ->{// reset joints
+            case ENTER -> {// reset joints
                 robot.reset();
+                notifyPropertyChange("QUPDATE", null, robot.qRef);
             }
+            case UP -> {
+                dZ += shifting*100;
+                robot.getFrames().get(0).setOrigin(dX,dY,dZ);
+            }
+            case DOWN -> {
+                dZ -= shifting*100;
+                robot.getFrames().get(0).setOrigin(dX,dY,dZ);
+            }
+            case LEFT -> {
+                dY += shifting*100;
+                robot.getFrames().get(0).setOrigin(dX,dY,dZ);
+            }
+            case RIGHT -> {
+                dY -= shifting*100;
+                robot.getFrames().get(0).setOrigin(dX,dY,dZ);
+            }
+            default -> {/**/}
         }
     }
+
     private void qUpdate(char key) {
-        switch(key){
-            case '1' -> {
-                robot.qRef[0] = robot.getQ()[0] + shifting;
-            }
-            case '2' -> {
-                robot.qRef[1] = robot.getQ()[1] + shifting;
-            }
-            case '3' -> {
-                robot.qRef[2] = robot.getQ()[2] + shifting;
-            }
-            case '4' -> {
-                if(qRef.length >3)
-                    robot.qRef[3] = robot.getQ()[3] + shifting;
-            }
-            case '5' -> {
-                if(qRef.length >3)
-                    robot.qRef[4] = robot.getQ()[4] + shifting;
-            }
-            case '6' -> {
-                if(qRef.length >3)
-                    robot.qRef[5] = robot.getQ()[5] + shifting;
-            }
-            default -> {
-                LOGGER.info("default key");
+        String[] keySet = new String[]{"1", "2", "3", "4", "5", "6"};
+        String keyS = String.valueOf(key);
+        if (Arrays.asList(keySet).contains(keyS)) {
+            int joint = Integer.parseInt(keyS) - 1;
+            if (joint < robot.table[0].length) {
+                robot.qRef[joint] += shifting;
             }
         }
-        notifyPropertyChange("QUPDATE",null,qRef);
-        LOGGER.info("{}",robot.getQ());
+        notifyPropertyChange("QUPDATE", null, robot.qRef);
+        LOGGER.info("{}", robot.getQ());
     }
 }

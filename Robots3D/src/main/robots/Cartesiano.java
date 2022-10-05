@@ -26,27 +26,27 @@ public class Cartesiano extends Robot {
         } else if(i == 2) {
             isTerm = true;
         }
-        link(theta,d,alpha,a,isTerm,isHorz,angle);
+        link(theta,d,alpha,a,isTerm,isHorz,angle,false);
         frames.get(i).show(toShow);
 
     }
 
     @Override
     protected void reset() {
-        q = new float[]{30,30,30};
-        d = new float[]{M*q[0],M*q[1],M*q[2]};
-        theta = new float[]{0,-PI/2,0};
-        alpha = new float[]{-PI/2,-PI/2,0};
-        a = new float[]{0,0,0};
-        table = new float[][]{q,d,alpha,a};
+        setQ(new float[]{30,30,30});
+        setD(new float[]{M*q[0],M*q[1],M*q[2]});
+        setTheta(new float[]{0,-PI/2,0});
+        setAlpha(new float[]{-PI/2,-PI/2,0});
+        setA(new float[]{0,0,0});
+        setTable(new float[][]{q,d,alpha,a});
         qRef = q.clone();
     }
 
     @Override
     public void setTable(float[] q) {
-        d[0] = M*q[0];
-        d[1] = M*q[1];
-        d[2] = M*q[2];
+        d[0] = q[0];
+        d[1] = q[1];
+        d[2] = q[2];
         setTable(new float[][]{theta,d,alpha,a});
     }
 

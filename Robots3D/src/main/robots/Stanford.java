@@ -9,6 +9,7 @@ import processing.core.PApplet;
 import java.beans.PropertyChangeEvent;
 
 import static main.Colors.*;
+import static processing.core.PApplet.radians;
 import static processing.core.PConstants.PI;
 
 public class Stanford extends Robot {
@@ -38,25 +39,26 @@ public class Stanford extends Robot {
         } else if(i == 2) {
             isTerm = true;
         }
-        link(theta,d,alpha,a,isTerm,isHorz,angle);
+        link(theta,d,alpha,a,isTerm,isHorz,angle,false);
         frames.get(i).show(toShow);
     }
 
     @Override
     protected void reset() {
-        q = new float[]{0,0,30};
-        theta = new float[]{q[0],q[1],0};
-        d = new float[]{100f,120f,0};
-        alpha = new float[]{-PI/2,PI/2,0};
-        a = new float[]{0,0,0};
-        table = new float[][]{q,d,alpha,a};
+        setQ(new float[]{PI/2,0,30});
+        setTheta(new float[]{q[0],q[1],0});
+        setD(new float[]{100f,120f,0});
+        setAlpha(new float[]{-PI/2,PI/2,0});
+        setA(new float[]{0,0,0});
+        setTable(new float[][]{q,d,alpha,a});
+        qRef = q.clone();
     }
 
     @Override
     public void setTable(float[] q) {
-        theta[0] = q[0];
-        theta[1] = q[1];
-        d[2] = M*q[2];
+        theta[0] = radians(q[0]);
+        theta[1] = radians(q[1]);
+        d[2] = q[2];
         setTable(new float[][]{theta,d,alpha,a});
     }
 }

@@ -69,7 +69,7 @@ public abstract class Robot implements PropertyChangeListener{
     protected PApplet p3d;
     protected PShape gripper;
     protected static final Logger LOGGER = LoggerFactory.getLogger(Robot.class.getName());
-    protected static final int M  = 3;
+    protected static final int M  = 5;
     protected Robot(PApplet p3d){
         this.p3d = p3d;
         this.frameZero = new Reference(p3d);
@@ -118,7 +118,7 @@ public abstract class Robot implements PropertyChangeListener{
         String eventName = evt.getPropertyName();
         switch (eventName){
             case "QUPDATE" -> {
-                qRef = (float[]) evt.getNewValue();
+                this.qRef = (float[]) evt.getNewValue();
             }
         }
     }
@@ -160,35 +160,38 @@ public abstract class Robot implements PropertyChangeListener{
         return this.p3d.color(colorVector[0],colorVector[1],colorVector[2],colorVector[3]);
     }
 
-    protected void link(float theta, float d, float alpha, float a, boolean isTerm, boolean isHorz, float angle){
+    protected void link(float theta, float d, float alpha, float a, boolean isTerm, boolean isHorz, float angle, boolean turnGripple){
         p3d.rotateZ(theta);
         p3d.fill(colorWrap(VIOLET));
         p3d.sphere(sphereRadius);
         p3d.translate(0, 0, d/2);
         p3d.pushMatrix();
         p3d.fill(colorWrap(DARK_YELLOW));
-//        if(isHorz)
-//            p3d.rotateY(angle);
         drawCylinder(sides, boxSize / 2f, boxSize / 2f, d);
         p3d.popMatrix();
         p3d.translate(0, 0, d/2);
-        if (isTerm){
-            p3d.fill(colorWrap(DARK_RED));
-            p3d.sphere(sphereRadius/2f);
-            p3d.shape(gripper);
-        } else {
-            p3d.fill(colorWrap(VIOLET));
-            p3d.sphere(sphereRadius);
-        }
         p3d.rotateX(alpha);
         p3d.translate(a/2, 0, 0);
         p3d.pushMatrix();
-        if(isHorz)
+        if(isHorz) {
             p3d.rotateY(angle);
+        }
         p3d.fill(colorWrap(DARK_YELLOW));
         drawCylinder(sides, boxSize / 2f, boxSize / 2f, a);
         p3d.popMatrix();
         p3d.translate(a/2, 0, 0);
+        if (isTerm){
+            p3d.fill(colorWrap(DARK_RED));
+            p3d.sphere(sphereRadius/2f);
+            p3d.pushMatrix();
+            if(turnGripple) p3d.rotateY(PI/2);
+            p3d.translate(0,0,10);
+            p3d.shape(gripper);
+            p3d.popMatrix();
+        } else {
+            p3d.fill(colorWrap(VIOLET));
+            p3d.sphere(sphereRadius);
+        }
     }
 
     protected void dh(float theta, float d, float alpha, float a, int i){
@@ -260,5 +263,9 @@ public abstract class Robot implements PropertyChangeListener{
         for (Reference r : frames){
             r.show(!toShow);
         }
+    }
+
+    public List<Reference> getFrames() {
+        return frames;
     }
 }

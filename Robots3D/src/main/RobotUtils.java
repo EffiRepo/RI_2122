@@ -12,7 +12,8 @@ import static java.lang.Math.sin;
 
 public class RobotUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(RobotUtils.class);
-
+    public static final float MIN = 30f;
+    public static final float MAX = 200f;
 
     public static void printR(RealMatrix realMatrix) {
         LOGGER.info("\n[{},{},{}]\n[{},{},{}]\n[{},{},{}]",
@@ -86,5 +87,11 @@ public class RobotUtils {
         RealMatrix ry = MatrixUtils.createRealMatrix(rotateYm(pitch));
         RealMatrix rz = MatrixUtils.createRealMatrix(rotateZm(roll));
         return rz.multiply(ry).multiply(rx);
+    }
+    public static float saturate(float v, float min, float max){
+        return Math.min(Math.max(min, v), max);
+    }
+    public static float saturate(float v){
+        return saturate(v,RobotUtils.MIN, RobotUtils.MAX);
     }
 }
