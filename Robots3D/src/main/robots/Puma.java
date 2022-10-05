@@ -3,7 +3,6 @@ package main.robots;
 import main.Robot;
 import processing.core.PApplet;
 
-import static processing.core.PApplet.radians;
 import static processing.core.PConstants.PI;
 
 public class Puma extends Robot {
@@ -28,23 +27,18 @@ public class Puma extends Robot {
     }
     @Override
     public void setTable(float[] q) {
-        theta[0] = radians(q[0]);
-        theta[1] = radians(q[1]);
-        theta[2] = radians(q[2]);
-        theta[3] = radians(q[3]);
-        theta[4] = radians(q[4]);
-        theta[5] = radians(q[5]);
+        setTheta(q);
         setTable(new float[][]{theta,d,alpha,a});
     }
 
     @Override
     protected void reset() {
-        setQ(new float[]{0,-PI,PI/2,0,0,0});
-        setTheta(new float[]{q[0],q[1],q[2],q[3],q[4],q[5]});
+        qRef = new float[]{0,0,0,0,0,0};
+        q = q == null? new float[]{0,0,0,0,0,0}: getQ();
+        setTheta(q);
         setD(new float[]{100,0,0,80,0,60});
         setAlpha(new float[]{-PI/2,0,PI/2,-PI/2,PI/2,0});
         setA(new float[]{0,80,0,0,0,0});
-        setTable(new float[][]{q,d,alpha,a});
-        qRef = q.clone();
+        setTable(qProp(qRef, kp));
     }
 }

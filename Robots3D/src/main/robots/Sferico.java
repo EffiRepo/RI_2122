@@ -15,9 +15,8 @@ public class Sferico extends Robot {
 
     @Override
     public void setTable(float[] q) {
-        theta[0] = radians(q[0]);
-        theta[1] = radians(q[1]);
-        d[2] = q[2];
+        setTheta(new float[]{q[0], q[1], 0});
+        setD(new float[]{100f, 0, q[2]});
         setTable(new float[][]{theta, d, alpha, a});
     }
 
@@ -39,12 +38,12 @@ public class Sferico extends Robot {
 
     @Override
     protected void reset() {
-        setQ(new float[]{PI/2, 0, 10});
+        qRef = new float[]{0,0,30};
+        q = q == null? new float[]{0,0,30}: getQ();
         setTheta(new float[]{q[0], q[1], 0});
-        setD(new float[]{100f, 0, M * q[2]});
+        setD(new float[]{100f, 0, q[2]});
         setAlpha(new float[]{PI / 2, PI / 2, 0});
         setA(new float[]{0, 80, 0});
-        setTable(new float[][]{q, d, alpha, a});
-        qRef = q.clone();
+        setTable(new float[][]{theta, d, alpha, a});
     }
 }

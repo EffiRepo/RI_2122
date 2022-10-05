@@ -10,15 +10,7 @@ import static processing.core.PApplet.radians;
 import static processing.core.PConstants.PI;
 
 public class Scara extends Robot {
-    @Override
-    public void setTable(float[] q) {
-        theta[0] = radians(q[0]);
-        theta[1] = radians(q[1]);
-        d[2] = q[2];
-        setTable(new float[][]{theta,d,alpha,a});
-    }
 
-    //! WARNING: WHEN PLOTTING q[3] MUST BE MULTIPLIED BY 4.
     public Scara(PApplet p3d) {
         super(p3d);
         reset();
@@ -39,17 +31,23 @@ public class Scara extends Robot {
         link(theta,d,alpha,a,isTerm,isHorz,angle,false);
         frames.get(i).show(toShow);
     }
-
     @Override
     protected void reset() {
-        setQ(new float[]{PI/2,0,30});
+        qRef = new float[]{PI/2,0,30};
+        q = q == null? new float[]{PI/2,0,30}: getQ();
         setTheta(new float[]{q[0],q[1],0});
-        setD(new float[]{100f,0,M*q[2]});
+        setD(new float[]{100f,0,30});
         setAlpha(new float[]{0,0,0});
         setA(new float[]{80,80,0});
-        setTable(new float[][]{q,d,alpha,a});
-        qRef = q.clone();
+        setTable(new float[][]{theta,d,alpha,a});
     }
 
 
+
+    @Override
+    public void setTable(float[] q) {
+        setTheta(new float[]{radians(q[0]), radians(q[1]), 0});
+        setD(new float[]{100f,0,q[2]});
+        setTable(new float[][]{theta,d,alpha,a});
+    }
 }

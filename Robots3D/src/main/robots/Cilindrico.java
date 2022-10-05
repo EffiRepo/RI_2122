@@ -18,33 +18,31 @@ public class Cilindrico extends Robot {
         boolean isTerm = false;
         boolean isHorz = false;
         float angle = 0;
-        if(i == 2) {
+        if (i == 2) {
             isHorz = true;
-            angle = PI/2;
+            angle = PI / 2;
             isTerm = true;
         }
-        link(theta,d,alpha,a,isTerm,isHorz,angle,false);
+        link(theta, d, alpha, a, isTerm, isHorz, angle, false);
         frames.get(i).show(toShow);
     }
 
     @Override
     protected void reset() {
-        setQ(new float[]{PI/2,30,30});
-        setTheta(new float[]{q[0],0,0});
-        setD(new float[]{80f,M*q[1],M*q[2]});
-        setAlpha(new float[]{0,-PI/2,0});
-        setA(new float[]{0,0,0});
-        setTable(new float[][]{q,d,alpha,a});
-        qRef = q.clone();
+        qRef = new float[]{PI / 2, 50, 50};
+        q = q == null ? new float[]{PI / 2, 50, 50} : getQ();
+        setTheta(new float[]{q[0], 0, 0});
+        setD(new float[]{100, q[1], q[2]});
+        setAlpha(new float[]{0, -PI / 2, 0});
+        setA(new float[]{0, 0, 0});
+        setTable(qProp(qRef, kp));
     }
 
     @Override
     public void setTable(float[] q) {
-        theta[0] = radians(q[0]);
-        d[1] = q[1];
-        d[2] = q[2];
-        setTable(new float[][]{theta,d,alpha,a});
+        setTheta(new float[]{radians(q[0]), 0,0});
+        setD(new float[]{100, q[1], q[2]});
+        setTable(new float[][]{theta, d, alpha, a});
 
     }
-
 }

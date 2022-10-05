@@ -3,22 +3,24 @@ package main.robots;
 import main.Robot;
 import processing.core.PApplet;
 
-import java.beans.PropertyChangeEvent;
-
-import static main.Colors.VIOLET;
 import static processing.core.PConstants.PI;
 
 public class Cartesiano extends Robot {
     public Cartesiano(PApplet p3d) {
+        // richiamo il costruttore del padre
         super(p3d);
+        // inizializzo e/o resetto
         reset();
     }
 
     @Override
     public void dh(float theta, float d, float alpha, float a, int i) {
         super.dh(theta, d, alpha, a, i);
+        // parametro per la verifica di un giunto terminale
         boolean isTerm = false;
+        // parametro per la verifica di un link orizzontale
         boolean isHorz = false;
+        // angolo per la rotazione in orizzontale
         float angle = 0;
         if(i == 1) {
             isHorz = true;
@@ -26,27 +28,27 @@ public class Cartesiano extends Robot {
         } else if(i == 2) {
             isTerm = true;
         }
+        // disegno il link i-esimo
         link(theta,d,alpha,a,isTerm,isHorz,angle,false);
+        // mostro S.d.R. i-esimo
         frames.get(i).show(toShow);
 
     }
 
     @Override
     protected void reset() {
-        setQ(new float[]{30,30,30});
-        setD(new float[]{M*q[0],M*q[1],M*q[2]});
+        q = q == null? new float[]{100,100,100} : getQ();
+        qRef = new float[]{100,100,100};
         setTheta(new float[]{0,-PI/2,0});
+        setD(q);
         setAlpha(new float[]{-PI/2,-PI/2,0});
         setA(new float[]{0,0,0});
-        setTable(new float[][]{q,d,alpha,a});
-        qRef = q.clone();
+        setTable(qProp(qRef, kp));
     }
 
     @Override
     public void setTable(float[] q) {
-        d[0] = q[0];
-        d[1] = q[1];
-        d[2] = q[2];
+        setD(q);
         setTable(new float[][]{theta,d,alpha,a});
     }
 

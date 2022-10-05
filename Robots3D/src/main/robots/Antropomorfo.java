@@ -3,7 +3,6 @@ package main.robots;
 import main.Robot;
 import processing.core.PApplet;
 
-import static processing.core.PApplet.radians;
 import static processing.core.PConstants.PI;
 
 public class Antropomorfo extends Robot {
@@ -29,20 +28,18 @@ public class Antropomorfo extends Robot {
     }
     @Override
     public void setTable(float[] q) {
-        theta[0] = radians(q[0]);
-        theta[1] = radians(q[1]);
-        theta[2] = radians(q[2]);
+        setTheta(new float[]{q[0],q[1],q[2]});
         setTable(new float[][]{q,d,alpha,a});
     }
 
     @Override
     protected void reset() {
-        setQ(new float[]{PI/2,0,0});
+        qRef = new float[]{PI/2,0,0};
+        q = q == null? new float[]{PI/2,0,0} : getQ();
         setTheta(new float[]{q[0],q[1],q[2]});
         setD(new float[]{100,0,0});
         setAlpha(new float[]{PI/2,0,0});
         setA(new float[]{0,80,50});
-        setTable(new float[][]{q,d,alpha,a});
-        qRef = super.q.clone();
+        setTable(qProp(qRef, kp));
     }
 }

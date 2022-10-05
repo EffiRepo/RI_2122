@@ -1,5 +1,6 @@
 package main;
 
+import main.robots.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import peasy.PeasyCam;
@@ -10,7 +11,9 @@ import processing.opengl.PGraphics3D;
 import processing.opengl.PJOGL;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static main.Colors.ACID_GREEN;
 import static main.Colors.MAGENTA;
@@ -25,8 +28,6 @@ public class Base3D extends PApplet {
     private float dY;
     private float dX;
 
-
-    private float[] qRef;
     PeasyCam[] cameras = new PeasyCam[NX * NY];
     private Robot robot;
     PropertyChangeSupport changes = new PropertyChangeSupport(this);
@@ -47,9 +48,19 @@ public class Base3D extends PApplet {
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Base3D.class.getName());
-
+    private static final List<Robot> robotList = new ArrayList<>();
+    private int listSize;
+    private int listIndex = 0;
+    private Menu helper;
     public Base3D() {
         // empty constructor
+        robotList.addAll(List.of(
+                new Antropomorfo(this), new Cartesiano(this), new Cilindrico(this),
+                new Polso(this), new Scara(this), new Sferico(this), new Stanford(this),
+                new Stanford6(this), new Puma(this)
+                )
+        );
+        listSize = robotList.size();
     }
 
 
@@ -62,12 +73,14 @@ public class Base3D extends PApplet {
 
     @Override
     public void setup() {
+        // project setup
+        setRobot();
         background(bgColor);
         frameRate(120);
         rectMode(CENTER);
         ellipseMode(RADIUS);
         sphereDetail(30);
-        robot.loadGripper();
+        helper = new Menu(270,250,270,250,this);
         /* From PeasyCam documentation */
         int padding = 10;
         int tileX = floor((width - padding));
@@ -90,7 +103,9 @@ public class Base3D extends PApplet {
 
     @Override
     public void draw() {
+        // from camera doc
         setGLGraphicsViewport(0, 0, width, height);
+        // start project
         background(colorWrap(MAGENTA));
         /*Render the scene*/
         pushStyle();
@@ -99,7 +114,7 @@ public class Base3D extends PApplet {
         directionalLight(126F, 126F, 126F, -1, 1, (float) -0.7);
         // Aggiungo degli effetti di luce ambientale
         ambientLight(200, 200, 200);
-
+        // inizializzo camera
         cameraSetup(cameras[0]);
         if (robot != null) {
             robot.draw();
@@ -108,6 +123,7 @@ public class Base3D extends PApplet {
         // HUD
         cameras[0].beginHUD();
         // insert code here
+        helper.draw();
         cameras[0].endHUD();
 
         popMatrix();
@@ -123,9 +139,14 @@ public class Base3D extends PApplet {
         return robot;
     }
 
-    public void setRobot(Robot robot) {
-        this.robot = robot;
-        this.qRef = robot.getQ().clone();
+    public void setRobot() {
+        // seleziono robot tramite buffer circolare
+        this.robot = robotList.get(listIndex % listSize);
+        // resetto per evitare problemi al cambiamento del robot selezionato
+        this.robot.reset();
+        // pulisco lista dei S.d.R.
+        if (robot.gripper == null) robot.loadGripper();
+        listIndex++;
         PVector origin = this.robot.getFrames().get(0).getOrigin();
         dX = origin.x;
         dY = origin.y;
@@ -191,24 +212,29 @@ public class Base3D extends PApplet {
             }
             case ENTER -> {// reset joints
                 robot.reset();
+                robot.getFrames().get(0).setOrigin(0, 0, -230);
                 notifyPropertyChange("QUPDATE", null, robot.qRef);
             }
-            case UP -> {
-                dZ += shifting*100;
-                robot.getFrames().get(0).setOrigin(dX,dY,dZ);
+            case CODED -> {
+                if (keyCode == UP) {
+                    dZ += shifting * 10;
+                    robot.getFrames().get(0).setOrigin(dX, dY, dZ);
+                } else if (keyCode == DOWN) {
+                    dZ -= shifting * 10;
+                    robot.getFrames().get(0).setOrigin(dX, dY, dZ);
+                } else if (keyCode == LEFT) {
+                    dY -= shifting * 10;
+                    robot.getFrames().get(0).setOrigin(dX, dY, dZ);
+                } else if (keyCode == RIGHT) {
+                    dY += shifting * 10;
+                    robot.getFrames().get(0).setOrigin(dX, dY, dZ);
+                }
             }
-            case DOWN -> {
-                dZ -= shifting*100;
-                robot.getFrames().get(0).setOrigin(dX,dY,dZ);
-            }
-            case LEFT -> {
-                dY += shifting*100;
-                robot.getFrames().get(0).setOrigin(dX,dY,dZ);
-            }
-            case RIGHT -> {
-                dY -= shifting*100;
-                robot.getFrames().get(0).setOrigin(dX,dY,dZ);
-            }
+            case 'h' -> helper.show();
+            case 'k' -> robot.setKp(robot.getKp()+0.1f);
+            case 'j' -> robot.setKp(robot.getKp()-0.1f);
+            case 'g' -> {/**/}
+            case 's' -> setRobot();
             default -> {/**/}
         }
     }
@@ -223,6 +249,6 @@ public class Base3D extends PApplet {
             }
         }
         notifyPropertyChange("QUPDATE", null, robot.qRef);
-        LOGGER.info("{}", robot.getQ());
+//        LOGGER.info("{}", robot.getQ());
     }
 }

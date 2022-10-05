@@ -19,57 +19,53 @@ import java.beans.PropertyChangeListener;
 
 public abstract class Robot implements PropertyChangeListener{
     // theta
-    protected float[] q = new float[]{0, 0, 0, 0, 0, 0};
+    protected float[] theta;
     // d
-    protected float d1 = 0f;
-    protected float d2 = 0f;
-    protected float d3 = 0f;
-    protected float d4 = 0f;
-    protected float d5 = 0f;
-    protected float d6 = 0f;
-    protected float[] d = new float[]{d1, d2, d3, d4, d5, d6};
+    protected float[] d;
     // Alpha
-    protected float alpha1 = 0f;
-    protected float alpha2 = 0f;
-    protected float alpha3 = 0f;
-    protected float alpha4 = 0f;
-    protected float alpha5 = 0f;
-    protected float alpha6 = 0f;
-    protected float[] alpha = new float[]{alpha1, alpha2, alpha3, alpha4, alpha5, alpha6};
+    protected float[] alpha;
     // a
-    protected float a1 = 0f;
-    protected float a2 = 0f;
-    protected float a3 = 0f;
-    protected float a4 = 0f;
-    protected float a5 = 0f;
-    protected float a6 = 0f;
-    protected float[] a = new float[]{a1, a2, a3, a4, a5, a6};
-    protected int[][] ELBOW;
-    protected boolean start;
-    protected float[] theta = new float[]{0,0,0,0,0,0};
+    protected float[] a;
+    // joints
+    protected float[] q;
 
-    public abstract void setTable(float[] q);
+    protected int[][] ELBOW;
+
+    // DH table
+    protected float[][] table;
+    public abstract void setTable(float[] q);   // ogni figlio setta le sue variabili di giunto in tabella
     public float[][] getTable(){
         return new float[][]{this.theta, this.d, this.alpha, this.a};
     }
-    protected float[][] table;
     protected Reference frameZero;
     protected List<Reference> frames;
     protected int baseColor;
     protected int[] robotColor;
+    // raggio inferiore della base
     protected float baseR1;
+    // raggio superiore della base
     protected float baseR2;
+    // altezza base
     protected float baseH;
+    // numero di lati per renderizzare la base
     protected int sides;
+    // raggio sfera del link
     protected int sphereRadius;
+    // diametro cilindro
     protected int boxSize;
+    // booleano per mostrare i S.d.R.
     protected boolean toShow;
-    protected float k = (float) 0.01;
+    // parametro del controllo proporzionale
+    protected float kp = (float) 0.01;
+    // valore di riferimento dei giunti
     protected float[] qRef;
+    // riferimento a processing
     protected PApplet p3d;
+    // modello della pinza
     protected PShape gripper;
+
     protected static final Logger LOGGER = LoggerFactory.getLogger(Robot.class.getName());
-    protected static final int M  = 5;
+
     protected Robot(PApplet p3d){
         this.p3d = p3d;
         this.frameZero = new Reference(p3d);
@@ -81,10 +77,9 @@ public abstract class Robot implements PropertyChangeListener{
         sides = 20;
         sphereRadius = 20;
         boxSize = 20;
-        qRef = q.clone();
         robotColor = new int[]{colorWrap(ORANGE),colorWrap(MAGENTA)};
         this.toShow = true;
-        table =  new float[][]{this.q, this.d, this.alpha, this.a};
+        table =  new float[][]{this.theta, this.d, this.alpha, this.a};
         frames = new ArrayList<>();
         frames.add(frameZero);
     }
@@ -101,11 +96,16 @@ public abstract class Robot implements PropertyChangeListener{
         // set origin
         p3d.translate(frameZero.getOrigin().x,frameZero.getOrigin().y,frameZero.getOrigin().z);
         p3d.fill(baseColor);
+        p3d.pushMatrix();
+        p3d.translate(0,0, -10);
         drawCylinder(sides, baseR1, baseR2, baseH);
+        p3d.popMatrix();
         frameZero.show(toShow);
         // draw robot
         p3d.pushMatrix();
-        float[] qNew = qProp(qRef,k);
+        // inizializzo controllo proporzionale
+        float[] qNew = qProp(qRef, kp);
+        // setto la tabella con i nuovi valori
         setTable(qNew);
         for (int i = 0; i < q.length; i++) {
             dh(table[0][i], table[1][i], table[2][i], table[3][i], i);
@@ -161,41 +161,49 @@ public abstract class Robot implements PropertyChangeListener{
     }
 
     protected void link(float theta, float d, float alpha, float a, boolean isTerm, boolean isHorz, float angle, boolean turnGripple){
+        // ruoto su Z
         p3d.rotateZ(theta);
+        // metto sfera viola
         p3d.fill(colorWrap(VIOLET));
         p3d.sphere(sphereRadius);
+        // traslo su Z fino al bc del link
         p3d.translate(0, 0, d/2);
         p3d.pushMatrix();
+        // disegno cilindro giallo
         p3d.fill(colorWrap(DARK_YELLOW));
         drawCylinder(sides, boxSize / 2f, boxSize / 2f, d);
         p3d.popMatrix();
+        // traslo fino all'estremità del giunto
         p3d.translate(0, 0, d/2);
+        // ruoto su X
         p3d.rotateX(alpha);
+        // traslo su X come ho fatto prima su Z
         p3d.translate(a/2, 0, 0);
         p3d.pushMatrix();
+        // verifico che il giunto sia orizzontale e in tal caso ruoto
         if(isHorz) {
             p3d.rotateY(angle);
         }
+        // disegno cilindro giallo
         p3d.fill(colorWrap(DARK_YELLOW));
         drawCylinder(sides, boxSize / 2f, boxSize / 2f, a);
         p3d.popMatrix();
         p3d.translate(a/2, 0, 0);
+        // verifico che il giunto è terminale, in tal caso aggancio l'end-effector
         if (isTerm){
             p3d.fill(colorWrap(DARK_RED));
             p3d.sphere(sphereRadius/2f);
             p3d.pushMatrix();
+            // se la configurazione mi porta a non avere l'EF lungo il link, ruoto
             if(turnGripple) p3d.rotateY(PI/2);
             p3d.translate(0,0,10);
             p3d.shape(gripper);
             p3d.popMatrix();
-        } else {
-            p3d.fill(colorWrap(VIOLET));
-            p3d.sphere(sphereRadius);
         }
     }
 
     protected void dh(float theta, float d, float alpha, float a, int i){
-        if( i <= table[0].length  )
+        if( frames.size() <= table[0].length  )
             frames.add(i+1,new Reference(p3d));
     }
 
@@ -263,6 +271,22 @@ public abstract class Robot implements PropertyChangeListener{
         for (Reference r : frames){
             r.show(!toShow);
         }
+    }
+
+    public float getKp() {
+        return kp;
+    }
+
+    public void setKp(float kp) {
+        this.kp = kp;
+    }
+
+    public float[] getqRef() {
+        return qRef;
+    }
+
+    public void setqRef(float[] qRef) {
+        this.qRef = qRef;
     }
 
     public List<Reference> getFrames() {

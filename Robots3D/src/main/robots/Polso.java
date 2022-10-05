@@ -28,20 +28,18 @@ public class Polso extends Robot {
     }
     @Override
     public void setTable(float[] q) {
-        theta[0] = radians(q[0]);
-        theta[1] = radians(q[1]);
-        theta[2] = radians(q[2]);
+        setQ(q);
         setTable(new float[][]{theta,d,alpha,a});
     }
 
     @Override
     protected void reset() {
-        setQ(new float[]{0,0,0});
-        setTheta(new float[]{q[0],q[1],q[2]});
+        qRef = new float[]{PI/2,0,0};
+        q = q == null? new float[]{PI/2,0,0}: getQ();
+        setTheta(q);
         setD(new float[]{0,0,100f});
         setAlpha(new float[]{-PI/2,PI/2,0});
         setA(new float[]{0,0,0});
-        setTable(new float[][]{q,d,alpha,a});
-        qRef = q.clone();
+        setTable(new float[][]{theta,d,alpha,a});
     }
 }
