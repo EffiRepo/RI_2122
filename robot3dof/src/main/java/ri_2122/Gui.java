@@ -156,7 +156,7 @@ public class Gui extends PShape {
         env.fill(PROCESSING_MAIN.color(0,0,0,200));
         env.text("x:"+df.format(PROCESSING_MAIN.getxTarget()),585,50);
         env.text("y:"+df.format(PROCESSING_MAIN.getyTarget()),635,50);
-        env.text("phi:"+df.format(PApplet.radians(PROCESSING_MAIN.getPhi())),675,50);
+        env.text("phi:"+df.format(PROCESSING_MAIN.getPhi()),675,50);
         env.text("Kp;"+df.format(PROCESSING_MAIN.getkP()),745,50);
         env.text("Kn:"+df.format(PROCESSING_MAIN.getkN()),805,50);
         env.text("KG:"+df.format(PROCESSING_MAIN.getkG()),855,50);

@@ -30,7 +30,7 @@ public class ProcessingMain extends PApplet {
     private float q2N=0f;
     private float q3N=0f;
 
-    private float q1G=-PI/2;
+    private float q1G=0;
     private float q2G=0.0f;
     private float q3G=0.0f;
 
@@ -38,7 +38,7 @@ public class ProcessingMain extends PApplet {
     private float kN =0.1f;
     private float kP = 0.1f;
 
-    private float kG =0.01f;
+    private float kG =0.5f;
     private float gomito = 1f;
     float epsilon = 0.0000001f;
 
@@ -55,6 +55,9 @@ public class ProcessingMain extends PApplet {
     private float sumGrad;
     private boolean toShow=true;
     private boolean warningShow;
+    private float sumGrad1=0f;
+    private float sumGrad2=0f;
+    private float sumGrad3=0f;
 
     @Override
     public void settings() {
@@ -267,29 +270,37 @@ public class ProcessingMain extends PApplet {
         float xCurr = link3 * cos(q1G + q2G + q3G) + link2 * cos(q1G + q2G) + link1 * cos(q1G);
         float yCurr = link3 * sin(q1G + q2G + q3G) + link2 * sin(q1G + q2G) + link1 * sin(q1G);
         float phiCurr = q1G + q2G + q3G;
-        float errnorm = pow(xCurr-xTarget, 2) +
-                pow(yCurr-yTarget, 2) +
-                10000*pow(phiCurr-phi, 2);
+//        float errnorm = pow(xCurr-xTarget, 2) +
+//                pow(yCurr-yTarget, 2) +
+//                pow(phiCurr-phi, 2);
+//        float errnorm = pow(Q1g, 2) + pow(Q2g, 2) + pow(Q3g, 2);
 //        pow(Q1g, 2) + pow(Q2g, 2) + pow(Q3g, 2)+
-        sumGrad += errnorm;
-        Q1g = Q1g/sqrt(sumGrad+epsilon);
-        Q2g = Q2g/sqrt(sumGrad+epsilon);
-        Q3g = Q3g/(sqrt(sumGrad+epsilon));
-        if(abs(kG*Q1g)>0.0001) {
+        sumGrad1 += pow(Q1g, 2);
+        sumGrad2 += pow(Q2g, 2);
+        sumGrad3 += pow(Q3g, 2);
+
+        Q1g = Q1g/sqrt(sumGrad1+epsilon);
+        Q2g = Q2g/sqrt(sumGrad2+epsilon);
+        Q3g = Q3g/(sqrt(sumGrad3+epsilon));
+        if(abs(Q1g)>0.0000001) {
             Oscilloscope.getInstance().addPoint("EG", Q1g, 0);
         }
-        if(abs(kG*Q2g)>0.0001) {
+        if(abs(Q2g)>0.0000001) {
         Oscilloscope.getInstance().addPoint("EG",Q2g,1);
         }
-        float q3New = (phi - q1G - q2G + kG * Q3g) / 2f;
-        if(abs(q3New -q3G)>0.0001) {
+        float q3New = (phiCurr - q1G - q2G) ;
+        if(abs(Q3g)>0.00000001) {
             Oscilloscope.getInstance().addPoint("EG", Q3g, 2);
         }
+//        if(abs(phiCurr-phi)>0.001 && abs(xCurr-xTarget)<0.1 && abs(yCurr-yTarget)<0.1){
+//            LOGGER.info("Correzione gradiente");
+//            q1G=q1G+PI;
+//        }
         return new float[]{
                 q1G+kG*Q1g,
                 q2G+kG*Q2g,
 //                q3G+kG*Q3g
-                q3New
+                q3New+kG*Q3g
         };
     }
 
@@ -327,23 +338,28 @@ public class ProcessingMain extends PApplet {
             targetVisibility=!targetVisibility;
         }else if(key=='P'||key=='p'){
             phi +=5;
-            sumGrad=0f;
+
+            sumGrad1=0f;
+            sumGrad2=0f;
+            sumGrad3=0f;
 //            Oscilloscope.getInstance().resetPlot();
 
             exactIK();
 
         }else if(key=='L'||key=='l'){
             phi -=5;
-            sumGrad=0f;
-//            Oscilloscope.getInstance().resetPlot();
+            sumGrad1=0f;
+            sumGrad2=0f;
+            sumGrad3=0f;//            Oscilloscope.getInstance().resetPlot();
 
             exactIK();
         }else if(key=='E'||key=='e'){
             gomito = -gomito;
             gomitoN++;
             gomitoG++;
-            sumGrad=0f;
-//            Oscilloscope.getInstance().resetPlot();
+            sumGrad1=0f;
+            sumGrad2=0f;
+            sumGrad3=0f;//            Oscilloscope.getInstance().resetPlot();
 
             exactIK();
         }else if(key=='S'||key=='s'){
