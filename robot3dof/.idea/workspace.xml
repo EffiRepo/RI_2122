@@ -5,49 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7e14b8e-e268-4d29-8dc9-ad4b3aa4ba9c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/core.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/gluegen-rt.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/jogl-all.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/linux-amd64/libgluegen_rt.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/linux-amd64/libjogl_desktop.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/linux-amd64/libjogl_mobile.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/linux-amd64/libnativewindow_awt.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/linux-amd64/libnativewindow_drm.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/linux-amd64/libnativewindow_x11.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/linux-amd64/libnewt_drm.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/linux-amd64/libnewt_head.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/windows-amd64/fenster.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/windows-amd64/gluegen_rt.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/windows-amd64/jogl_desktop.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/windows-amd64/jogl_mobile.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/windows-amd64/nativewindow_awt.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/windows-amd64/nativewindow_win32.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../NewtonGrad3DOF/lib/processing/windows-amd64/newt_head.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/core.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/gluegen-rt.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/jogl-all.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/linux-amd64/libgluegen_rt.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/linux-amd64/libjogl_desktop.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/linux-amd64/libjogl_mobile.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/linux-amd64/libnativewindow_awt.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/linux-amd64/libnativewindow_drm.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/linux-amd64/libnativewindow_x11.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/linux-amd64/libnewt_drm.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/linux-amd64/libnewt_head.so" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/windows-amd64/fenster.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/windows-amd64/gluegen_rt.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/windows-amd64/jogl_desktop.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/windows-amd64/jogl_mobile.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/windows-amd64/nativewindow_awt.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/windows-amd64/nativewindow_win32.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/processing/windows-amd64/newt_head.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ri_2122/Gui.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ri_2122/Link.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ri_2122/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ri_2122/Oscilloscope.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ri_2122/Plot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ri_2122/ProcessingMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
