@@ -66,6 +66,8 @@ public abstract class Robot implements PropertyChangeListener{
     protected PShape gripper;
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(Robot.class.getName());
+    private float[] qNew;
+
 
     protected Robot(PApplet p3d){
         this.p3d = p3d;
@@ -78,13 +80,12 @@ public abstract class Robot implements PropertyChangeListener{
         sides = 20;
         sphereRadius = 20;
         boxSize = 20;
-        robotColor = new int[]{colorWrap(ORANGE),colorWrap(MAGENTA)};
+        robotColor = new int[]{colorWrap(DARK_YELLOW),colorWrap(VIOLET),colorWrap(ORANGE),colorWrap(BROWN)};
         this.toShow = true;
         table =  new float[][]{this.theta, this.d, this.alpha, this.a};
         frames = new ArrayList<>();
         frames.add(frameZero);
     }
-
     protected void loadGripper() {
         File file = p3d.sketchFile("models/r6c.obj");
         String objPath = file.getAbsolutePath();
@@ -92,8 +93,7 @@ public abstract class Robot implements PropertyChangeListener{
         gripper.scale(0.3f);
         gripper.setFill(colorWrap(DARK_RED));
     }
-
-    protected void draw(){
+    protected void draw(boolean phantom){
         // set origin
         p3d.translate(frameZero.getOrigin().x,frameZero.getOrigin().y,frameZero.getOrigin().z);
         p3d.fill(baseColor);
@@ -103,12 +103,15 @@ public abstract class Robot implements PropertyChangeListener{
         p3d.popMatrix();
         frameZero.show(toShow);
         // draw robot
+        if(!phantom)
         // inizializzo controllo proporzionale
-        float[] qNew = qProp(qRef, kp);
+            qNew = qProp(qRef, kp);
+        else
+            qNew = qRef;
         // setto la tabella con i nuovi valori
         setTable(qNew);
         for (int i = 0; i < q.length; i++) {
-            dh(table[0][i], table[1][i], table[2][i], table[3][i], i);
+            dh(table[0][i], table[1][i], table[2][i], table[3][i], i, phantom);
         }
 
     }
@@ -160,19 +163,22 @@ public abstract class Robot implements PropertyChangeListener{
         return this.p3d.color(colorVector[0],colorVector[1],colorVector[2],colorVector[3]);
     }
 
-    protected void link(float theta, float d, float alpha, float a, boolean isTerm, boolean isHorz, float angle, boolean turnGripple){
+    protected void link(float theta, float d, float alpha, float a, boolean isTerm,
+                        boolean isHorz, float angle, boolean turnGripple, boolean phantom){
         // ruoto su Z
         p3d.rotateZ(theta);
-        // metto sfera viola
-        p3d.fill(colorWrap(VIOLET));
+        // metto sfera
+        if(!phantom) p3d.fill(robotColor[0]);
+        else p3d.fill(robotColor[3]);
         p3d.sphere(sphereRadius);
         // traslo su Z fino al bc del link
         p3d.translate(0, 0, d/2);
-        p3d.pushMatrix();
-        // disegno cilindro giallo
-        p3d.fill(colorWrap(DARK_YELLOW));
-        drawCylinder(sides, boxSize / 2f, boxSize / 2f, d);
-        p3d.popMatrix();
+        // disegno cilindro
+        if(d != 0) {
+            if(!phantom) p3d.fill(robotColor[1]);
+            else p3d.fill(robotColor[3]);
+            drawCylinder(sides, boxSize / 2f, boxSize / 2f, d);
+        }
         // traslo fino all'estremità del giunto
         p3d.translate(0, 0, d/2);
         // ruoto su X
@@ -184,14 +190,18 @@ public abstract class Robot implements PropertyChangeListener{
         if(isHorz) {
             p3d.rotateY(angle);
         }
-        // disegno cilindro giallo
-        p3d.fill(colorWrap(DARK_YELLOW));
-        drawCylinder(sides, boxSize / 2f, boxSize / 2f, a);
+        // disegno cilindro
+        if(a!=0){
+            if(!phantom) p3d.fill(robotColor[1]);
+            else p3d.fill(robotColor[3]);
+            drawCylinder(sides, boxSize / 2f, boxSize / 2f, a);
+        }
         p3d.popMatrix();
         p3d.translate(a/2, 0, 0);
         // verifico che il giunto è terminale, in tal caso aggancio l'end-effector
         if (isTerm){
-            p3d.fill(colorWrap(DARK_RED));
+            if(!phantom) p3d.fill(robotColor[1]);
+            else p3d.fill(robotColor[3]);
             p3d.sphere(sphereRadius/2f);
             p3d.pushMatrix();
             // se la configurazione mi porta a non avere l'EF lungo il link, ruoto
@@ -199,10 +209,15 @@ public abstract class Robot implements PropertyChangeListener{
             p3d.translate(0,0,10);
             p3d.shape(gripper);
             p3d.popMatrix();
+        } else {
+            if(!phantom) p3d.fill(robotColor[0]);
+            else p3d.fill(robotColor[1]);
+            p3d.sphere(sphereRadius);
         }
+
     }
 
-    protected void dh(float theta, float d, float alpha, float a, int i){
+    protected void dh(float theta, float d, float alpha, float a, int i,boolean phantom){
         if( frames.size() <= table[0].length  )
             frames.add(i+1,new Reference(p3d));
     }

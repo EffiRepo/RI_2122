@@ -3,6 +3,7 @@ package main.robots;
 import main.Robot;
 import processing.core.PApplet;
 
+import static processing.core.PApplet.radians;
 import static processing.core.PConstants.PI;
 
 public class Antropomorfo extends Robot {
@@ -11,8 +12,8 @@ public class Antropomorfo extends Robot {
         reset();
     }
     @Override
-    protected void dh(float theta, float d, float alpha, float a, int i) {
-        super.dh(theta, d, alpha, a, i);
+    protected void dh(float theta, float d, float alpha, float a, int i, boolean phantom) {
+        super.dh(theta, d, alpha, a, i, phantom);
         boolean isTerm = false;
         boolean isHorz = false;
         float angle = 0;
@@ -23,12 +24,12 @@ public class Antropomorfo extends Robot {
         if(i == 2) {
             isTerm = true;
         }
-        link(theta,d,alpha,a,isTerm,isHorz,angle,true);
+        link(theta,d,alpha,a,isTerm,isHorz,angle,true,phantom);
         frames.get(i).show(toShow);
     }
     @Override
     public void setTable(float[] q) {
-        setTheta(new float[]{q[0],q[1],q[2]});
+        setTheta(new float[]{radians(q[0]),radians(q[1]),radians(q[2])});
         setTable(new float[][]{q,d,alpha,a});
     }
 

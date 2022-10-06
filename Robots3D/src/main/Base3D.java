@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import peasy.PeasyCam;
 import processing.core.PApplet;
+import processing.core.PFont;
+import processing.core.PGraphics;
 import processing.core.PVector;
 import processing.opengl.PGL;
 import processing.opengl.PGraphics3D;
@@ -14,10 +16,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-import static main.Colors.ACID_GREEN;
-import static main.Colors.MAGENTA;
+import static main.Colors.*;
 
 public class Base3D extends PApplet {
 
@@ -25,7 +27,7 @@ public class Base3D extends PApplet {
     private static final int NX = 1;
     private static final int NY = 1;
     private final Oscilloscope oscilloscope;
-    private float shifting = 1.4f;
+    private final float shifting = 2f;
     private float dZ;
     private float dY;
     private float dX;
@@ -57,6 +59,11 @@ public class Base3D extends PApplet {
     private Menu helper;
     private Menu legend;
     private Menu robotData;
+    private PGraphics robotNameG;
+    private String[] robotNameS = {"Antropomorfo","Cartesiano","Cilindrico","Polso","Scara","Sferico",
+            "Stanford","Stanford Completo","Puma"};
+    private PFont TITLE_FONT;
+    private static final float TITLE_SIZE = 36;
     public Base3D() {
         // empty constructor
         robotList.addAll(List.of(
@@ -89,7 +96,8 @@ public class Base3D extends PApplet {
         sphereDetail(30);
         helper = new Menu(270,250,270,250,this);
         helper.show();
-
+        TITLE_FONT = createFont("Arial Bold",TITLE_SIZE);
+        robotNameG = this.createGraphics(500,500);
         /* From PeasyCam documentation */
         int padding = 10;
         int tileX = floor((width - padding));
@@ -132,15 +140,31 @@ public class Base3D extends PApplet {
         // inizializzo camera
         cameraSetup(cameras[0]);
         if (robot != null) {
-            robot.draw();
+            pushMatrix();
+            robot.draw(true);
+            popMatrix();
+            pushMatrix();
+            robot.draw(false);
+            popMatrix();
+
         }
         /* RENDERING END */
         // HUD
         cameras[0].beginHUD();
             helper.drawHelper();
             oscilloscope.drawPlots();
+            assert(robot != null);
             legend.drawPlotInfo(this.robot.q.length);
             robotData.drawRobotData(this.robot.q.length);
+            // draw title
+            robotNameG.beginDraw();
+            robotNameG.background(0,0,0,0);
+            robotNameG.textAlign(LEFT);
+            robotNameG.textFont(TITLE_FONT);
+            robotNameG.fill(colorWrap(DARK_RED));
+            robotNameG.text(robotNameS[robotList.indexOf(robot)],0,40);
+            this.image(robotNameG,width/2f-150,15);
+            robotNameG.endDraw();
         cameras[0].endHUD();
 
         popMatrix();
@@ -165,7 +189,7 @@ public class Base3D extends PApplet {
 
         // pulisco lista dei S.d.R.
         if (robot.gripper == null) robot.loadGripper();
-        listIndex++;
+        listIndex = (listIndex+1) % listSize;
         PVector origin = this.robot.getFrames().get(0).getOrigin();
         dX = origin.x;
         dY = origin.y;
@@ -268,12 +292,16 @@ public class Base3D extends PApplet {
     }
 
     private void qUpdate(char key) {
+
         String[] keySet = new String[]{"1", "2", "3", "4", "5", "6"};
         String keyS = String.valueOf(key);
         if (Arrays.asList(keySet).contains(keyS)) {
+
             int joint = Integer.parseInt(keyS) - 1;
             if (joint < robot.table[0].length) {
-                robot.qRef[joint] += shifting;
+                oscilloscope.resetPlot();
+
+                robot.qRef[joint] += 2*shifting;
             }
         }
         notifyPropertyChange("QUPDATE", null, robot.qRef);

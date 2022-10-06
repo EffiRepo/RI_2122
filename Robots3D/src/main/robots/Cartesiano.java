@@ -14,8 +14,8 @@ public class Cartesiano extends Robot {
     }
 
     @Override
-    public void dh(float theta, float d, float alpha, float a, int i) {
-        super.dh(theta, d, alpha, a, i);
+    public void dh(float theta, float d, float alpha, float a, int i, boolean phantom) {
+        super.dh(theta, d, alpha, a, i, phantom);
         // parametro per la verifica di un giunto terminale
         boolean isTerm = false;
         // parametro per la verifica di un link orizzontale
@@ -29,7 +29,7 @@ public class Cartesiano extends Robot {
             isTerm = true;
         }
         // disegno il link i-esimo
-        link(theta,d,alpha,a,isTerm,isHorz,angle,false);
+        link(theta,d,alpha,a,isTerm,isHorz,angle,false,phantom);
         // mostro S.d.R. i-esimo
         frames.get(i).show(toShow);
 

@@ -149,8 +149,6 @@ public class Menu {
         }
     }
     public void drawRobotData(int joints){
-        int offX = (int) (width - BORDER_WIDTH);
-        int offY = (int) (height - BORDER_HEIGHT);
         if(isVisible){
             g.beginDraw();
             g.noStroke();
