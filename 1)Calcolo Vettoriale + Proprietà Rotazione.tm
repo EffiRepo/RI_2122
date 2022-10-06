@@ -112,9 +112,7 @@
 
       let(B[3,1],alpha*A[3,1])
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >>b<rsub|1>\<longrightarrow\>A<rsub|1,1>*\<alpha\>>>
 
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
@@ -147,7 +145,9 @@
     <|unfolded-io>
       vect_prod(A, B)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><around*|[|0,<math-bf|true>|]>>>
     </unfolded-io>
 
@@ -514,17 +514,13 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>27) >
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
     <|unfolded-io>
       inverse_check(theta*sqrt<around*|(|2|)>*0.1534768)
     <|unfolded-io>
-      \;
+      <math|<with|math-display|true|<text|Definiamo p, ph, R, Rt >>>
 
-      \ <math|<with|math-display|true|<text|Definiamo p, ph, R, Rt >>>
-
-      \;
-
-      \ <math|<with|math-display|true|<text|R(
+      <math|<with|math-display|true|<text|R(
       >0.1534768*<sqrt|2>*\<vartheta\><text|) =
       ><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>|<cell|-sin
@@ -547,12 +543,12 @@
       <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>+y<rsub|h>*cos
       <around*|(|<frac|95923*\<vartheta\>|78125*2<rsup|<frac|5|2>>>|)>>>>>>>>
 
-      <math|<with|math-display|true|<text|Definisco prodotto matriciale R.Rt
-      >>>
-
       \;
 
-      \ <math|<with|math-display|true|<text|Controllo che la trasposta è
+      \ <math|<with|math-display|true|<text|Definisco prodotto matriciale
+      R.Rt >>>
+
+      <math|<with|math-display|true|<text|Controllo che la trasposta è
       l'inversa di R >>>
 
       \;
@@ -597,7 +593,7 @@
 
       <math|<with|math-display|true|<text|Come volevasi dimostrare >>>
 
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
       >Come volevasi dimostrare >>>
     </unfolded-io>
 

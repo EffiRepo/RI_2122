@@ -87,9 +87,7 @@
     <|unfolded-io>
       isAsim(S)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
       >><math-bf|true>>>
     </unfolded-io>
 
@@ -98,7 +96,9 @@
     <|unfolded-io>
       S:S(matrix([0.14564],[sqrt(%pi)*theta[i]],[rho*1/431]))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o6>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|-<frac|\<rho\>|431>>|<cell|<sqrt|\<pi\>>*\<vartheta\><rsub|i>>>|<row|<cell|<frac|\<rho\>|431>>|<cell|0>|<cell|-0.14564>>|<row|<cell|-<sqrt|\<pi\>>*\<vartheta\><rsub|i>>|<cell|0.14564>|<cell|0>>>>>>>
     </unfolded-io>
 
@@ -107,7 +107,9 @@
     <|unfolded-io>
       isAsim(S)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
       >><math-bf|true>>>
     </unfolded-io>
 
@@ -151,9 +153,7 @@
     <|unfolded-io>
       getAsimVect(S)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><matrix|<tformat|<table|<row|<cell|0.14564>>|<row|<cell|<sqrt|\<pi\>>*\<vartheta\><rsub|i>>>|<row|<cell|<frac|\<rho\>|431>>>>>>>>
     </unfolded-io>
 
@@ -187,9 +187,7 @@
     <|unfolded-io>
       ww:matrix([w[x]],[w[y]],[w[z]])
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><matrix|<tformat|<table|<row|<cell|w<rsub|x>>>|<row|<cell|w<rsub|y>>>|<row|<cell|w<rsub|z>>>>>>>>
     </unfolded-io>
 
@@ -226,9 +224,7 @@
     <|unfolded-io>
       psubst([e[x]=matrix([1],[0],[0]),e[y]=matrix([0],[1],[0]),e[z]=matrix([0],[0],[1])],prod2)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
       >><matrix|<tformat|<table|<row|<cell|v<rsub|y>*w<rsub|z>-w<rsub|y>*v<rsub|z>>>|<row|<cell|w<rsub|x>*v<rsub|z>-v<rsub|x>*w<rsub|z>>>|<row|<cell|v<rsub|x>*w<rsub|y>-w<rsub|x>*v<rsub|y>>>>>>>>
     </unfolded-io>
 
@@ -373,9 +369,7 @@
     <|unfolded-io>
       expVect(A,t)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
       >><matrix|<tformat|<table|<row|<cell|\<mathe\><rsup|t>>|<cell|<around*|(|\<mathe\><rsup|t>-1|)>*\<mathe\><rsup|t>>|<cell|<around*|(|\<mathe\><rsup|t>-1|)><rsup|2>*\<mathe\><rsup|t>>>|<row|<cell|0>|<cell|\<mathe\><rsup|2*t>>|<cell|2*<around*|(|\<mathe\><rsup|t>-1|)>*\<mathe\><rsup|2*t>>>|<row|<cell|0>|<cell|0>|<cell|\<mathe\><rsup|3*t>>>>>>>>
     </unfolded-io>
 
@@ -384,9 +378,7 @@
     <|unfolded-io>
       a:matrix([0,1,0],[1,0,0],[0,0,-1])
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o21>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|1>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-1>>>>>>>
     </unfolded-io>
 
@@ -922,13 +914,13 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>40) >
+      <with|color|red|(<with|math-font-family|rm|%i>41) >
     <|unfolded-io>
       angle:getAngle(R)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o40>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o41>)
       >>-<frac|5*2<rsup|<frac|3|2>>*\<pi\>|<sqrt|321>>+<frac|<sqrt|2>*\<pi\>|3>+<frac|3|<sqrt|2>>>>
     </unfolded-io>
 
@@ -938,7 +930,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>41) >
+      <with|color|red|(<with|math-font-family|rm|%i>42) >
     <|input>
       getRotData(R):=block(
 
@@ -954,11 +946,11 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>42) >
+      <with|color|red|(<with|math-font-family|rm|%i>43) >
     <|unfolded-io>
       R
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o42>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o43>)
       >><matrix|<tformat|<table|<row|<cell|1-<frac|121*<around*|(|1-cos
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>|)>|321>>|<cell|<frac|55*2<rsup|<frac|3|2>>*<around*|(|1-cos
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>|)>|321>>|<cell|<frac|11*sin
@@ -972,11 +964,11 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>43) >
+      <with|color|red|(<with|math-font-family|rm|%i>44) >
     <|unfolded-io>
       data:getRotData(R)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o43>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o44>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|<frac|11|5*2<rsup|<frac|3|2>>>>>|<row|<cell|0>>>>>,-<frac|5*2<rsup|<frac|3|2>>*\<pi\>|<sqrt|321>>+<frac|<sqrt|2>*\<pi\>|3>+<frac|3|<sqrt|2>>|]>>>
     </unfolded-io>
 
@@ -985,11 +977,11 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>44) >
+      <with|color|red|(<with|math-font-family|rm|%i>45) >
     <|unfolded-io>
       rodData:trigreduce(rodrigues(data[1],data[2]))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o44>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o45>)
       >><matrix|<tformat|<table|<row|<cell|1-<frac|121*<around*|(|1-cos
       <around*|(|<frac|<sqrt|321>*\<pi\>|30>-\<pi\>+<frac|3*<sqrt|321>|20>|)>|)>|321>>|<cell|<frac|55*<around*|(|2<rsup|<frac|3|2>>-2<rsup|<frac|3|2>>*cos
       <around*|(|<frac|<sqrt|321>*\<pi\>|30>-\<pi\>+<frac|3*<sqrt|321>|20>|)>|)>|321>>|<cell|<frac|11*sin
@@ -1003,13 +995,13 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>45) >
+      <with|color|red|(<with|math-font-family|rm|%i>46) >
     <|unfolded-io>
       factor(expand(trigreduce(trigexpand(rodData ))))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o45>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o46>)
       >><matrix|<tformat|<table|<row|<cell|-<frac|121*cos
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>-200|321>>|<cell|<frac|55*2<rsup|<frac|3|2>>*<around*|(|cos
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>+1|)>|321>>|<cell|-<frac|11*sin
@@ -1023,11 +1015,11 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>46) >
+      <with|color|red|(<with|math-font-family|rm|%i>47) >
     <|unfolded-io>
       isRot(rodData)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o46>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o47>)
       >><math-bf|true>>>
     </unfolded-io>
 
@@ -1116,7 +1108,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>47) >
+      <with|color|red|(<with|math-font-family|rm|%i>48) >
     <|input>
       cayley(S):=block(
 
@@ -1138,29 +1130,29 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>48) >
+      <with|color|red|(<with|math-font-family|rm|%i>49) >
     <|unfolded-io>
       S
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o48>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o49>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|<sqrt|2>>>|<row|<cell|0>|<cell|0>|<cell|-1>>|<row|<cell|-<sqrt|2>>|<cell|1>|<cell|0>>>>>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>49) >
+      <with|color|red|(<with|math-font-family|rm|%i>50) >
     <|unfolded-io>
       cayley(S)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o49>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o50>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|<frac|1|<sqrt|2>>>|<cell|<frac|1|<sqrt|2>>>>|<row|<cell|<frac|1|<sqrt|2>>>|<cell|<frac|1|2>>|<cell|-<frac|1|2>>>|<row|<cell|-<frac|1|<sqrt|2>>>|<cell|<frac|1|2>>|<cell|-<frac|1|2>>>>>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>50) >
+      <with|color|red|(<with|math-font-family|rm|%i>51) >
     <|input>
       invCayley(R):=block([I,S,v,norm,cosTheta,sinTheta,theta,cond],
 
@@ -1196,11 +1188,11 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>51) >
+      <with|color|red|(<with|math-font-family|rm|%i>52) >
     <|unfolded-io>
       R
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o51>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o52>)
       >><matrix|<tformat|<table|<row|<cell|1-<frac|121*<around*|(|1-cos
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>|)>|321>>|<cell|<frac|55*2<rsup|<frac|3|2>>*<around*|(|1-cos
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>|)>|321>>|<cell|<frac|11*sin
@@ -1214,11 +1206,11 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>52) >
+      <with|color|red|(<with|math-font-family|rm|%i>53) >
     <|unfolded-io>
       S:invCayley(R)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o52>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o53>)
       >><around*|[|<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|<frac|11*sin
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>|<sqrt|321>*<around*|(|cos
       <around*|(|<frac|<sqrt|321>*<around*|(|2*\<pi\>+9|)>|60>|)>+1|)>>>>|<row|<cell|0>|<cell|0>|<cell|-<frac|5*2<rsup|<frac|3|2>>*sin
@@ -1231,7 +1223,7 @@
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>53) >
+      <with|color|red|(<with|math-font-family|rm|%i>54) >
     <|input>
       \;
     </input>

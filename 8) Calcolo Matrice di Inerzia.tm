@@ -1,9 +1,48 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1.2>
 
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
-  <center|<strong|Matrice Inerzia Corpi Rigidi>>
+  <center|<doc-data|<doc-title|Calcolo Matrice di Inerzia>>>
+
+  Definito un corpo rigido, sia <math|P\<assign\>>coordinate di un punto
+  generico solidale al corpo. Si definisce matrice di inerzia
+  <math|\<bbb-I\>>:
+
+  <\equation>
+    \<bbb-I\>=\<rho\><big|int><rsub|V>S<rsup|T><around*|(|P|)>S<around*|(|P|)>\<partial\>V
+  </equation>
+
+  in cui <math|V=<big|int>\<delta\>V> è il volume e <math|\<rho\>=<frac|M|V>>
+  è la densità del corpo rigido e <math|S> matrice antisimmetrica di
+  <math|P>.
+
+  Per semplificare la matrice di inerzia risultante, è utile porre il punto
+  <math|P=<matrix|<tformat|<table|<row|<cell|x>>|<row|<cell|y>>|<row|<cell|z>>>>>>
+  lungo i piani di simmetria del corpo. Così facendo si ottiene:
+
+  <\equation>
+    S<rsup|T><around*|(|P|)>S<around*|(|P|)>=<matrix|<tformat|<table|<row|<cell|y<rsup|2>+z<rsup|2><space|1em>-x
+    y<space|1em>-x z>>|<row|<cell|-x y<space|1em>x<rsup|2>+z<rsup|2><space|1em>-y
+    z>>|<row|<cell|-x z<space|1em>-y z<space|1em>x<rsup|2>+y<rsup|2>>>>>>
+  </equation>
+
+  Imponendo una densità costante al corpo <math|\<rho\>=cost.>, si deve
+  risolvere il seguente integrale:
+
+  <\equation>
+    \<bbb-I\>=<frac|M|V><big|int><big|int><big|int><matrix|<tformat|<table|<row|<cell|y<rsup|2>+z<rsup|2><space|1em>-x
+    y<space|1em>-x z>>|<row|<cell|-x y<space|1em>x<rsup|2>+z<rsup|2><space|1em>-y
+    z>>|<row|<cell|-x z<space|1em>-y z<space|1em>x<rsup|2>+y<rsup|2>>>>>>\<partial\>x\<partial\>y\<partial\>z
+  </equation>
+
+  Altrimenti:
+
+  <\equation>
+    \<bbb-I\>=<big|int><big|int><big|int>\<rho\><around*|(|x,y,z|)><matrix|<tformat|<table|<row|<cell|y<rsup|2>+z<rsup|2><space|1em>-x
+    y<space|1em>-x z>>|<row|<cell|-x y<space|1em>x<rsup|2>+z<rsup|2><space|1em>-y
+    z>>|<row|<cell|-x z<space|1em>-y z<space|1em>x<rsup|2>+y<rsup|2>>>>>>\<partial\>x\<partial\>y\<partial\>z
+  </equation>
 
   <\session|maxima|default>
     <\textput>
@@ -27,6 +66,47 @@
       1.<strong|Parallelepipedo> Lati A,B,C\ 
 
       Consideriamo che il punto p si trovi al centro dell'oggetto.
+
+      Sia:
+
+      <\equation*>
+        x\<in\><around*|[|-<frac|A|2>,<frac|A|2>|]>,y\<in\><around*|[|-<frac|B|2>,<frac|B|2>|]>,z\<in\><around*|[|-<frac|C|2>,<frac|C|2>|]>
+      </equation*>
+
+      <\equation*>
+        \<bbb-I\>=<frac|M|V><big|int><big|int><big|int><matrix|<tformat|<table|<row|<cell|y<rsup|2>+z<rsup|2><space|1em>-x
+        y<space|1em>-x z>>|<row|<cell|-x y<space|1em>x<rsup|2>+z<rsup|2><space|1em>-y
+        z>>|<row|<cell|-x z<space|1em>-y z<space|1em>x<rsup|2>+y<rsup|2>>>>>>
+        \<partial\>x\<partial\>y\<partial\>z
+      </equation*>
+
+      <\equation*>
+        x<rsup|2>\<longrightarrow\><big|int><rsub|-<frac|C|2>><rsup|<frac|C|2>><big|int><rsub|-<frac|B|2>><rsup|<frac|B|2>><big|int><rsub|-<frac|A|2>><rsup|<frac|A|2>>x<rsup|2>\<partial\>x\<partial\>y\<partial\>z=<big|int><rsub|-<frac|C|2>><rsup|<frac|C|2>><big|int><rsub|-<frac|B|2>><rsup|<frac|B|2>><around*|[|<frac|x<rsup|3>|3>|]><rsup|<frac|A|2>><rsub|-<frac|A|2>>=<big|int><rsub|-<frac|C|2>><rsup|<frac|C|2>><big|int><rsub|-<frac|B|2>><rsup|<frac|B|2>><frac|A<rsup|3>|12>\<partial\>y\<partial\>z=<frac|A<rsup|3>|12>BC
+      </equation*>
+
+      <\equation*>
+        \<rho\>x<rsup|2>\<Rightarrow\><frac|M|ABC><frac|A<rsup|3>|12>BC=<frac|MA<rsup|2>|12>
+      </equation*>
+
+      <\equation*>
+        y<rsup|2>\<longrightarrow\><frac|MB<rsup|2>|12>;z<rsup|2>\<longrightarrow\><frac|MC<rsup|2>|12>
+      </equation*>
+
+      <\equation*>
+        xy\<longrightarrow\><big|int><rsub|-<frac|C|2>><rsup|<frac|C|2>><big|int><rsub|-<frac|B|2>><rsup|<frac|B|2>><big|int><rsub|-<frac|A|2>><rsup|<frac|A|2>>xy\<partial\>x\<partial\>y\<partial\>z=<big|int><rsub|-<frac|C|2>><rsup|<frac|C|2>><big|int><rsub|-<frac|B|2>><rsup|<frac|B|2>><around*|[|<frac|x<rsup|2>|2>y|]><rsup|<frac|A|2>><rsub|-<frac|A|2>>\<partial\>y\<partial\>z=0
+      </equation*>
+
+      <\equation*>
+        xz\<longrightarrow\>0;yz\<longrightarrow\>0
+      </equation*>
+
+      Quindi:
+
+      <\equation*>
+        \<bbb-I\>=<frac|M|12><matrix|<tformat|<table|<row|<cell|B<rsup|2>+C<rsup|2><space|1em>0<space|1em>0>>|<row|<cell|0<space|1em>A<rsup|2>+C<rsup|2><space|1em>0>>|<row|<cell|0<space|1em>0<space|1em>A<rsup|2>+B<rsup|2>>>>>>
+      </equation*>
+
+      \;
 
       Estremi di integrazione
     </textput>
@@ -193,13 +273,11 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
     <|unfolded-io>
       Ic:factor(expand(rhovt*paraCavoT(p,a,b,c,avt,bvt,cvt)))
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
       >><matrix|<tformat|<table|<row|<cell|<frac|M*<around*|(|A<rsub|<math-up|vt>>*B<rsub|<math-up|vt>>*C<rsub|<math-up|vt>><rsup|3>+A<rsub|<math-up|vt>>*B<rsub|<math-up|vt>><rsup|3>*C<rsub|<math-up|vt>>-A*B*C<rsup|3>-A*B<rsup|3>*C|)>|12*<around*|(|A<rsub|<math-up|vt>>*B<rsub|<math-up|vt>>*C<rsub|<math-up|vt>>-A*B*C|)>>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M*<around*|(|A<rsub|<math-up|vt>>*B<rsub|<math-up|vt>>*C<rsub|<math-up|vt>><rsup|3>+A<rsub|<math-up|vt>><rsup|3>*B<rsub|<math-up|vt>>*C<rsub|<math-up|vt>>-A*B*C<rsup|3>-A<rsup|3>*B*C|)>|12*<around*|(|A<rsub|<math-up|vt>>*B<rsub|<math-up|vt>>*C<rsub|<math-up|vt>>-A*B*C|)>>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M*<around*|(|A<rsub|<math-up|vt>>*B<rsub|<math-up|vt>><rsup|3>*C<rsub|<math-up|vt>>+A<rsub|<math-up|vt>><rsup|3>*B<rsub|<math-up|vt>>*C<rsub|<math-up|vt>>-A*B<rsup|3>*C-A<rsup|3>*B*C|)>|12*<around*|(|A<rsub|<math-up|vt>>*B<rsub|<math-up|vt>>*C<rsub|<math-up|vt>>-A*B*C|)>>>>>>>>>
     </unfolded-io>
 
@@ -218,45 +296,45 @@
     <math|A<rsub|v>=A,B<rsub|v>\<less\>B,C<rsub|v>\<less\>C>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|unfolded-io>
       av:[-A/2,A/2]
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
       >><around*|[|-<frac|A|2>,<frac|A|2>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>15) >
+    <|unfolded-io>
+      bv:[-B[v]/2,B[v]/2]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      >><around*|[|-<frac|B<rsub|v>|2>,<frac|B<rsub|v>|2>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>16) >
     <|unfolded-io>
-      bv:[-B[v]/2,B[v]/2]
+      cv:[-C[v]/2,C[v]/2]
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o16>)
-      >><around*|[|-<frac|B<rsub|v>|2>,<frac|B<rsub|v>|2>|]>>>
+      >><around*|[|-<frac|C<rsub|v>|2>,<frac|C<rsub|v>|2>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>17) >
     <|unfolded-io>
-      cv:[-C[v]/2,C[v]/2]
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
-      >><around*|[|-<frac|C<rsub|v>|2>,<frac|C<rsub|v>|2>|]>>>
-    </unfolded-io>
-
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>18) >
-    <|unfolded-io>
       rhov:M/(A*B*C-A*B[v]*C[v])
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o17>)
       >><frac|M|A*B*C-A*B<rsub|v>*C<rsub|v>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>19) >
+      <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|input>
       paraCavo(p,a,b,c,bv,cv):=block(
 
@@ -286,11 +364,11 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>20) >
+      <with|color|red|(<with|math-font-family|rm|%i>19) >
     <|unfolded-io>
       Ic:factor(expand(rhov*paraCavo(p,a,b,c,bv,cv)))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
       >><matrix|<tformat|<table|<row|<cell|<frac|M*<around*|(|B<rsub|v>*C<rsub|v><rsup|3>+B<rsub|v><rsup|3>*C<rsub|v>-B*C<rsup|3>-B<rsup|3>*C|)>|12*<around*|(|B<rsub|v>*C<rsub|v>-B*C|)>>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M*<around*|(|B<rsub|v>*C<rsub|v><rsup|3>+A<rsup|2>*B<rsub|v>*C<rsub|v>-B*C<rsup|3>-A<rsup|2>*B*C|)>|12*<around*|(|B<rsub|v>*C<rsub|v>-B*C|)>>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M*<around*|(|B<rsub|v><rsup|3>*C<rsub|v>+A<rsup|2>*B<rsub|v>*C<rsub|v>-B<rsup|3>*C-A<rsup|2>*B*C|)>|12*<around*|(|B<rsub|v>*C<rsub|v>-B*C|)>>>>>>>>>
     </unfolded-io>
 
@@ -303,35 +381,45 @@
       <center|<math|<choice|<tformat|<table|<row|<cell|x=\<rho\>cos<around*|(|\<theta\>|)><space|1em>\<rho\>\<in\><around*|[|0,R|]>>>|<row|<cell|y=\<rho\>sin<around*|(|\<theta\>|)><space|1em>\<theta\>\<in\><around*|[|0,2\<pi\>|]>>>|<row|<cell|z=h<space|4em>h\<in\><around*|[|0,H|]>>>>>>>>
     </textput>
 
+    Definiamo il volume <math|V> e la densità <math|\<rho\>>:
+
+    <\equation*>
+      V=A<rsub|b>*H=\<pi\>R<rsup|2>H
+    </equation*>
+
+    <\equation*>
+      \<rho\>=<frac|M|\<pi\>R<rsup|2>H>
+    </equation*>
+
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>21) >
+      <with|color|red|(<with|math-font-family|rm|%i>20) >
     <|input>
       assume(R\<gtr\>0)$
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>22) >
+      <with|color|red|(<with|math-font-family|rm|%i>21) >
     <|input>
       rhoC:[0,R]$
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>23) >
+      <with|color|red|(<with|math-font-family|rm|%i>22) >
     <|input>
       hC:[0,H]$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>24) >
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
     <|unfolded-io>
       dens:M/(%pi*R^2*H)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
       >><frac|M|\<pi\>*H*R<rsup|2>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>25) >
+      <with|color|red|(<with|math-font-family|rm|%i>24) >
     <|input>
       cilindro(rhoC,hC):=block(
 
@@ -369,13 +457,13 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>26) >
+      <with|color|red|(<with|math-font-family|rm|%i>25) >
     <|unfolded-io>
       factor(dens*cilindro(rhoC,hC))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
       >><matrix|<tformat|<table|<row|<cell|<frac|M*<around*|(|3*R<rsup|2>+4*H<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M*<around*|(|3*R<rsup|2>+4*H<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M*R<rsup|2>|2>>>>>>>>
     </unfolded-io>
 
@@ -393,36 +481,36 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>27) >
+      <with|color|red|(<with|math-font-family|rm|%i>26) >
     <|input>
       assume(R[vt]\<gtr\>0)$
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>28) >
+      <with|color|red|(<with|math-font-family|rm|%i>27) >
     <|input>
       rhoCvt:[0,R[vt]]$
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>29) >
+      <with|color|red|(<with|math-font-family|rm|%i>28) >
     <|input>
       hCvt:[0,H[vt]]$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>30) >
+      <with|color|red|(<with|math-font-family|rm|%i>29) >
     <|unfolded-io>
       densvt:M/((%pi*R^2*H)-(%pi*R[vt]^2*H[vt]))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o29>)
       >><frac|M|\<pi\>*H*R<rsup|2>-\<pi\>*H<rsub|<math-up|vt>>*R<rsub|<math-up|vt>><rsup|2>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>31) >
+      <with|color|red|(<with|math-font-family|rm|%i>30) >
     <|input>
       cilindroVT(rhoC,hC,rhoCvt,hCvt):=block(
 
@@ -468,13 +556,13 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>32) >
+      <with|color|red|(<with|math-font-family|rm|%i>31) >
     <|unfolded-io>
       factor(densvt*cilindroVT(rhoC,hC,rhoCvt,hCvt))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o32>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
       >><matrix|<tformat|<table|<row|<cell|<frac|M*<around*|(|3*H<rsub|<math-up|vt>>*R<rsub|<math-up|vt>><rsup|4>+4*H<rsub|<math-up|vt>><rsup|3>*R<rsub|<math-up|vt>><rsup|2>-3*H*R<rsup|4>-4*H<rsup|3>*R<rsup|2>|)>|12*<around*|(|H<rsub|<math-up|vt>>*R<rsub|<math-up|vt>><rsup|2>-H*R<rsup|2>|)>>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M*<around*|(|3*H<rsub|<math-up|vt>>*R<rsub|<math-up|vt>><rsup|4>+4*H<rsub|<math-up|vt>><rsup|3>*R<rsub|<math-up|vt>><rsup|2>-3*H*R<rsup|4>-4*H<rsup|3>*R<rsup|2>|)>|12*<around*|(|H<rsub|<math-up|vt>>*R<rsub|<math-up|vt>><rsup|2>-H*R<rsup|2>|)>>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M*<around*|(|H<rsub|<math-up|vt>>*R<rsub|<math-up|vt>><rsup|4>-H*R<rsup|4>|)>|2*<around*|(|H<rsub|<math-up|vt>>*R<rsub|<math-up|vt>><rsup|2>-H*R<rsup|2>|)>>>>>>>>>
     </unfolded-io>
 
@@ -495,36 +583,36 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>33) >
+      <with|color|red|(<with|math-font-family|rm|%i>32) >
     <|input>
       assume(R[v]\<gtr\>0)$
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>34) >
+      <with|color|red|(<with|math-font-family|rm|%i>33) >
     <|input>
       rhoCv:[0,R[v]]$
     </input>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>35) >
+      <with|color|red|(<with|math-font-family|rm|%i>34) >
     <|input>
       hCv:[0,H]$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>36) >
+      <with|color|red|(<with|math-font-family|rm|%i>35) >
     <|unfolded-io>
       densv:M/((%pi*R^2*H)-(%pi*R[v]^2*H))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o36>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
       >><frac|M|\<pi\>*H*R<rsup|2>-\<pi\>*H*R<rsub|v><rsup|2>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>37) >
+      <with|color|red|(<with|math-font-family|rm|%i>36) >
     <|input>
       cilindroV(rhoC,hC,rhoCv):=block(
 
@@ -570,13 +658,17 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>38) >
+      <with|color|red|(<with|math-font-family|rm|%i>37) >
     <|unfolded-io>
       factor(densv*cilindroV(rhoC,hC,rhoCv))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o38>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o37>)
       >><matrix|<tformat|<table|<row|<cell|<frac|M*<around*|(|3*R<rsub|v><rsup|2>+3*R<rsup|2>+4*H<rsup|2>|)>|12>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|M*<around*|(|3*R<rsub|v><rsup|2>+3*R<rsup|2>+4*H<rsup|2>|)>|12>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|M*<around*|(|R<rsub|v><rsup|2>+R<rsup|2>|)>|2>>>>>>>>
     </unfolded-io>
+
+    \;
+
+    \;
 
     <\textput>
       3. <strong|Sfera di raggio <math|R>>
@@ -586,25 +678,35 @@
       <\equation*>
         <choice|<tformat|<table|<row|<cell|x=\<rho\>sin<around*|(|\<phi\>|)>cos<around*|(|\<theta\>|)>>>|<row|<cell|y=\<rho\>sin<around*|(|\<phi\>|)>sin<around*|(|\<theta\>|)>>>|<row|<cell|z=\<rho\>cos<around*|(|\<phi\>|)>>>>>>\<longrightarrow\>\<theta\>\<in\><around*|[|0;2\<pi\>|]>,\<rho\>\<in\><around*|[|-<frac|R|2>,<frac|R|2>|]>,\<phi\>\<in\><around*|[|0;2\<pi\>|]>
       </equation*>
+
+      Definiamo il volume <math|V> e il raggio <math|\<rho\>>:
+
+      <\equation*>
+        V=<frac|4|3>\<pi\>R<rsup|3>
+      </equation*>
+
+      <\equation*>
+        \<rho\>=<frac|M|<frac|4|3>\<pi\>R<rsup|3>>
+      </equation*>
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>39) >
+      <with|color|red|(<with|math-font-family|rm|%i>38) >
     <|input>
       rhoS:[0,R]$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>40) >
+      <with|color|red|(<with|math-font-family|rm|%i>39) >
     <|unfolded-io>
       densS:M/(4/3*%pi*R^3)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o40>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o39>)
       >><frac|3*M|4*\<pi\>*R<rsup|3>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>41) >
+      <with|color|red|(<with|math-font-family|rm|%i>40) >
     <|input>
       sfera(rhoS):=block(
 
@@ -646,13 +748,13 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>42) >
+      <with|color|red|(<with|math-font-family|rm|%i>41) >
     <|unfolded-io>
       densS*sfera(rhoS)
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o42>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o41>)
       >><matrix|<tformat|<table|<row|<cell|<frac|2*M*R<rsup|2>|5>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|2*M*R<rsup|2>|5>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|2*M*R<rsup|2>|5>>>>>>>>
     </unfolded-io>
 
@@ -664,22 +766,22 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>43) >
+      <with|color|red|(<with|math-font-family|rm|%i>42) >
     <|input>
       rv:[0,R[v]]$
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>44) >
+      <with|color|red|(<with|math-font-family|rm|%i>43) >
     <|unfolded-io>
       densSv:M/(4/3*%pi*R^3-4/3*%pi*R[v]^3)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o44>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o43>)
       >><frac|M|<frac|4*\<pi\>*R<rsup|3>|3>-<frac|4*\<pi\>*R<rsub|v><rsup|3>|3>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>45) >
+      <with|color|red|(<with|math-font-family|rm|%i>44) >
     <|input>
       sferaV(rhoS,rv):=block(
 
@@ -729,16 +831,16 @@
     </input>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>46) >
+      <with|color|red|(<with|math-font-family|rm|%i>45) >
     <|unfolded-io>
       factor(densSv*sferaV(rhoS,rv))
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o46>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o45>)
       >><matrix|<tformat|<table|<row|<cell|<frac|2*M*<around*|(|R<rsub|v><rsup|4>+R*R<rsub|v><rsup|3>+R<rsup|2>*R<rsub|v><rsup|2>+R<rsup|3>*R<rsub|v>+R<rsup|4>|)>|5*<around*|(|R<rsub|v><rsup|2>+R*R<rsub|v>+R<rsup|2>|)>>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|<frac|2*M*<around*|(|R<rsub|v><rsup|4>+R*R<rsub|v><rsup|3>+R<rsup|2>*R<rsub|v><rsup|2>+R<rsup|3>*R<rsub|v>+R<rsup|4>|)>|5*<around*|(|R<rsub|v><rsup|2>+R*R<rsub|v>+R<rsup|2>|)>>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|2*M*<around*|(|R<rsub|v><rsup|4>+R*R<rsub|v><rsup|3>+R<rsup|2>*R<rsub|v><rsup|2>+R<rsup|3>*R<rsub|v>+R<rsup|4>|)>|5*<around*|(|R<rsub|v><rsup|2>+R*R<rsub|v>+R<rsup|2>|)>>>>>>>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>47) >
+      <with|color|red|(<with|math-font-family|rm|%i>46) >
     <|input>
       \;
     </input>

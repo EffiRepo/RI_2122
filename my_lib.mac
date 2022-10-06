@@ -5,6 +5,7 @@ triginverses:all$
 /* Caricamento libreria per semplificazioni aggiuntive*/
 load("atrig1");
 /* Regole di semplificazione coseno e seno*/
+/*
 matchdeclare(a,lambda([x],is(x=cos)),b,symbolp,l,integerp)$
 defrule(r1,a(b[l]),c[l])$
 matchdeclare(d,lambda([x],is(x=sin)),f,symbolp,g,integerp)$
@@ -21,9 +22,72 @@ matchdeclare(a,lambda([x],is(x=cos)),b,symbolp)$
 defrule(r7,a(b),c[b])$
 matchdeclare(a,lambda([x],is(x=sin)),b,symbolp)$
 defrule(r8,a(b),s[b])$
+*/
+/*
 rename(expr,i):=block(
   if(i=0) then(return (applyb1(expr,r1,r2,r3,r4,r5,r6,r7,r8)))
   elseif(i=1)then(return (applyb1(trigexpand(expr),r1,r2,r7,r8)))
+)$
+*/
+matchdeclare(a,lambda([x],is(x=cos)),b,lambda([x],is(subvarp(x))))$
+defrule(r1,a(b),c[part(b,1)])$
+matchdeclare(a,lambda([x],is(x=sin)),b,lambda([x],is(subvarp(x))))$
+defrule(r2,a(b),s[part(b,1)])$
+
+matchdeclare(a,lambda([x],is(x=sin)),b,
+  lambda([x],
+            if(operatorp(x,"+")) then(
+              ar:args(x),
+              check:true,
+              for value in ar do(
+              if (subvarp(value)=false) then (check:false)
+              ),
+              is(check)
+            )else(is(false))
+  )
+)$
+defrule(r3,a(b),s[part(b,1,1)+10*part(b,2,1)])$
+matchdeclare(a,lambda([x],is(x=cos)),b,
+    lambda([x],
+            if(operatorp(x,"+")) then(
+              ar:args(x),
+              check:true,
+              for value in ar do(
+              if (subvarp(value)=false) then (check:false)
+              ),
+              is(check)
+            )else(is(false))
+    )
+  )$
+defrule(r4,a(b),c[part(b,1,1)+10*part(b,2,1)])$
+matchdeclare(a,lambda([x],is(x=cos)),b,
+lambda([x],
+            if(operatorp(x,["+","+","+"]))
+            then(
+              ar:args(x),
+              check:true,
+              for value in ar do(
+              if (subvarp(value)=false) then (check:false)
+              ),
+              is(check)
+            )else(is(false))
+))$
+defrule(r14,a[b],c[100*part(b,3,1)+10*part(b,2,1)+part(b,1,1)])$
+matchdeclare(a,lambda([x],is(x=sin)),b,
+lambda([x],
+            if(operatorp(x,["+","+","+"])) then(
+              ar:args(x),
+              check:true,
+              for value in ar do(
+              if (subvarp(value)=false) then (check:false)
+              ),
+              is(check)
+            )else(is(false))
+    )
+)$
+defrule(r14,a[b],s[100*part(b,3,1)+10*part(b,2,1)+part(b,1,1)])$
+rename(expr,i):=block(
+  return (apply2(expr,r1,r2,r3,r4,r5,r6,r7,r8))
 )$
 /*Funzioni per semplificare espressioni complesse*/
 mySimp(expr):=block(
@@ -516,6 +580,9 @@ II:matrix([x[i],0,0],
 II:subst(j,i,II),
 return(II)
 )$
+
+
+
 grad(expr):=block(
   [var:[],i,n,idx,l:0,const:[q,v,x,y,z,theta,phi,omega],J,f:[]],
   f:flatten(append(f,[expr])),
@@ -600,6 +667,54 @@ derivate(f):=block(
   ),
   return(df)         
 )$
+
+/* NEW DERIVATIVES*/
+partial(f,dir):=block([
+                       dot:0,
+                       index:0,
+                       value:0
+                       ],
+                       if(subvarp(dir)) then(
+                         
+                         index:part(dir,1),
+                         dot:diff(part(dir,0),t),
+                         
+                         value:diff(f,dir)*dot[index],
+                         return(value)
+                       )else(
+                         disp(dir),
+                         return(diff(f,dir)*diff(dir,t))
+                       )
+)$
+gradef(q,t,v)$
+gradef(v,t,a)$
+dev(f,var):=block([symb,
+                  varTograd,
+                  dif:0],
+          symb:listofvars(f),
+          varToGrad:[],
+          for s in symb do(
+            if(symbolp(s) and s#L and s#D) then push(s,varToGrad)
+            else if(subvarp(s) and part(s,0)#L and part(s,0)#D) then  push(s,varToGrad)
+          ),
+           if(var=t) then(
+             for dir in varToGrad do(
+                dif:dif+partial(f,dir)
+             ),
+             return(dif)
+           )else(
+             disp(var),
+             return(partial(f,var))
+           )
+           
+  
+)$
+
+
+
+
+
+
 baricentro(row):=block(
 [bc],
 bc:addrow(addcol(ident(3),transpose(row)),[0,0,0,1]),

@@ -210,10 +210,8 @@
       <|unfolded-io>
         rename(DH(dueDof)[1],0)
       <|unfolded-io>
-        \;
-
-        \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-        >><matrix|<tformat|<table|<row|<cell|c<rsub|21>>|<cell|-s<rsub|21>>|<cell|0>|<cell|L<rsub|2>*c<rsub|21>+L<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|21>>|<cell|c<rsub|21>>|<cell|0>|<cell|L<rsub|2>*s<rsub|21>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+        >><matrix|<tformat|<table|<row|<cell|c<rsub|12>>|<cell|-s<rsub|12>>|<cell|0>|<cell|L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|12>>|<cell|c<rsub|12>>|<cell|0>|<cell|L<rsub|2>*s<rsub|12>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
       </unfolded-io>
 
       <\unfolded-io>
@@ -221,9 +219,7 @@
       <|unfolded-io>
         DH(dueDof)[2]
       <|unfolded-io>
-        \;
-
-        \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
         >><around*|[|<matrix|<tformat|<table|<row|<cell|cos
         <around*|(|q<rsub|1>|)>>|<cell|-sin
         <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|1>*cos
@@ -286,9 +282,7 @@
       <|unfolded-io>
         treDof:[[q[1],0,0,L[1]],[q[2],0,0,L[2]],[q[3],0,0,L[3]]];
       <|unfolded-io>
-        \;
-
-        \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
         >><around*|[|<around*|[|q<rsub|1>,0,0,L<rsub|1>|]>,<around*|[|q<rsub|2>,0,0,L<rsub|2>|]>,<around*|[|q<rsub|3>,0,0,L<rsub|3>|]>|]>>>
       </unfolded-io>
 
@@ -297,57 +291,19 @@
       <|unfolded-io>
         rename(DH(treDof)[1],0)
       <|unfolded-io>
-        \;
-
-        \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
-        >><matrix|<tformat|<table|<row|<cell|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>>|<cell|-c<rsub|3>*s<rsub|21>-s<rsub|3>*c<rsub|21>>|<cell|0>|<cell|-L<rsub|3>*s<rsub|3>*s<rsub|21>+L<rsub|3>*c<rsub|3>*c<rsub|21>+L<rsub|2>*c<rsub|21>+L<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|3>*s<rsub|21>+s<rsub|3>*c<rsub|21>>|<cell|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>>|<cell|0>|<cell|L<rsub|3>*c<rsub|3>*s<rsub|21>+L<rsub|2>*s<rsub|21>+L<rsub|3>*s<rsub|3>*c<rsub|21>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o10>)
+        >><matrix|<tformat|<table|<row|<cell|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>>|<cell|-c<rsub|3>*s<rsub|12>-s<rsub|3>*c<rsub|12>>|<cell|0>|<cell|-L<rsub|3>*s<rsub|3>*s<rsub|12>+L<rsub|3>*c<rsub|3>*c<rsub|12>+L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|3>*s<rsub|12>+s<rsub|3>*c<rsub|12>>|<cell|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>>|<cell|0>|<cell|L<rsub|3>*c<rsub|3>*s<rsub|12>+L<rsub|2>*s<rsub|12>+L<rsub|3>*s<rsub|3>*c<rsub|12>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
       </unfolded-io>
 
       <\unfolded-io>
         <with|color|red|(<with|math-font-family|rm|%i>11) >
       <|unfolded-io>
-        DH(treDof)[2]
+        rename(DH(treDof)[2],0)
       <|unfolded-io>
-        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
-        >><around*|[|<matrix|<tformat|<table|<row|<cell|cos
-        <around*|(|q<rsub|1>|)>>|<cell|-sin
-        <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|1>*cos
-        <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
-        <around*|(|q<rsub|1>|)>>|<cell|cos
-        <around*|(|q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|1>*sin
-        <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|-sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|2>*cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*cos
-        <around*|(|q<rsub|1>|)>>>|<row|<cell|sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>>|<cell|0>|<cell|L<rsub|2>*sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*sin
-        <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*cos <around*|(|q<rsub|3>|)>-sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*sin
-        <around*|(|q<rsub|3>|)>>|<cell|-cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*sin <around*|(|q<rsub|3>|)>-sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*cos
-        <around*|(|q<rsub|3>|)>>|<cell|0>|<cell|-L<rsub|3>*sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*sin
-        <around*|(|q<rsub|3>|)>+L<rsub|3>*cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*cos
-        <around*|(|q<rsub|3>|)>+L<rsub|2>*cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*cos
-        <around*|(|q<rsub|1>|)>>>|<row|<cell|cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*sin <around*|(|q<rsub|3>|)>+sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*cos
-        <around*|(|q<rsub|3>|)>>|<cell|cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*cos <around*|(|q<rsub|3>|)>-sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*sin
-        <around*|(|q<rsub|3>|)>>|<cell|0>|<cell|L<rsub|3>*cos
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*sin
-        <around*|(|q<rsub|3>|)>+L<rsub|3>*sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>*cos
-        <around*|(|q<rsub|3>|)>+L<rsub|2>*sin
-        <around*|(|q<rsub|2>+q<rsub|1>|)>+L<rsub|1>*sin
-        <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
+        \;
+
+        \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+        >><around*|[|<matrix|<tformat|<table|<row|<cell|c<rsub|1>>|<cell|-s<rsub|1>>|<cell|0>|<cell|L<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|1>>|<cell|c<rsub|1>>|<cell|0>|<cell|L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|c<rsub|12>>|<cell|-s<rsub|12>>|<cell|0>|<cell|L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|12>>|<cell|c<rsub|12>>|<cell|0>|<cell|L<rsub|2>*s<rsub|12>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>>|<cell|-c<rsub|3>*s<rsub|12>-s<rsub|3>*c<rsub|12>>|<cell|0>|<cell|-L<rsub|3>*s<rsub|3>*s<rsub|12>+L<rsub|3>*c<rsub|3>*c<rsub|12>+L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|3>*s<rsub|12>+s<rsub|3>*c<rsub|12>>|<cell|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>>|<cell|0>|<cell|L<rsub|3>*c<rsub|3>*s<rsub|12>+L<rsub|2>*s<rsub|12>+L<rsub|3>*s<rsub|3>*c<rsub|12>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
       </unfolded-io>
 
       <\textput>
@@ -367,7 +323,9 @@
       <|unfolded-io>
         cart:[[0,q[1],-%pi/2,0],[-%pi/2,q[2],-%pi/2,0],[0,q[3],0,0]]
       <|unfolded-io>
-        <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+        \;
+
+        \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
         >><around*|[|<around*|[|0,q<rsub|1>,-<frac|\<pi\>|2>,0|]>,<around*|[|-<frac|\<pi\>|2>,q<rsub|2>,-<frac|\<pi\>|2>,0|]>,<around*|[|0,q<rsub|3>,0,0|]>|]>>>
       </unfolded-io>
 
@@ -478,7 +436,7 @@
         rename(DH(scara)[1],0)
       <|unfolded-io>
         <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-        >><matrix|<tformat|<table|<row|<cell|c<rsub|21>>|<cell|-s<rsub|21>>|<cell|0>|<cell|D<rsub|2>*c<rsub|21>+D<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|21>>|<cell|c<rsub|21>>|<cell|0>|<cell|D<rsub|2>*s<rsub|21>+D<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+        >><matrix|<tformat|<table|<row|<cell|c<rsub|12>>|<cell|-s<rsub|12>>|<cell|0>|<cell|D<rsub|2>*c<rsub|12>+D<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|12>>|<cell|c<rsub|12>>|<cell|0>|<cell|D<rsub|2>*s<rsub|12>+D<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
       </unfolded-io>
 
       <\unfolded-io>
@@ -511,6 +469,22 @@
         <around*|(|q<rsub|2>+q<rsub|1>|)>+D<rsub|1>*sin
         <around*|(|q<rsub|1>|)>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|q<rsub|3>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>>>
       </unfolded-io>
+
+      \;
+
+      \;
+
+      \;
+
+      \;
+
+      \;
+
+      \;
+
+      \;
+
+      \;
 
       \;
 
@@ -643,11 +617,7 @@
         \;
 
         \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
-        >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|32>>|<cell|-c<rsub|1>*s<rsub|32>>|<cell|s<rsub|1>>|<cell|c<rsub|1>*<around*|(|D<rsub|3>*c<rsub|32>+D<rsub|2>*c<rsub|2>|)>>>|<row|<cell|s<rsub|1>*c<rsub|32>>|<cell|-s<rsub|1>*s<rsub|32>>|<cell|-c<rsub|1>>|<cell|s<rsub|1>*<around*|(|D<rsub|3>*c<rsub|32>+D<rsub|2>*c<rsub|2>|)>>>|<row|<cell|s<rsub|32>>|<cell|c<rsub|32>>|<cell|0>|<cell|D<rsub|3>*s<rsub|32>+D<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
-
-        \;
-
-        \;
+        >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|23>>|<cell|-c<rsub|1>*s<rsub|23>>|<cell|s<rsub|1>>|<cell|c<rsub|1>*<around*|(|D<rsub|3>*c<rsub|23>+D<rsub|2>*c<rsub|2>|)>>>|<row|<cell|s<rsub|1>*c<rsub|23>>|<cell|-s<rsub|1>*s<rsub|23>>|<cell|-c<rsub|1>>|<cell|s<rsub|1>*<around*|(|D<rsub|3>*c<rsub|23>+D<rsub|2>*c<rsub|2>|)>>>|<row|<cell|s<rsub|23>>|<cell|c<rsub|23>>|<cell|0>|<cell|D<rsub|3>*s<rsub|23>+D<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
       </unfolded-io>
 
       \;
@@ -735,7 +705,7 @@
         expand(rename(DH(puma)[1],0))
       <|unfolded-io>
         <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
-        >><matrix|<tformat|<table|<row|<cell|-c<rsub|1>*s<rsub|5>*c<rsub|6>*s<rsub|32>-c<rsub|1>*s<rsub|4>*s<rsub|6>*c<rsub|32>+c<rsub|1>*c<rsub|4>*c<rsub|5>*c<rsub|6>*c<rsub|32>-s<rsub|1>*c<rsub|4>*s<rsub|6>-s<rsub|1>*s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|c<rsub|1>*s<rsub|5>*s<rsub|6>*s<rsub|32>-c<rsub|1>*c<rsub|4>*c<rsub|5>*s<rsub|6>*c<rsub|32>-c<rsub|1>*s<rsub|4>*c<rsub|6>*c<rsub|32>+s<rsub|1>*s<rsub|4>*c<rsub|5>*s<rsub|6>-s<rsub|1>*c<rsub|4>*c<rsub|6>>|<cell|c<rsub|1>*c<rsub|5>*s<rsub|32>+c<rsub|1>*c<rsub|4>*s<rsub|5>*c<rsub|32>-s<rsub|1>*s<rsub|4>*s<rsub|5>>|<cell|c<rsub|1>*c<rsub|5>*L<rsub|6>*s<rsub|32>+c<rsub|1>*L<rsub|4>*s<rsub|32>+c<rsub|1>*c<rsub|4>*s<rsub|5>*L<rsub|6>*c<rsub|32>-s<rsub|1>*s<rsub|4>*s<rsub|5>*L<rsub|6>+c<rsub|1>*D<rsub|2>*c<rsub|2>>>|<row|<cell|-s<rsub|1>*s<rsub|5>*c<rsub|6>*s<rsub|32>-s<rsub|1>*s<rsub|4>*s<rsub|6>*c<rsub|32>+s<rsub|1>*c<rsub|4>*c<rsub|5>*c<rsub|6>*c<rsub|32>+c<rsub|1>*c<rsub|4>*s<rsub|6>+c<rsub|1>*s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|s<rsub|1>*s<rsub|5>*s<rsub|6>*s<rsub|32>-s<rsub|1>*c<rsub|4>*c<rsub|5>*s<rsub|6>*c<rsub|32>-s<rsub|1>*s<rsub|4>*c<rsub|6>*c<rsub|32>-c<rsub|1>*s<rsub|4>*c<rsub|5>*s<rsub|6>+c<rsub|1>*c<rsub|4>*c<rsub|6>>|<cell|s<rsub|1>*c<rsub|5>*s<rsub|32>+s<rsub|1>*c<rsub|4>*s<rsub|5>*c<rsub|32>+c<rsub|1>*s<rsub|4>*s<rsub|5>>|<cell|s<rsub|1>*c<rsub|5>*L<rsub|6>*s<rsub|32>+s<rsub|1>*L<rsub|4>*s<rsub|32>+s<rsub|1>*c<rsub|4>*s<rsub|5>*L<rsub|6>*c<rsub|32>+c<rsub|1>*s<rsub|4>*s<rsub|5>*L<rsub|6>+s<rsub|1>*D<rsub|2>*c<rsub|2>>>|<row|<cell|s<rsub|4>*s<rsub|6>*s<rsub|32>-c<rsub|4>*c<rsub|5>*c<rsub|6>*s<rsub|32>-s<rsub|5>*c<rsub|6>*c<rsub|32>>|<cell|c<rsub|4>*c<rsub|5>*s<rsub|6>*s<rsub|32>+s<rsub|4>*c<rsub|6>*s<rsub|32>+s<rsub|5>*s<rsub|6>*c<rsub|32>>|<cell|c<rsub|5>*c<rsub|32>-c<rsub|4>*s<rsub|5>*s<rsub|32>>|<cell|-c<rsub|4>*s<rsub|5>*L<rsub|6>*s<rsub|32>+c<rsub|5>*L<rsub|6>*c<rsub|32>+L<rsub|4>*c<rsub|32>-D<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+        >><matrix|<tformat|<table|<row|<cell|-c<rsub|1>*s<rsub|5>*c<rsub|6>*s<rsub|23>-c<rsub|1>*s<rsub|4>*s<rsub|6>*c<rsub|23>+c<rsub|1>*c<rsub|4>*c<rsub|5>*c<rsub|6>*c<rsub|23>-s<rsub|1>*c<rsub|4>*s<rsub|6>-s<rsub|1>*s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|c<rsub|1>*s<rsub|5>*s<rsub|6>*s<rsub|23>-c<rsub|1>*c<rsub|4>*c<rsub|5>*s<rsub|6>*c<rsub|23>-c<rsub|1>*s<rsub|4>*c<rsub|6>*c<rsub|23>+s<rsub|1>*s<rsub|4>*c<rsub|5>*s<rsub|6>-s<rsub|1>*c<rsub|4>*c<rsub|6>>|<cell|c<rsub|1>*c<rsub|5>*s<rsub|23>+c<rsub|1>*c<rsub|4>*s<rsub|5>*c<rsub|23>-s<rsub|1>*s<rsub|4>*s<rsub|5>>|<cell|c<rsub|1>*c<rsub|5>*L<rsub|6>*s<rsub|23>+c<rsub|1>*L<rsub|4>*s<rsub|23>+c<rsub|1>*c<rsub|4>*s<rsub|5>*L<rsub|6>*c<rsub|23>-s<rsub|1>*s<rsub|4>*s<rsub|5>*L<rsub|6>+c<rsub|1>*D<rsub|2>*c<rsub|2>>>|<row|<cell|-s<rsub|1>*s<rsub|5>*c<rsub|6>*s<rsub|23>-s<rsub|1>*s<rsub|4>*s<rsub|6>*c<rsub|23>+s<rsub|1>*c<rsub|4>*c<rsub|5>*c<rsub|6>*c<rsub|23>+c<rsub|1>*c<rsub|4>*s<rsub|6>+c<rsub|1>*s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|s<rsub|1>*s<rsub|5>*s<rsub|6>*s<rsub|23>-s<rsub|1>*c<rsub|4>*c<rsub|5>*s<rsub|6>*c<rsub|23>-s<rsub|1>*s<rsub|4>*c<rsub|6>*c<rsub|23>-c<rsub|1>*s<rsub|4>*c<rsub|5>*s<rsub|6>+c<rsub|1>*c<rsub|4>*c<rsub|6>>|<cell|s<rsub|1>*c<rsub|5>*s<rsub|23>+s<rsub|1>*c<rsub|4>*s<rsub|5>*c<rsub|23>+c<rsub|1>*s<rsub|4>*s<rsub|5>>|<cell|s<rsub|1>*c<rsub|5>*L<rsub|6>*s<rsub|23>+s<rsub|1>*L<rsub|4>*s<rsub|23>+s<rsub|1>*c<rsub|4>*s<rsub|5>*L<rsub|6>*c<rsub|23>+c<rsub|1>*s<rsub|4>*s<rsub|5>*L<rsub|6>+s<rsub|1>*D<rsub|2>*c<rsub|2>>>|<row|<cell|s<rsub|4>*s<rsub|6>*s<rsub|23>-c<rsub|4>*c<rsub|5>*c<rsub|6>*s<rsub|23>-s<rsub|5>*c<rsub|6>*c<rsub|23>>|<cell|c<rsub|4>*c<rsub|5>*s<rsub|6>*s<rsub|23>+s<rsub|4>*c<rsub|6>*s<rsub|23>+s<rsub|5>*s<rsub|6>*c<rsub|23>>|<cell|c<rsub|5>*c<rsub|23>-c<rsub|4>*s<rsub|5>*s<rsub|23>>|<cell|-c<rsub|4>*s<rsub|5>*L<rsub|6>*s<rsub|23>+c<rsub|5>*L<rsub|6>*c<rsub|23>+L<rsub|4>*c<rsub|23>-D<rsub|2>*s<rsub|2>+L<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
       </unfolded-io>
 
       <\textput>
@@ -797,7 +767,7 @@
         \;
 
         \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o35>)
-        >><matrix|<tformat|<table|<row|<cell|c<rsub|6>*<around*|(|c<rsub|4>*c<rsub|5>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>+s<rsub|5>*<around*|(|-c<rsub|3>*s<rsub|21>-s<rsub|3>*c<rsub|21>|)>|)>-s<rsub|4>*s<rsub|6>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>>|<cell|-s<rsub|6>*<around*|(|c<rsub|4>*c<rsub|5>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>+s<rsub|5>*<around*|(|-c<rsub|3>*s<rsub|21>-s<rsub|3>*c<rsub|21>|)>|)>-s<rsub|4>*c<rsub|6>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>>|<cell|c<rsub|4>*s<rsub|5>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>-c<rsub|5>*<around*|(|-c<rsub|3>*s<rsub|21>-s<rsub|3>*c<rsub|21>|)>>|<cell|L<rsub|6>*<around*|(|c<rsub|4>*s<rsub|5>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>-c<rsub|5>*<around*|(|-c<rsub|3>*s<rsub|21>-s<rsub|3>*c<rsub|21>|)>|)>-L<rsub|3>*s<rsub|3>*s<rsub|21>+L<rsub|3>*c<rsub|3>*c<rsub|21>+L<rsub|2>*c<rsub|21>+L<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|6>*<around*|(|s<rsub|5>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>+c<rsub|4>*c<rsub|5>*<around*|(|c<rsub|3>*s<rsub|21>+s<rsub|3>*c<rsub|21>|)>|)>-s<rsub|4>*s<rsub|6>*<around*|(|c<rsub|3>*s<rsub|21>+s<rsub|3>*c<rsub|21>|)>>|<cell|-s<rsub|6>*<around*|(|s<rsub|5>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>+c<rsub|4>*c<rsub|5>*<around*|(|c<rsub|3>*s<rsub|21>+s<rsub|3>*c<rsub|21>|)>|)>-s<rsub|4>*c<rsub|6>*<around*|(|c<rsub|3>*s<rsub|21>+s<rsub|3>*c<rsub|21>|)>>|<cell|c<rsub|4>*s<rsub|5>*<around*|(|c<rsub|3>*s<rsub|21>+s<rsub|3>*c<rsub|21>|)>-c<rsub|5>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>>|<cell|L<rsub|6>*<around*|(|c<rsub|4>*s<rsub|5>*<around*|(|c<rsub|3>*s<rsub|21>+s<rsub|3>*c<rsub|21>|)>-c<rsub|5>*<around*|(|c<rsub|3>*c<rsub|21>-s<rsub|3>*s<rsub|21>|)>|)>+L<rsub|3>*c<rsub|3>*s<rsub|21>+L<rsub|2>*s<rsub|21>+L<rsub|3>*s<rsub|3>*c<rsub|21>+L<rsub|1>*s<rsub|1>>>|<row|<cell|c<rsub|4>*s<rsub|6>+s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|c<rsub|4>*c<rsub|6>-s<rsub|4>*c<rsub|5>*s<rsub|6>>|<cell|s<rsub|4>*s<rsub|5>>|<cell|s<rsub|4>*s<rsub|5>*L<rsub|6>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+        >><matrix|<tformat|<table|<row|<cell|c<rsub|6>*<around*|(|c<rsub|4>*c<rsub|5>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>+s<rsub|5>*<around*|(|-c<rsub|3>*s<rsub|12>-s<rsub|3>*c<rsub|12>|)>|)>-s<rsub|4>*s<rsub|6>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>>|<cell|-s<rsub|6>*<around*|(|c<rsub|4>*c<rsub|5>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>+s<rsub|5>*<around*|(|-c<rsub|3>*s<rsub|12>-s<rsub|3>*c<rsub|12>|)>|)>-s<rsub|4>*c<rsub|6>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>>|<cell|c<rsub|4>*s<rsub|5>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>-c<rsub|5>*<around*|(|-c<rsub|3>*s<rsub|12>-s<rsub|3>*c<rsub|12>|)>>|<cell|L<rsub|6>*<around*|(|c<rsub|4>*s<rsub|5>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>-c<rsub|5>*<around*|(|-c<rsub|3>*s<rsub|12>-s<rsub|3>*c<rsub|12>|)>|)>-L<rsub|3>*s<rsub|3>*s<rsub|12>+L<rsub|3>*c<rsub|3>*c<rsub|12>+L<rsub|2>*c<rsub|12>+L<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|6>*<around*|(|s<rsub|5>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>+c<rsub|4>*c<rsub|5>*<around*|(|c<rsub|3>*s<rsub|12>+s<rsub|3>*c<rsub|12>|)>|)>-s<rsub|4>*s<rsub|6>*<around*|(|c<rsub|3>*s<rsub|12>+s<rsub|3>*c<rsub|12>|)>>|<cell|-s<rsub|6>*<around*|(|s<rsub|5>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>+c<rsub|4>*c<rsub|5>*<around*|(|c<rsub|3>*s<rsub|12>+s<rsub|3>*c<rsub|12>|)>|)>-s<rsub|4>*c<rsub|6>*<around*|(|c<rsub|3>*s<rsub|12>+s<rsub|3>*c<rsub|12>|)>>|<cell|c<rsub|4>*s<rsub|5>*<around*|(|c<rsub|3>*s<rsub|12>+s<rsub|3>*c<rsub|12>|)>-c<rsub|5>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>>|<cell|L<rsub|6>*<around*|(|c<rsub|4>*s<rsub|5>*<around*|(|c<rsub|3>*s<rsub|12>+s<rsub|3>*c<rsub|12>|)>-c<rsub|5>*<around*|(|c<rsub|3>*c<rsub|12>-s<rsub|3>*s<rsub|12>|)>|)>+L<rsub|3>*c<rsub|3>*s<rsub|12>+L<rsub|2>*s<rsub|12>+L<rsub|3>*s<rsub|3>*c<rsub|12>+L<rsub|1>*s<rsub|1>>>|<row|<cell|c<rsub|4>*s<rsub|6>+s<rsub|4>*c<rsub|5>*c<rsub|6>>|<cell|c<rsub|4>*c<rsub|6>-s<rsub|4>*c<rsub|5>*s<rsub|6>>|<cell|s<rsub|4>*s<rsub|5>>|<cell|s<rsub|4>*s<rsub|5>*L<rsub|6>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
       </unfolded-io>
 
       <\textput>
@@ -897,8 +867,14 @@
         \;
 
         \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o41>)
-        >><matrix|<tformat|<table|<row|<cell|c<rsub|5>*c<rsub|6>*<around*|(|c<rsub|4>*c<rsub|21>-s<rsub|4>*s<rsub|21>|)>+s<rsub|6>*<around*|(|-c<rsub|4>*s<rsub|21>-s<rsub|4>*c<rsub|21>|)>>|<cell|c<rsub|6>*<around*|(|-c<rsub|4>*s<rsub|21>-s<rsub|4>*c<rsub|21>|)>-c<rsub|5>*s<rsub|6>*<around*|(|c<rsub|4>*c<rsub|21>-s<rsub|4>*s<rsub|21>|)>>|<cell|s<rsub|5>*<around*|(|c<rsub|4>*c<rsub|21>-s<rsub|4>*s<rsub|21>|)>>|<cell|s<rsub|5>*L<rsub|6>*<around*|(|c<rsub|4>*c<rsub|21>-s<rsub|4>*s<rsub|21>|)>+D<rsub|2>*c<rsub|21>+D<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|6>*<around*|(|c<rsub|4>*c<rsub|21>-s<rsub|4>*s<rsub|21>|)>+c<rsub|5>*c<rsub|6>*<around*|(|c<rsub|4>*s<rsub|21>+s<rsub|4>*c<rsub|21>|)>>|<cell|c<rsub|6>*<around*|(|c<rsub|4>*c<rsub|21>-s<rsub|4>*s<rsub|21>|)>-c<rsub|5>*s<rsub|6>*<around*|(|c<rsub|4>*s<rsub|21>+s<rsub|4>*c<rsub|21>|)>>|<cell|s<rsub|5>*<around*|(|c<rsub|4>*s<rsub|21>+s<rsub|4>*c<rsub|21>|)>>|<cell|s<rsub|5>*L<rsub|6>*<around*|(|c<rsub|4>*s<rsub|21>+s<rsub|4>*c<rsub|21>|)>+D<rsub|2>*s<rsub|21>+D<rsub|1>*s<rsub|1>>>|<row|<cell|-s<rsub|5>*c<rsub|6>>|<cell|s<rsub|5>*s<rsub|6>>|<cell|c<rsub|5>>|<cell|c<rsub|5>*L<rsub|6>+L<rsub|4>+q<rsub|3>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+        >><matrix|<tformat|<table|<row|<cell|c<rsub|5>*c<rsub|6>*<around*|(|c<rsub|4>*c<rsub|12>-s<rsub|4>*s<rsub|12>|)>+s<rsub|6>*<around*|(|-c<rsub|4>*s<rsub|12>-s<rsub|4>*c<rsub|12>|)>>|<cell|c<rsub|6>*<around*|(|-c<rsub|4>*s<rsub|12>-s<rsub|4>*c<rsub|12>|)>-c<rsub|5>*s<rsub|6>*<around*|(|c<rsub|4>*c<rsub|12>-s<rsub|4>*s<rsub|12>|)>>|<cell|s<rsub|5>*<around*|(|c<rsub|4>*c<rsub|12>-s<rsub|4>*s<rsub|12>|)>>|<cell|s<rsub|5>*L<rsub|6>*<around*|(|c<rsub|4>*c<rsub|12>-s<rsub|4>*s<rsub|12>|)>+D<rsub|2>*c<rsub|12>+D<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|6>*<around*|(|c<rsub|4>*c<rsub|12>-s<rsub|4>*s<rsub|12>|)>+c<rsub|5>*c<rsub|6>*<around*|(|c<rsub|4>*s<rsub|12>+s<rsub|4>*c<rsub|12>|)>>|<cell|c<rsub|6>*<around*|(|c<rsub|4>*c<rsub|12>-s<rsub|4>*s<rsub|12>|)>-c<rsub|5>*s<rsub|6>*<around*|(|c<rsub|4>*s<rsub|12>+s<rsub|4>*c<rsub|12>|)>>|<cell|s<rsub|5>*<around*|(|c<rsub|4>*s<rsub|12>+s<rsub|4>*c<rsub|12>|)>>|<cell|s<rsub|5>*L<rsub|6>*<around*|(|c<rsub|4>*s<rsub|12>+s<rsub|4>*c<rsub|12>|)>+D<rsub|2>*s<rsub|12>+D<rsub|1>*s<rsub|1>>>|<row|<cell|-s<rsub|5>*c<rsub|6>>|<cell|s<rsub|5>*s<rsub|6>>|<cell|c<rsub|5>>|<cell|c<rsub|5>*L<rsub|6>+L<rsub|4>+q<rsub|3>>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
       </unfolded-io>
+
+      <\input>
+        <with|color|red|(<with|math-font-family|rm|%i>42) >
+      <|input>
+        \;
+      </input>
 
       <\input>
         <with|color|red|(<with|math-font-family|rm|%i>42) >
@@ -931,10 +907,10 @@
   <\collection>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|10|5>>
-    <associate|auto-11|<tuple|11|5>>
-    <associate|auto-12|<tuple|12|5>>
-    <associate|auto-13|<tuple|13|5>>
-    <associate|auto-14|<tuple|14|6>>
+    <associate|auto-11|<tuple|11|6>>
+    <associate|auto-12|<tuple|12|6>>
+    <associate|auto-13|<tuple|13|6>>
+    <associate|auto-14|<tuple|14|7>>
     <associate|auto-2|<tuple|2|2>>
     <associate|auto-3|<tuple|3|2>>
     <associate|auto-4|<tuple|4|3>>
@@ -942,7 +918,7 @@
     <associate|auto-6|<tuple|6|4>>
     <associate|auto-7|<tuple|7|4>>
     <associate|auto-8|<tuple|8|4>>
-    <associate|auto-9|<tuple|9|4>>
+    <associate|auto-9|<tuple|9|5>>
   </collection>
 </references>
 

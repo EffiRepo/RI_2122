@@ -367,13 +367,13 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>8) >
+      <with|color|red|(<with|math-font-family|rm|%i>25) >
     <|unfolded-io>
       M2:nautRot([z,x,y],ratsimp([%pi/3,%pi/6,0.1*sqrt(%pi/16)*0.754]))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
       >><matrix|<tformat|<table|<row|<cell|<frac|cos
       <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|2>-<frac|<sqrt|3>*sin
       <around*|(|<frac|377*<sqrt|\<pi\>>|20000>|)>|4>>|<cell|-<frac|3|4>>|<cell|<frac|sin
@@ -388,11 +388,11 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>9) >
+      <with|color|red|(<with|math-font-family|rm|%i>26) >
     <|unfolded-io>
       isRot(M2)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
       >><math-bf|true>>>
     </unfolded-io>
 
@@ -522,7 +522,9 @@
     <|unfolded-io>
       test()$
     <|unfolded-io>
-      <math|<with|math-display|true|R<rsub|z><around|(|\<vartheta\>|)><text|=
+      \;
+
+      \ <math|<with|math-display|true|R<rsub|z><around|(|\<vartheta\>|)><text|=
       ><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<vartheta\>|)>>|<cell|-sin
       <around*|(|\<vartheta\>|)>>|<cell|0>>|<row|<cell|sin
@@ -530,7 +532,9 @@
       <around*|(|\<vartheta\>|)>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|1>>>>><text|;
       E' una rotazione rispetto >z<text|? ><math-bf|true>>>
 
-      <math|<with|math-display|true|R<rsub|y><around|(|\<vartheta\>|)><text|=
+      \;
+
+      \ <math|<with|math-display|true|R<rsub|y><around|(|\<vartheta\>|)><text|=
       ><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<vartheta\>|)>>|<cell|0>|<cell|sin
       <around*|(|\<vartheta\>|)>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-sin
