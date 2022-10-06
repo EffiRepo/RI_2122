@@ -5,15 +5,14 @@ triginverses:all$
 /* Caricamento libreria per semplificazioni aggiuntive*/
 load("atrig1");
 /* Regole di semplificazione coseno e seno*/
-/*
 matchdeclare(a,lambda([x],is(x=cos)),b,symbolp,l,integerp)$
 defrule(r1,a(b[l]),c[l])$
 matchdeclare(d,lambda([x],is(x=sin)),f,symbolp,g,integerp)$
 defrule(r2,d(f[l]),s[l])$
-matchdeclare(d,lambda([x],is(x=sin)),h,symbolp,z,symbolp,u,integerp,i,integerp)$
-defrule(r3,d(h[u]+z[i]),s[u+10*i])$
-matchdeclare(d,lambda([x],is(x=cos)),h,symbolp,z,symbolp,u,integerp,i,integerp)$
-defrule(r4,d(h[u]+z[i]),c[u+10*i])$
+matchdeclare(d,lambda([x],is(x=sin)),w,symbolp,z,symbolp,u,integerp,i,integerp)$
+defrule(r3,d(w[u]+z[i]),s[u+10*i])$
+matchdeclare(d,lambda([x],is(x=cos)),w,symbolp,z,symbolp,u,integerp,i,integerp)$
+defrule(r4,d(w[u]+z[i]),c[u+10*i])$
 matchdeclare(d,lambda([x],is(x=cos)),s,symbolp,z,symbolp,r,symbolp,e,integerp,j,integerp,o,integerp)$
 defrule(r5,d(s[e]+z[j]+r[o]),c[e+10*j+100*o])$
 matchdeclare(d,lambda([x],is(x=sin)),c,symbolp,z,symbolp,r,symbolp,e,integerp,j,integerp,o,integerp)$
@@ -22,72 +21,9 @@ matchdeclare(a,lambda([x],is(x=cos)),b,symbolp)$
 defrule(r7,a(b),c[b])$
 matchdeclare(a,lambda([x],is(x=sin)),b,symbolp)$
 defrule(r8,a(b),s[b])$
-*/
-/*
 rename(expr,i):=block(
   if(i=0) then(return (applyb1(expr,r1,r2,r3,r4,r5,r6,r7,r8)))
   elseif(i=1)then(return (applyb1(trigexpand(expr),r1,r2,r7,r8)))
-)$
-*/
-matchdeclare(a,lambda([x],is(x=cos)),b,lambda([x],is(subvarp(x))))$
-defrule(r1,a(b),c[part(b,1)])$
-matchdeclare(a,lambda([x],is(x=sin)),b,lambda([x],is(subvarp(x))))$
-defrule(r2,a(b),s[part(b,1)])$
-
-matchdeclare(a,lambda([x],is(x=sin)),b,
-  lambda([x],
-            if(operatorp(x,"+")) then(
-              ar:args(x),
-              check:true,
-              for value in ar do(
-              if (subvarp(value)=false) then (check:false)
-              ),
-              is(check)
-            )else(is(false))
-  )
-)$
-defrule(r3,a(b),s[part(b,1,1)+10*part(b,2,1)])$
-matchdeclare(a,lambda([x],is(x=cos)),b,
-    lambda([x],
-            if(operatorp(x,"+")) then(
-              ar:args(x),
-              check:true,
-              for value in ar do(
-              if (subvarp(value)=false) then (check:false)
-              ),
-              is(check)
-            )else(is(false))
-    )
-  )$
-defrule(r4,a(b),c[part(b,1,1)+10*part(b,2,1)])$
-matchdeclare(a,lambda([x],is(x=cos)),b,
-lambda([x],
-            if(operatorp(x,["+","+","+"]))
-            then(
-              ar:args(x),
-              check:true,
-              for value in ar do(
-              if (subvarp(value)=false) then (check:false)
-              ),
-              is(check)
-            )else(is(false))
-))$
-defrule(r14,a[b],c[100*part(b,3,1)+10*part(b,2,1)+part(b,1,1)])$
-matchdeclare(a,lambda([x],is(x=sin)),b,
-lambda([x],
-            if(operatorp(x,["+","+","+"])) then(
-              ar:args(x),
-              check:true,
-              for value in ar do(
-              if (subvarp(value)=false) then (check:false)
-              ),
-              is(check)
-            )else(is(false))
-    )
-)$
-defrule(r14,a[b],s[100*part(b,3,1)+10*part(b,2,1)+part(b,1,1)])$
-rename(expr,i):=block(
-  return (apply2(expr,r1,r2,r3,r4,r5,r6,r7,r8))
 )$
 /*Funzioni per semplificare espressioni complesse*/
 mySimp(expr):=block(
@@ -572,149 +508,54 @@ DH(M):=block(
     ),
     return([Q,Qm])
 )$
-inerzia(j):=block(
-[II],
-II:matrix([x[i],0,0],
-[0,y[i],0],
-[0,0,z[i]]),
-II:subst(j,i,II),
-return(II)
-)$
-
-
-
-grad(expr):=block(
-  [var:[],i,n,idx,l:0,const:[q,v,x,y,z,theta,phi,omega],J,f:[]],
-  f:flatten(append(f,[expr])),
-  l:length(f),
-  for i:1 thru l do (
-    if subvarp(f[i]) then (
-          if member(part(f[i],0),const)then 
-             (var:append(var,[f[i]]))
-          )
-    elseif member(f[i],const) then (
-          if symbolp(f[i]) then(
-              var:append(var,[f[i]])
-          )
-          elseif lowercasep(string(f[i])) then(
-                 var:append(var,[f[i]])
-           )
-          )
-  ),
-  var:flatten(var),
-  n: length(var),
-  if n=1 and not subvarp(var[1]) then(
-
-   if member(var[1],[q,v,x,y,z]) then(
-       J:matrix([v,a])
-   )
-   elseif member(var[1],[theta,phi,omega]) then(
-      J:matrix([omega,alpha])
-   )
-  )
-  else(
-      J:zeromatrix(n,2),
-      for i:1 thru n do (
-        if subvarp(var[i]) then (
-          idx:part(var[i],1),
-          if part(var[i],0)=q or part(var[i],0)=v then(
-            J[i,1]:v[idx],
-            J[i,2]:a[idx]
-          )
-          elseif part(var[i],0)=theta or part(var[i],0)=omega then(
-            J[i,1]:omega[idx],
-            J[i,2]:alpha[idx]
-          )
-        )
-        else(
-            J[i,1]:v[var[i]],
-            J[i,2]:a[var[i]]
-        )
-      )
-  ),
-  return([J,var])
-)$
-derivate(f):=block(
-  [df:0,varp:[],sizeVar:0,derivSym:zeromatrix(1,1),
-   var:0,index:0,symb:0,partswitch:true,J,vars:[]],
-  varp:unique(flatten([exprbreak(f,1)])),
-  sizeVar:length(varp),
-  for i:1 thru sizeVar do(
-    if numberp(varp[i]) then varp[i]:[]
-    elseif not ((subvarp(varp[i]) or symbolp(varp[i])) 
-                and (part(varp[i],0)=q or part(varp[i],0)=v) 
-                or part(varp[i],0)=end) then (varp[i]:[])
-  ),
-   varp:flatten(varp),
-   derivSym:grad(varp),
-   J:grad(varp)[1],
-   vars:grad(varp)[2],
-   sizeVar:length(vars),
-   for i:1 thru sizeVar do(
-       var:vars[i],
-       if symbolp(var) then(
-         if member(var,[omega,v]) then (df:df+diff(f,var)*J[i,2])
-         elseif member(var,[q,phi,x,y,z,theta]) then
-             df:df+diff(f,var)*J[i,1]
-       )else(
-       index:part(var,1),
-       symb:part(var,0),
-       if member(symb,[q,x,y,z,phi,theta]) then 
-           df:df+diff(f,var)*J[i,1]
-       elseif member(symb,[v,omega]) then 
-           df:df+diff(f,var)*J[i,2]
-       )    
-  ),
-  return(df)         
-)$
-
 /* NEW DERIVATIVES*/
-partial(f,dir):=block([
-                       dot:0,
-                       index:0,
-                       value:0
-                       ],
-                       if(subvarp(dir)) then(
-                         
-                         index:part(dir,1),
-                         dot:diff(part(dir,0),t),
-                         
-                         value:diff(f,dir)*dot[index],
-                         return(value)
-                       )else(
-                         disp(dir),
-                         return(diff(f,dir)*diff(dir,t))
-                       )
-)$
 gradef(q,t,v)$
 gradef(v,t,a)$
+partial(f,dir,tot):=block([
+  dot:0,
+  index:0,
+  value:0
+  ],
+  if(subvarp(dir) and tot=t) then(
+    index:part(dir,1),
+    dot:diff(part(dir,0),t),
+    if(dot#0) then(return(diff(f,dir)*dot[index]))
+    else(return(0))
+  )
+  else if(symbolp(dir) and tot=t) then(
+    dot:diff(dir,t),
+    return(diff(f,dir)*dot)
+  )else(
+    return(diff(f,dir))
+  )
+)$
+
 dev(f,var):=block([symb,
                   varTograd,
                   dif:0],
-          symb:listofvars(f),
-          varToGrad:[],
-          for s in symb do(
-            if(symbolp(s) and s#L and s#D) then push(s,varToGrad)
-            else if(subvarp(s) and part(s,0)#L and part(s,0)#D) then  push(s,varToGrad)
-          ),
-           if(var=t) then(
-             for dir in varToGrad do(
-                dif:dif+partial(f,dir)
-             ),
-             return(dif)
-           )else(
-             disp(var),
-             return(partial(f,var))
-           )
-           
-  
+  symb:listofvars(f),
+  varToGrad:[],
+  for s in symb do(
+    if(symbolp(s) and s#L and s#D) then push(s,varToGrad)
+    else if(subvarp(s) and part(s,0)#L and part(s,0)#D) then  push(s,varToGrad)
+  ),
+    if(var=t) then(
+      for dir in varToGrad do(
+        dif:dif+partial(f,dir,t)
+      ),
+      return(dif)
+    )else(
+      return(partial(f,var,var))
+    )
 )$
-
-
-
-
-
-
+inerzia(j):=block(
+[II],
+II:matrix([I[concat(x,j)],0,0],
+[0,I[concat(y,j)],0],
+[0,0,I[concat(z,j)]]),
+/*II:subst(j,i,II),*/
+return(II)
+)$
 baricentro(row):=block(
 [bc],
 bc:addrow(addcol(ident(3),transpose(row)),[0,0,0,1]),
@@ -724,13 +565,13 @@ formaQuad(func,n):=block(
 [B],
 B:zeromatrix(n,n),
 /*Derivoduevolte:ottengoiterminiquadraticinellevelocità*/
-for k:1 thru n do(
+for k:1thru n do(
 B[k,k]:diff(func,v[k],2)),
 /*Derivoiterminimisti:*/
 /*ottengoiterminisopraesottoladiagonaleprincipale.*/
 for i:1 thru n do(
 for j:i+1 thru n do(
-B[i,j]:1/2*diff(diff(func,v[j]),v[i]),
+B[i,j]:1/2*dev(dev(func,v[j]),v[i]),
 B[j,i]:B[i,j]
 )
 ),
@@ -738,13 +579,13 @@ return(B)
 )$
 
 
- matrixDot(m):=block([sizeM:size(m),dotM:zerofor(m)],
-  for i:1 thru sizeM[1] do (
-  for j:1 thru sizeM[2] do(
-  dotM[i,j]:derivate(m[i][j])
-  )
-  ),
-  return(dotM)
+matrixDot(m):=block([sizeM:size(m),dotM:zerofor(m)],
+    for i:1 thru sizeM[1] do (
+      for j:1 thru sizeM[2] do(
+          dotM[i,j]:dev(m[i][j],t)
+        )
+    ),
+    return(dotM)
 )$
 Ulink(Qh,M):=block(
 [g,U,d],

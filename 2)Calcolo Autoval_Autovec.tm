@@ -3,8 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
-  <doc-data|<doc-title|\UProcedure\U>|<doc-subtitle|Calcolo degli
-  Autovettori, Energia Cinetica con coordinate polari>>
+  <doc-data|<doc-author|<author-data|<author-name|Andrea Efficace & Lorenzo
+  Rossi>>>|<doc-subtitle|Calcolo degli Autovettori, Energia Cinetica con
+  coordinate polari>>
 
   <\session|maxima|default>
     <\textput>

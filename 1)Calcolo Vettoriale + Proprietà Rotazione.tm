@@ -3,12 +3,10 @@
 <style|<tuple|generic|italian|framed-session|maxima>>
 
 <\body>
-  <doc-data|<doc-title|\UProcedure\U>|<\doc-subtitle>
-    Calcolo Vettoriale in <math|<with|font|Bbb|R<rsup|3>>> e Rotazioni in
-    <math|<with|font|Bbb|R<rsup|2>>>
-
-    \;
-  </doc-subtitle>>
+  <center|<doc-data|<doc-title|Calcolo Vettoriale in
+  <math|<with|font|Bbb|R<rsup|3>>> e Rotazioni in
+  <math|<with|font|Bbb|R<rsup|2>>>>|<doc-author|<author-data|<author-name|Andrea
+  Efficace & Lorenzo Rossi>>>>>
 
   <\session|maxima|default>
     <\textput>

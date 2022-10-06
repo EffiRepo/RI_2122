@@ -1,12 +1,45 @@
-<TeXmacs|2.1.1>
+<TeXmacs|2.1.2>
 
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
+  <center|<doc-data|<doc-title|Robot 2DOF Cinematica
+  Inversa>|<doc-author|<author-data|<author-name|Andrea Efficace & Lorenzo
+  Rossi>>>>>
+
+  Calcolare la cinematica inversa del robot 2DOF RR utilizzando il comando
+  Maxima eliminate().
+
+  Passi da eseguire:
+
+  <\itemize>
+    <item>Eliminare iterativamente tutte le variabili di giunto tranne una;
+
+    <item>Se necessario applicare le equazioni di identità trigonometrica per
+    ricavare il seno o coseno;
+
+    <item>Fattorizzare il risultato ottenuto dal comando eliminate();
+
+    <item>Sostituire i fattori costanti (indipendenti dalle variabili di
+    giunto e indipendenti dal punto terminale) con delle variabili ausiliarie
+    per permettere a maxima di effettuare i conti in caso di espressioni
+    troppo complesse;
+
+    <item>Considerare solamente i fattori che dipendono unicamente dall'unica
+    variabile non cancellata e dal punto terminale;
+
+    <item>Utilizzare il comando solve() per calcolare le variabili di giunto
+    che si stanno cercando;
+
+    <item>Ripetere il procedimento del passo 1 fino al calcolo di tutte le
+    variabili di giunto
+
+    <item>Verificare le soluzioni ottenute controllando che sia soddisfatta
+    l'equazione: <math|s<rsup|2>+c<rsup|2>=1>
+  </itemize>
+
   <\session|maxima|default>
-    <\textput>
-      <with|font-series|bold|2DoF Planare>
-    </textput>
+    \;
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
@@ -34,7 +67,7 @@
       \;
 
       \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
-      >><matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>>|<cell|-c<rsub|1>*s<rsub|2>-s<rsub|1>*c<rsub|2>>|<cell|0>|<cell|L<rsub|2>*<around*|(|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>|)>+L<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|1>*s<rsub|2>+s<rsub|1>*c<rsub|2>>|<cell|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>>|<cell|0>|<cell|L<rsub|2>*<around*|(|c<rsub|1>*s<rsub|2>+s<rsub|1>*c<rsub|2>|)>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>>>
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>>|<cell|-c<rsub|1>*s<rsub|2>-s<rsub|1>*c<rsub|2>>|<cell|0>|<cell|L<rsub|2>*<around*|(|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>|)>+L<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|1>*s<rsub|2>+s<rsub|1>*c<rsub|2>>|<cell|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>>|<cell|0>|<cell|L<rsub|2>*<around*|(|c<rsub|1>*s<rsub|2>+s<rsub|1>*c<rsub|2>|)>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<around*|[|<matrix|<tformat|<table|<row|<cell|c<rsub|1>>|<cell|-s<rsub|1>>|<cell|0>|<cell|L<rsub|1>*c<rsub|1>>>|<row|<cell|s<rsub|1>>|<cell|c<rsub|1>>|<cell|0>|<cell|L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>,<matrix|<tformat|<table|<row|<cell|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>>|<cell|-c<rsub|1>*s<rsub|2>-s<rsub|1>*c<rsub|2>>|<cell|0>|<cell|L<rsub|2>*<around*|(|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>|)>+L<rsub|1>*c<rsub|1>>>|<row|<cell|c<rsub|1>*s<rsub|2>+s<rsub|1>*c<rsub|2>>|<cell|c<rsub|1>*c<rsub|2>-s<rsub|1>*s<rsub|2>>|<cell|0>|<cell|L<rsub|2>*<around*|(|c<rsub|1>*s<rsub|2>+s<rsub|1>*c<rsub|2>|)>+L<rsub|1>*s<rsub|1>>>|<row|<cell|0>|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|0>|<cell|1>>>>>|]>|]>>>
     </unfolded-io>
 
     <\input>
@@ -72,7 +105,7 @@
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>5) >
     <|unfolded-io>
-      eq:flatten([getEq(dh),c[1]^2+s[1]^2-1=0,c[2]^2+s[2]^2-1=0])
+      eq:flatten([getEq(dh[1]),c[1]^2+s[1]^2-1=0,c[2]^2+s[2]^2-1=0])
     <|unfolded-io>
       \;
 
@@ -152,13 +185,13 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>12) >
+      <with|color|red|(<with|math-font-family|rm|%i>25) >
     <|unfolded-io>
       eqq:facsum(ratsimp(expand(subst([s[2]=S2,c[2]=C2],[eq[1],eq[2],eq[5]]))),[s[1],c[1]])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o12>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
       >><around*|[|<frac|s<rsub|1>*<sqrt|-Y<rsup|4>+<around*|(|-2*X<rsup|2>+2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*Y<rsup|2>-X<rsup|4>+<around*|(|2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*X<rsup|2>-L<rsub|2><rsup|4>+2*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>-L<rsub|1><rsup|4>>-c<rsub|1>*<around*|(|Y<rsup|2>+X<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|)>+2*L<rsub|1>*X|2*L<rsub|1>>=0,-<frac|c<rsub|1>*<sqrt|-Y<rsup|4>+<around*|(|-2*X<rsup|2>+2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*Y<rsup|2>-X<rsup|4>+<around*|(|2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*X<rsup|2>-L<rsub|2><rsup|4>+2*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>-L<rsub|1><rsup|4>>+s<rsub|1>*<around*|(|Y<rsup|2>+X<rsup|2>-L<rsub|2><rsup|2>+L<rsub|1><rsup|2>|)>-2*L<rsub|1>*Y|2*L<rsub|1>>=0,0=0|]>>>
     </unfolded-io>
 
@@ -168,29 +201,29 @@
     </textput>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>13) >
+      <with|color|red|(<with|math-font-family|rm|%i>26) >
     <|unfolded-io>
       ss:map(rhs,flatten(solve([eqq[1],eqq[2]],[s[1],c[1]])))
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
       >><around*|[|-<frac|X*<sqrt|-Y<rsup|4>+<around*|(|-2*X<rsup|2>+2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*Y<rsup|2>-X<rsup|4>+<around*|(|2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*X<rsup|2>-L<rsub|2><rsup|4>+2*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>-L<rsub|1><rsup|4>>-Y<rsup|3>+<around*|(|-X<rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|)>*Y|2*L<rsub|1>*Y<rsup|2>+2*L<rsub|1>*X<rsup|2>>,<frac|Y*<sqrt|-Y<rsup|4>+<around*|(|-2*X<rsup|2>+2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*Y<rsup|2>-X<rsup|4>+<around*|(|2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*X<rsup|2>-L<rsub|2><rsup|4>+2*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>-L<rsub|1><rsup|4>>+X*Y<rsup|2>+X<rsup|3>+<around*|(|L<rsub|1><rsup|2>-L<rsub|2><rsup|2>|)>*X|2*L<rsub|1>*Y<rsup|2>+2*L<rsub|1>*X<rsup|2>>|]>>>
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>14) >
+      <with|color|red|(<with|math-font-family|rm|%i>27) >
     <|unfolded-io>
       qq1:atan2(ss[1],ss[2])
     <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o14>)
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
       >>-<math-up|atan2><around*|(|<frac|X*<sqrt|-Y<rsup|4>+<around*|(|-2*X<rsup|2>+2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*Y<rsup|2>-X<rsup|4>+<around*|(|2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*X<rsup|2>-L<rsub|2><rsup|4>+2*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>-L<rsub|1><rsup|4>>-Y<rsup|3>+<around*|(|-X<rsup|2>+L<rsub|2><rsup|2>-L<rsub|1><rsup|2>|)>*Y|2*L<rsub|1>*Y<rsup|2>+2*L<rsub|1>*X<rsup|2>>,<frac|Y*<sqrt|-Y<rsup|4>+<around*|(|-2*X<rsup|2>+2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*Y<rsup|2>-X<rsup|4>+<around*|(|2*L<rsub|2><rsup|2>+2*L<rsub|1><rsup|2>|)>*X<rsup|2>-L<rsub|2><rsup|4>+2*L<rsub|1><rsup|2>*L<rsub|2><rsup|2>-L<rsub|1><rsup|4>>+X*Y<rsup|2>+X<rsup|3>+<around*|(|L<rsub|1><rsup|2>-L<rsub|2><rsup|2>|)>*X|2*L<rsub|1>*Y<rsup|2>+2*L<rsub|1>*X<rsup|2>>|)>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>15) >
+      <with|color|red|(<with|math-font-family|rm|%i>28) >
     <|input>
       \;
     </input>

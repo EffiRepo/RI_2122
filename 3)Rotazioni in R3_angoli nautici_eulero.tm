@@ -5,7 +5,8 @@
 <\body>
   \;
 
-  <doc-data|<doc-title|\UProcedure\U>|<\doc-subtitle>
+  <doc-data|<doc-title|>|<doc-author|<author-data|<author-name|Andrea
+  Efficace & Lorenzo Rossi>>>|<\doc-subtitle>
     Matrici di Rotazione nello Spazio,
 
     Rappresentazione con Angoli Nautici e di Eulero

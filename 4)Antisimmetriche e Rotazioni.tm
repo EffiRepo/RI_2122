@@ -3,7 +3,8 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
-  <doc-data|<doc-title|--Procedure\U>|<\doc-subtitle>
+  <doc-data|<doc-author|<author-data|<author-name|Andrea Efficace & Lorenzo
+  Rossi>>>|<\doc-subtitle>
     Matrice Antisimmetrica e legame con Matrici di Rotazione,
 
     Formula di Rodrigues e Parametrizzazione di Cayley

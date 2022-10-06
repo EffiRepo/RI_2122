@@ -3,7 +3,9 @@
 <style|<tuple|generic|italian|maxima>>
 
 <\body>
-  <center|<doc-data|<doc-title|Calcolo Matrice di Inerzia>>>
+  <center|<doc-data|<doc-title|Calcolo Matrice di
+  Inerzia>|<doc-author|<author-data|<author-name|Andrea Efficace & Lorenzo
+  Rossi>>>>>
 
   Definito un corpo rigido, sia <math|P\<assign\>>coordinate di un punto
   generico solidale al corpo. Si definisce matrice di inerzia
