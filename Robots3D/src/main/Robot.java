@@ -103,7 +103,6 @@ public abstract class Robot implements PropertyChangeListener{
         p3d.popMatrix();
         frameZero.show(toShow);
         // draw robot
-        p3d.pushMatrix();
         // inizializzo controllo proporzionale
         float[] qNew = qProp(qRef, kp);
         // setto la tabella con i nuovi valori
@@ -111,7 +110,7 @@ public abstract class Robot implements PropertyChangeListener{
         for (int i = 0; i < q.length; i++) {
             dh(table[0][i], table[1][i], table[2][i], table[3][i], i);
         }
-        p3d.popMatrix();
+
     }
 
     @Override
@@ -217,6 +216,7 @@ public abstract class Robot implements PropertyChangeListener{
                 qNew[i] = qNew[i] + k * (diff);
             }
         }
+        setQ(qNew);
         return qNew;
     }
 

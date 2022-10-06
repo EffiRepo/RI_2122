@@ -14,13 +14,6 @@ public class Sferico extends Robot {
     }
 
     @Override
-    public void setTable(float[] q) {
-        setTheta(new float[]{q[0], q[1], 0});
-        setD(new float[]{100f, 0, q[2]});
-        setTable(new float[][]{theta, d, alpha, a});
-    }
-
-    @Override
     protected void dh(float theta, float d, float alpha, float a, int i) {
         super.dh(theta, d, alpha, a, i);
         boolean isTerm = false;
@@ -34,6 +27,13 @@ public class Sferico extends Robot {
         }
         link(theta, d, alpha, a, isTerm, isHorz, angle,false);
         frames.get(i).show(toShow);
+    }
+
+    @Override
+    public void setTable(float[] q) {
+        setTheta(new float[]{q[0], q[1], 0});
+        setD(new float[]{100f, 0, q[2]});
+        setTable(new float[][]{theta, d, alpha, a});
     }
 
     @Override

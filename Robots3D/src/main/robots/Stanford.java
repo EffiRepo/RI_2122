@@ -20,12 +20,6 @@ public class Stanford extends Robot {
         super(p3d);
         reset();
     }
-    @Override
-    public void draw(){
-        super.draw();
-
-
-    }
 
     @Override
     public void dh(float theta, float d, float alpha, float a, int i){

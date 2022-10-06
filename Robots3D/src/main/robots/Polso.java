@@ -28,7 +28,7 @@ public class Polso extends Robot {
     }
     @Override
     public void setTable(float[] q) {
-        setQ(q);
+        setTheta(q);
         setTable(new float[][]{theta,d,alpha,a});
     }
 

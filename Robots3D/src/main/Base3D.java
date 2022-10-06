@@ -56,7 +56,7 @@ public class Base3D extends PApplet {
     private int listIndex = 0;
     private Menu helper;
     private Menu legend;
-
+    private Menu robotData;
     public Base3D() {
         // empty constructor
         robotList.addAll(List.of(
@@ -88,6 +88,8 @@ public class Base3D extends PApplet {
         ellipseMode(RADIUS);
         sphereDetail(30);
         helper = new Menu(270,250,270,250,this);
+        helper.show();
+
         /* From PeasyCam documentation */
         int padding = 10;
         int tileX = floor((width - padding));
@@ -109,10 +111,9 @@ public class Base3D extends PApplet {
         /*
         Plot Initialization
          */
-        Oscilloscope.getInstance().addPlot("E",40,40,400,250);
+        Oscilloscope.getInstance().addPlot("E",20,20,400,250);
         Oscilloscope.getInstance().setPlotBuffer("E",6);
-        legend = new Menu(150,
-                30, this);
+        legend = new Menu(150,30, this);
     }
 
     @Override
@@ -136,10 +137,10 @@ public class Base3D extends PApplet {
         /* RENDERING END */
         // HUD
         cameras[0].beginHUD();
-        // insert code here
-        helper.drawHelper();
-        oscilloscope.drawPlots();
-        legend.drawPlotInfo(this.robot.q.length);
+            helper.drawHelper();
+            oscilloscope.drawPlots();
+            legend.drawPlotInfo(this.robot.q.length);
+            robotData.drawRobotData(this.robot.q.length);
         cameras[0].endHUD();
 
         popMatrix();
@@ -160,6 +161,8 @@ public class Base3D extends PApplet {
         this.robot = robotList.get(listIndex % listSize);
         // resetto per evitare problemi al cambiamento del robot selezionato
         this.robot.reset();
+        robotData = new Menu(270, 230, 1280-270-10, 0 ,this, robot);
+
         // pulisco lista dei S.d.R.
         if (robot.gripper == null) robot.loadGripper();
         listIndex++;
@@ -255,6 +258,7 @@ public class Base3D extends PApplet {
                 oscilloscope.allVisible(showPlt);
                 showPlt=!showPlt;
             }
+            case 'd' -> robotData.show();
             case 's' -> {
                 setRobot();
                 oscilloscope.resetPlot();
