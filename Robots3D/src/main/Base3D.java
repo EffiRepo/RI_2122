@@ -161,7 +161,7 @@ public class Base3D extends PApplet {
         this.robot = robotList.get(listIndex % listSize);
         // resetto per evitare problemi al cambiamento del robot selezionato
         this.robot.reset();
-        robotData = new Menu(270, 230, 1280-270-10, 0 ,this, robot);
+        robotData = new Menu(270, 230, 1280-270-10, -10 ,this, robot);
 
         // pulisco lista dei S.d.R.
         if (robot.gripper == null) robot.loadGripper();
