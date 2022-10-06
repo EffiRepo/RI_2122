@@ -69,7 +69,7 @@ public class Menu {
             // reference frame is left-handed with center in (0,0) in the top left corner
             // bordo
             g.fill(borderColor[0],borderColor[1],borderColor[2]);
-            g.rect(0,0, startX, startY,10);
+            g.rect(0,0, startX, startY,15,0,0,15);
             // sfondo
             g.fill(255);
             g.rect(BORDER_WIDTH, BORDER_HEIGHT,width-2* BORDER_WIDTH,height-2* BORDER_HEIGHT,10);
@@ -159,7 +159,7 @@ public class Menu {
             g.rect(0,0,width,height,20);
             // sfondo
             g.fill(255);
-            g.rect(BORDER_WIDTH, BORDER_HEIGHT,width-2* BORDER_WIDTH,height-2* BORDER_HEIGHT,15);
+            g.rect(BORDER_WIDTH, BORDER_HEIGHT,width-2* BORDER_WIDTH,height-2* BORDER_HEIGHT,15,0,0,15);
             // titolo
             g.textSize(TITLE_SIZE);
             g.textAlign(CENTER);

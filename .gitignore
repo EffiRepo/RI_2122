@@ -17,6 +17,7 @@ Robots3D/lib/ignite-slf4j-2.6.0-sources.jar
 Robots3D/lib/slf4j-api-1.7.7-javadoc.jar
 Robots3D/lib/slf4j-api-1.7.7-sources.jar
 Robots3D/out/
+Robots3D\out\production\Robots3D\main\Base3D.class
 *.class
 *.xml
 *.pb
