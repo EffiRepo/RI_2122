@@ -66,7 +66,7 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
-      rot3X(theta):=mySimp(matrix([1,0,0],
+      rot3X(theta):=ratsimp(matrix([1,0,0],
 
       \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0,cos(theta),-sin(theta)],
 
@@ -76,7 +76,7 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>2) >
     <|input>
-      rot3Y(theta):=mySimp(matrix([cos(theta),0,sin(theta)],
+      rot3Y(theta):=ratsimp(matrix([cos(theta),0,sin(theta)],
 
       \ \ \ \ \ \ \ \ \ \ \ \ \ \ [0,1,0],
 
@@ -86,7 +86,7 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>3) >
     <|input>
-      rot3Z(theta):=mySimp(matrix([cos(theta),-sin(theta),0],
+      rot3Z(theta):=ratsimp(matrix([cos(theta),-sin(theta),0],
 
       \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [sin(theta),cos(theta),0],
 
@@ -194,7 +194,9 @@
     <|unfolded-io>
       rot3(y,arg3)
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o15>)
       >><matrix|<tformat|<table|<row|<cell|cos
       <around*|(|\<vartheta\><rsub|i>|)>>|<cell|0>|<cell|sin
       <around*|(|\<vartheta\><rsub|i>|)>>>|<row|<cell|0>|<cell|1>|<cell|0>>|<row|<cell|-sin

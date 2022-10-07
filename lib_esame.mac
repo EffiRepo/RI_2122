@@ -1,0 +1,208 @@
+ratprint:false$
+algebraic:true$
+/*Semplificazione atan(tan(x))->x*/
+triginverses:all$
+/*Funzioni di controllo degli input*/
+/*Input vettore R3*/
+matchdeclare(a,lambda([x],if(matrixp(x)) then (is(length(x)=3 and length(transpose(x))=1))))$
+defrule(vector_input,a,a)$
+/*Input matrice R3*/
+matchdeclare(a,lambda([x],if(matrixp(x)) then (is(length(x)=3 and length(transpose(x))=3))))$
+defrule(matrix3_input,a,a)$
+/*Input matrice R2*/
+matchdeclare(a,lambda([x],if(matrixp(x)) then (is(length(x)=2 and length(transpose(x))=2))))$
+defrule(matrix2_input,a,a)$
+/*Matrice quadrata*/
+matchdeclare(a,lambda([x],if(matrixp(x))then (is(size(x)[1]=size(x)[2]))))$
+defrule(matrix_input,a,a)$
+/* Caricamento libreria per semplificazioni aggiuntive*/
+load("atrig1");
+/* Regole di semplificazione coseno e seno*/
+matchdeclare(a,lambda([x],is(x=cos)),b,symbolp,l,integerp)$
+defrule(r1,a(b[l]),c[l])$
+matchdeclare(d,lambda([x],is(x=sin)),f,symbolp,g,integerp)$
+defrule(r2,d(f[l]),s[l])$
+matchdeclare(d,lambda([x],is(x=sin)),w,symbolp,z,symbolp,u,integerp,i,integerp)$
+defrule(r3,d(w[u]+z[i]),s[u+10*i])$
+matchdeclare(d,lambda([x],is(x=cos)),w,symbolp,z,symbolp,u,integerp,i,integerp)$
+defrule(r4,d(w[u]+z[i]),c[u+10*i])$
+matchdeclare(d,lambda([x],is(x=cos)),s,symbolp,z,symbolp,r,symbolp,e,integerp,j,integerp,o,integerp)$
+defrule(r5,d(s[e]+z[j]+r[o]),c[e+10*j+100*o])$
+matchdeclare(d,lambda([x],is(x=sin)),c,symbolp,z,symbolp,r,symbolp,e,integerp,j,integerp,o,integerp)$
+defrule(r6,d(c[e]+z[j]+r[o]),s[e+10*j+100*o])$
+matchdeclare(a,lambda([x],is(x=cos)),b,symbolp)$
+defrule(r7,a(b),c[b])$
+matchdeclare(a,lambda([x],is(x=sin)),b,symbolp)$
+defrule(r8,a(b),s[b])$
+rename(expr,i):=block(
+  if(i=0) then(return (applyb1(expr,r1,r2,r3,r4,r5,r6,r7,r8)))
+  elseif(i=1)then(return (applyb1(trigexpand(expr),r1,r2,r7,r8)))
+)$
+/*Prodotto vettorial*/
+cross_prod(A,B):=block([vA,vB,E, M, AxB, res],
+/*Verifica delle dimensioni dei vettori*/
+vA:vector_input(A),vB:vector_input(B),
+if (vA=false or vB=false) then
+   error("Inserire vettori colonna")
+else(
+   /*Definisco vettore simbolico per i versori*/
+   E:matrix([e[x]],[e[y]],[e[z]]),
+   /*Definisco matrice per il prodotto vettoriale*/
+   M:addrow(transpose(E),transpose(A),transpose(B)),
+   /*Calcolo il prodotto vettoriale. Letsimp necessario per
+   coprire anche i casi di vettori simbolici assunti come paralleli*/
+   AxB:collectterms(scanmap(ratsimp,scanmap(trigsimp,factor(determinant(M)))),e[x],e[y],e[z]),
+   /*Verifico se i due vettori sono paralleli*/
+   if AxB = 0 then
+     printf(true,"~a//~a",vA,vB)
+     ),
+ return(AxB)
+ )$
+ /*Anticommutatività prodotto vettoriale*/
+anticomm(A,C):=block([AxC,CxA,cond1,cond2],
+/*Definisco i due prodotti vettoriali*/
+AxC:cross_prod(A,C),print("AxC = ",AxC),
+CxA:cross_prod(C,A),print("CxA = ",CxA),
+cond1:AxC - CxA= 0,
+cond2:AxC+CxA=0,
+if (cond1) then (false)
+else if(cond2) then (true)
+)$
+/*Matrice di rotazione R2*/
+rot2(alpha):=block(
+if(nonscalarp(alpha)=false) then
+(return(ratsimp(matrix([cos(alpha), -sin(alpha)],[sin(alpha), cos(alpha)]))))
+else(error("Inserire valore scalare"))
+)$
+/*Norma di un vettore*/
+norm(x):=scanmap(ratsimp,scanmap(trigsimp,factor(sqrt(vector_input(x).vector_input(x)))))$
+/*Dimensione dell'input*/
+size(x):=block([],
+               if(scalarp(x)) then return(1)
+               else if(matrixp(x)) then return([length(x),length(transpose(x))])
+               else if(nonscalarp(x)) then return([1,length(flatten(x))])
+)$
+/* Verifica se è una matrice di rotazione*/
+isRot(R):=block(
+[Rinput,RT, RRT, II, sz, det],
+     /*Controllo se R è quadrata ed è una matrice*/
+     Rinput:matrix_input(R),
+     if(Rinput#false) then(
+     sz: size(Rinput),
+     RT: transpose(Rinput),
+     RRT:scanmap(trigsimp,scanmap(trigreduce,trigexpand(factor(Rinput.RT)))),
+     II: identfor(Rinput),
+     det: scanmap(trigsimp,scanmap(trigreduce,(trigexpand(factor(determinant(Rinput)))))),
+     if RRT = II and det = 1 then
+     true
+     else
+     false)
+     else error("Inserire una Matrice")
+)$
+/*Matrice asse X*/
+rot3X(theta):=ratsimp(matrix([1,0,0],
+                     [0,cos(theta),-sin(theta)],
+                     [0,sin(theta),cos(theta)])
+)$
+/*Matrice asse Y*/
+rot3Y(theta):=ratsimp(matrix([cos(theta),0,sin(theta)],
+              [0,1,0],
+              [-sin(theta),0,cos(theta)])
+)$
+/*Matrice asse Z*/
+rot3Z(theta):=ratsimp(matrix([cos(theta),-sin(theta),0],
+                     [sin(theta),cos(theta),0],
+                     [0,0,1])
+)$
+/*Matrice R3*/
+rot3(a, theta):=block(
+[axis:[x,y,z], R],
+/*Verifico che l'asse in input sia un asse principale*/
+if not(member(a, axis)) then
+  error("Inserisci un asse valido")
+/*Verifico che l'angolo in input sia un simbolo o scalare*/
+elseif nonscalarp(theta) and not(symbolp(theta))
+       and not(subvarp(theta)) then
+       error("Inserisci un angolo scalare o simbolico")
+       else(
+/*Ritorna la matrice di rotazione corrispondente*/
+         if(a = x) then return(rot3X(theta)),
+         if(a = y) then return(rot3Y(theta)),
+         if(a = z) then return(rot3Z(theta))
+)
+)$
+/*Rotazione nautica*/
+nautRot(axList, angleList):=block(
+[axis:[x, y, z], R, isAxeList, i, newAngleList:ratsimp(angleList)],
+/*Controllo che l'input sia una lista di 3 elementi*/
+for i:1 thru 3 do(isAxeList:member(axList[i],axis)),
+if length(axList) # 3 and not(nonscalarp(axList)) and not(isAxeList) then
+  error("Inserisci come lista una permutazione di [x,y,z]")
+/*Verifico che l'angolo in input sia un simbolo o scalare*/
+elseif nonscalarp(theta) and not(symbolp(theta))
+       and not(subvarp(theta)) then
+       error("Inserisci un angolo scalare o simbolico")
+else(
+/*Calcolo della matrice di rotazione ed applichiamo semplificazioni*/
+  R:rot3(axList[1], newAngleList[1]).
+    rot3(axList[2],newAngleList[2]).rot3(axList[3], newAngleList[3]),
+  return(R)
+)
+)$
+/*Rotazione Eulero*/
+euleroRot(axList, angle):=block(
+[axis:[x, y, z], R, isAxeList, i, sgn:1],
+/*Controllo che l'input sia una lista di 3 elementi*/
+for i:1 thru 3 do(isAxeList:member(axList[i],axis) and axList[1] = axList[3]),
+if length(axList) # 3 and not(nonscalarp(axList)) and not(isAxeList) then
+  error("Inserisci come lista una permutazione di [x,y,z] con il primo e il terzo parametro coincidente")
+/*Verifico che l'angolo in input sia un simbolo o scalare*/
+elseif nonscalarp(theta) and not(symbolp(theta))
+       and not(subvarp(theta)) then
+       error("Inserisci un angolo scalare o simbolico")
+else(
+/*Calcolo della matrice di rotazione*/
+  /*x.y.-x-> z, -x.-y.x-> z*/
+  if axList[1] = axis[1] and axList[2] = axis[2] then(
+    R:rot3X(sgn*%pi/2).rot3Y(sgn*theta).rot3X(-sgn*%pi/2)
+  ),
+  /*-x.z.x -> y, x.-z.-x -> y*/
+  if axList[1] = axis[1] and axList[2] = axis[3] then(
+    R:rot3X(-sgn*%pi/2).rot3Z(sgn*theta).rot3X(sgn*%pi/2)
+  ),
+  /*-y.x.y -> z, y.-x.-y -> z*/
+  if axList[1] = axis[2] and axList[2] = axis[1] then(
+    R:rot3Y(-sgn*%pi/2).rot3X(sgn*theta).rot3Y(sgn*%pi/2)
+  ),
+  /*y.z.-y -> x, -y.-z.y -> x*/
+  if axList[1] = axis[2] and axList[2] = axis[3] then(
+    R:rot3Y(sgn*%pi/2).rot3Z(sgn*theta).rot3Y(-sgn*%pi/2)
+  ),
+  /*z.x.-z -> y, -z.-x.z -> y*/
+  if axList[1] = axis[3] and axList[2] = axis[1] then(
+    R:rot3Z(sgn*%pi/2).rot3X(sgn*theta).rot3Z(-sgn*%pi/2)
+  ),
+  /*-z.y.z -> x, z.-y.-z -> x*/
+  if axList[1] = axis[3] and axList[2] = axis[2] then(
+    R:rot3Z(-sgn*%pi/2).rot3Y(sgn*theta).rot3Z(sgn*%pi/2)
+  )
+), return(R)
+)$
+/*Matrice antisimmetrica*/
+S(v):=block(
+[S],
+/*Controlliamo che v sia un vettore o una lista*/
+if vector_input(v)=false then
+  error("Inserire un vettore colonna di tre elementi")
+else(
+  S:matrix([0,-v[3,1],v[2,1]],[v[3,1],0,-v[1,1]],[-v[2,1],v[1,1],0])
+)
+)$
+/*Check if asim*/
+isAsim(S):=block(
+[st, sz: size(S), sum],
+if matrix_input(S)=false then error("Inserire una matrice quadrata"),     
+st: transpose(S),
+if st = -S then return(true)
+else return(false)
+)$
