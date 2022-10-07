@@ -420,31 +420,34 @@ getRotData(R):=block(
 [angle, axes],
         axes:getAxis(R),
         angle:getAngle(R),
-        return([axes[1],angle])
+        return([axes[3],angle])
 )$
 /*Parametrizzazione cayley e cayley inverso*/
-cayley(S):=block(
-    [cay,I,dim],
-    dim:size(S),
-    if isAsim(S) then(
-    I:ident(dim[1]),
-    cay:(I+S).invert(I-S),
-    return(cay))
-    else(error("La matrice non è antisimmetrica"))
+cayley(ax,angle):=block(
+    [cay,I,dim,s,norm, vers, theta],
+     /*Normalizzo il vettore e ottengo norma e versore*/
+     [norm, vers]: normalize(ax),
+     /* Calcolo antisimmetrica con l'angolo corretto*/  
+    s:S(vers*sin(angle)/(cos(angle)+1)),
+    I:identfor(s),    
+    cay:(I+s).invert(I-s),
+return(cay)
 )$
 invCayley(R):=block([I,S,v,norm,cosTheta,sinTheta,theta,cond],
    if isRot(R) then(
      I:ident(3),
+     /*Semplifico R*/
      R:ratsimp(R),
-     S:mySimp(invert(R+I).(R-I)),
-     v:matrix([S[3][2]],[S[1][3]],[S[2][1]]),
-     norm:(v.v),
+     /*Applico Calyley Inverso*/
+     S:trigsimp(factor(invert(R+I).(R-I))),
+     v:getAsimVect(S),
+     norm:ratsimp(sqrt(v.v)), 
      cosTheta:trigsimp((1-norm)/(1+norm)),
      sinTheta:trigsimp((2*sqrt(norm))/(1+norm)),
      cond:sinTheta/(1+cosTheta),
      if cond>0 then (theta:trigsimp(myAtan2(sinTheta,cosTheta)))
-     else (theta:trigsimp(myAtan2(-sinTheta,cosTheta))),
-     return([S,theta])
+     else (theta:trigsimp(atan2(-sinTheta,cosTheta))),
+     return([factor(v*(cos(theta)+1)/sin(theta)),theta])
    )
    else(error("La matrice non è di rotazione"))
 )$
