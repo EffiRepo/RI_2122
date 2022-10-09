@@ -42,7 +42,7 @@
 
       \ \ \ \ \ \ \ \ \ \ bool: true,
 
-      \ \ \ \ \ \ \ \ \ \ v:ratsimp(v/v[i,1])
+      \ \ \ \ \ \ \ \ \ \ v:factor(ratsimp(v))
 
       \ \ \ \ \ \ \ \ )
 
@@ -176,7 +176,7 @@
       myEigens(A)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o5>)
-      >><around*|[|<around*|[|1,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-1>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|1>>>>>|]>|]>>>
+      >><around*|[|<around*|[|1,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|-1>>|<row|<cell|1>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|-1>>|<row|<cell|0>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|0>>|<row|<cell|-1>>>>>|]>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -215,7 +215,7 @@
       myEigens(M)
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><around*|[|<around*|[|<sqrt|2>,3,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-<frac|11*<sqrt|2>+22|20>>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|1>>|<row|<cell|-<frac|15*<sqrt|2>-56|10>>>|<row|<cell|-<frac|<sqrt|2>-3|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|1>>|<row|<cell|0>>>>>|]>|]>>>
+      >><around*|[|<around*|[|<sqrt|2>,3,2|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|2*<around*|(|<sqrt|2>-2|)>>>|<row|<cell|<frac|11|5>>>|<row|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|2>>|<row|<cell|-<frac|15*<sqrt|2>-56|5>>>|<row|<cell|-<around*|(|<sqrt|2>-3|)>>>>>>,<matrix|<tformat|<table|<row|<cell|0>>|<row|<cell|-<frac|11|2*5>>>|<row|<cell|0>>>>>|]>|]>>>
     </unfolded-io>
 
     <\textput>
@@ -277,9 +277,7 @@
     <|unfolded-io>
       z:toComplex(1,1)
     <|unfolded-io>
-      \;
-
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
       >><around*|[|<sqrt|2>,<frac|\<pi\>|4>,\<mathi\>+1,<sqrt|2>*\<mathe\><rsup|<frac|\<mathi\>*\<pi\>|4>>|]>>>
     </unfolded-io>
 
@@ -518,7 +516,7 @@
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>37) >
+      <with|color|red|(<with|math-font-family|rm|%i>34) >
     <|input>
       \;
     </input>

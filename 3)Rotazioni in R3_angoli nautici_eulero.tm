@@ -578,8 +578,122 @@
       >x<text|? ><math-bf|true>>>
     </unfolded-io>
 
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>7) >
+    <|unfolded-io>
+      ternaEulero(axes,angle):=block([dim],
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dim:size(axes),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if(dim[1]=3)
+      then(
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if(axes[1]=axes[3])
+      then(
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if(size(angle)[1]=3)
+      then(
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ return(rot3(axes[1],angle[1]).rot3(axes[2],angle[2]).rot3(axes[3],angle[3]))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else(error("Insert
+      3x1 angle list"))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else(error("First
+      and Last axe doesn't match"))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else(
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error("Insert
+      3x1 list")
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ))
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
+      >><math-up|ternaEulero><around*|(|<math-up|axes>,<math-up|angle>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|dim>|]>,<math-up|dim>:<math-up|size><around*|(|<math-up|axes>|)>,<math-bf|if><space|0.27em><math-up|dim><rsub|1>=3<space|0.27em><math-bf|then><space|0.27em><math-bf|if><space|0.27em><math-up|axes><rsub|1>=<math-up|axes><rsub|3><space|0.27em><math-bf|then><space|0.27em><math-bf|if><space|0.27em><around*|(|<math-up|size><around*|(|<math-up|angle>|)>|)><rsub|1>=3<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|rot3><around*|(|<math-up|axes><rsub|1>,<math-up|angle><rsub|1>|)>\<cdot\><with|math-font-family|rm|rot3><around*|(|<math-up|axes><rsub|2>,<math-up|angle><rsub|2>|)>\<cdot\><with|math-font-family|rm|rot3><around*|(|<math-up|axes><rsub|3>,<math-up|angle><rsub|3>|)>|)><space|0.27em><math-bf|else><space|0.27em><math-up|error><around*|(|<text|Insert
+      3x1 angle list >|)><space|0.27em><math-bf|else><space|0.27em><math-up|error><around*|(|<text|First
+      and Last axe doesn't match >|)><space|0.27em><math-bf|else><space|0.27em><math-up|error><around*|(|<text|Insert
+      3x1 list >|)>|)>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>8) >
+    <|unfolded-io>
+      ternaEulero([x,y,x],[alpha,beta,gamma])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
+      >><matrix|<tformat|<table|<row|<cell|cos
+      <around*|(|\<beta\>|)>>|<cell|sin <around*|(|\<beta\>|)>*sin
+      <around*|(|\<gamma\>|)>>|<cell|sin <around*|(|\<beta\>|)>*cos
+      <around*|(|\<gamma\>|)>>>|<row|<cell|sin <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<beta\>|)>>|<cell|cos <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<gamma\>|)>-sin <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>*sin <around*|(|\<gamma\>|)>>|<cell|-cos
+      <around*|(|\<alpha\>|)>*sin <around*|(|\<gamma\>|)>-sin
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*cos
+      <around*|(|\<gamma\>|)>>>|<row|<cell|-cos <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<beta\>|)>>|<cell|cos <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>*sin <around*|(|\<gamma\>|)>+sin
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<gamma\>|)>>|<cell|cos
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*cos
+      <around*|(|\<gamma\>|)>-sin <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<gamma\>|)>>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>11) >
+    <|unfolded-io>
+      ternaEulero([z,y,z],[alpha,beta,gamma])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o11>)
+      >><matrix|<tformat|<table|<row|<cell|cos <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>*cos <around*|(|\<gamma\>|)>-sin
+      <around*|(|\<alpha\>|)>*sin <around*|(|\<gamma\>|)>>|<cell|-cos
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*sin
+      <around*|(|\<gamma\>|)>-sin <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<gamma\>|)>>|<cell|cos <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<beta\>|)>>>|<row|<cell|cos <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<gamma\>|)>+sin <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<beta\>|)>*cos <around*|(|\<gamma\>|)>>|<cell|cos
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<gamma\>|)>-sin
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>*sin
+      <around*|(|\<gamma\>|)>>|<cell|sin <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<beta\>|)>>>|<row|<cell|-sin <around*|(|\<beta\>|)>*cos
+      <around*|(|\<gamma\>|)>>|<cell|sin <around*|(|\<beta\>|)>*sin
+      <around*|(|\<gamma\>|)>>|<cell|cos <around*|(|\<beta\>|)>>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>13) >
+    <|unfolded-io>
+      nautRot([z,x,y],[alpha,beta,gamma])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o13>)
+      >><matrix|<tformat|<table|<row|<cell|cos <around*|(|\<alpha\>|)>*cos
+      <around*|(|\<gamma\>|)>-sin <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<beta\>|)>*sin <around*|(|\<gamma\>|)>>|<cell|-sin
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>>|<cell|cos
+      <around*|(|\<alpha\>|)>*sin <around*|(|\<gamma\>|)>+sin
+      <around*|(|\<alpha\>|)>*sin <around*|(|\<beta\>|)>*cos
+      <around*|(|\<gamma\>|)>>>|<row|<cell|cos <around*|(|\<alpha\>|)>*sin
+      <around*|(|\<beta\>|)>*sin <around*|(|\<gamma\>|)>+sin
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<gamma\>|)>>|<cell|cos
+      <around*|(|\<alpha\>|)>*cos <around*|(|\<beta\>|)>>|<cell|sin
+      <around*|(|\<alpha\>|)>*sin <around*|(|\<gamma\>|)>-cos
+      <around*|(|\<alpha\>|)>*sin <around*|(|\<beta\>|)>*cos
+      <around*|(|\<gamma\>|)>>>|<row|<cell|-cos <around*|(|\<beta\>|)>*sin
+      <around*|(|\<gamma\>|)>>|<cell|sin <around*|(|\<beta\>|)>>|<cell|cos
+      <around*|(|\<beta\>|)>*cos <around*|(|\<gamma\>|)>>>>>>>>
+    </unfolded-io>
+
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>30) >
+      <with|color|red|(<with|math-font-family|rm|%i>14) >
     <|input>
       \;
     </input>

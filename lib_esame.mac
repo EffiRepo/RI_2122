@@ -14,7 +14,10 @@ matchdeclare(a,lambda([x],if(matrixp(x)) then (is(length(x)=2 and length(transpo
 defrule(matrix2_input,a,a)$
 /*Matrice quadrata*/
 matchdeclare(a,lambda([x],if(matrixp(x))then (is(size(x)[1]=size(x)[2]))))$
-defrule(matrix_input,a,a)$
+defrule(matrix_input,a,scanmap(trigsimp,factor(a)))$
+/* Trigonometric Input*/
+matchdeclare(a,lambda([x],is(x=sin or x=cos)),b,true)$
+defrule(trig_input,a(b),a(b))$
 /* Caricamento libreria per semplificazioni aggiuntive*/
 load("atrig1");
 /* Regole di semplificazione coseno e seno*/
@@ -38,7 +41,73 @@ rename(expr,i):=block(
   if(i=0) then(return (applyb1(expr,r1,r2,r3,r4,r5,r6,r7,r8)))
   elseif(i=1)then(return (applyb1(trigexpand(expr),r1,r2,r7,r8)))
 )$
-/*Prodotto vettorial*/
+/*Basic simp*/
+simp(expr):=block(
+  [res],
+  res:factor(expand(trigreduce(expand(expr)))),
+  return(res)
+)$
+/*WrapTo2pi*/
+wrapTo2Pi(expr):=block([positiveInput,res],
+  positiveInput:is(expr>0),
+  res:mod(expr,2*%pi),
+  if(res=0 and positiveInput) then(res:2*pi),
+  return(res)
+)$
+/*wrapToPi*/
+wrapToPi(expr):=block([q],
+  q:is(expr<-%pi or %pi<expr),
+  if(q=true) then(
+    return(wrapTo2Pi(expr+%pi)-%pi)
+  )
+)$
+/*Atan2 Modificato*/
+atan2mod(y,x):=block([signx,signy,atValue,at2Value,sn,cs,sn2,cs2],
+  if(scalarp(y) and scalarp(x)) then (
+  signx:signum(float(x)),
+  signy:signum(float(y)),
+  if (x=0) then (return(atan2(y,x))),
+  atValue:simp(atan(y/x)),
+  at2Value:simp(atan2(y,x)),
+  print(atValue),print(at2Value),
+  sn:signum(float(sin(atValue))),cs:signum(float(cos(atValue))),
+  sn2:signum(float(sin(at2Value))),cs2:signum(float(cos(at2Value))),
+  if(sn=signy and cs=signx) then (return(simp(atan(y/x))))
+  else if(sn2=signy and cs2=signx) then (return(simp(atan2(y,x))))
+  else(warning("caso non mappato"))
+  )
+  else(
+      return (simp(atan(y/x)))
+  )
+)$
+atan2mod1(y,x):=block([signx,signy],
+                     if(scalarp(y) and scalarp(x)) then (
+                      signx:signum(float(x)),
+                      signy:signum(float(y)),
+                      if(signx=1.0) then(
+                        return(simp(atan(y/x)+%pi))
+                      )
+                      else if(signx =-1.0 and (signy = 0.0 or signy=1.0)) then (
+                        return(simp(atan(y/x)))
+                      )
+                      else if(signx=-1.0 and signy=-1.0) then (
+                        return(simp(atan(y/x)))
+                      )
+                      else if(signx=0.0 and signy=1.0) then (
+                        return(%pi/2)
+                      )
+                      else if(signx=0.0 and signy=-1.0) then (
+                        return(-%pi/2)
+                      )
+                      else if(signx=0.0 and signy=0.0) then (
+                        return(atan2(y,x))
+                      )
+                     )
+                     else(
+                          return (simp(atan(y/x)))
+                     )
+)$
+/*Prodotto vettoriale*/
 cross_prod(A,B):=block([vA,vB,E, M, AxB, res],
 /*Verifica delle dimensioni dei vettori*/
 vA:vector_input(A),vB:vector_input(B),
@@ -80,7 +149,7 @@ norm(x):=scanmap(ratsimp,scanmap(trigsimp,factor(sqrt(vector_input(x).vector_inp
 size(x):=block([],
                if(scalarp(x)) then return(1)
                else if(matrixp(x)) then return([length(x),length(transpose(x))])
-               else if(nonscalarp(x)) then return([1,length(flatten(x))])
+               else if(nonscalarp(x)) then return([length(x),length(flatten(x))/length(x)])
 )$
 /* Verifica se è una matrice di rotazione*/
 isRot(R):=block(
@@ -188,6 +257,22 @@ else(
   )
 ), return(R)
 )$
+/*Rotazioni Eulero*/
+ternaEulero(axes,angle):=block([dim],
+  dim:size(axes),
+  if(dim[1]=3) then(
+      if(axes[1]=axes[3]) then(
+        if(size(angle)[1]=3) then(
+            return(rot3(axes[1],angle[1]).rot3(axes[2],angle[2]).rot3(axes[3],angle[3]))
+        )
+        else(error("Insert 3x1 angle list"))
+      )
+      else(error("First and Last axe doesn't match"))
+    )
+  else(
+    error("Insert 3x1 list")
+  )
+)$
 /*Matrice antisimmetrica*/
 S(v):=block(
 [S],
@@ -203,6 +288,469 @@ isAsim(S):=block(
 [st, sz: size(S), sum],
 if matrix_input(S)=false then error("Inserire una matrice quadrata"),     
 st: transpose(S),
-if st = -S then return(true)
+if expand(st + S)=zerofor(S) then return(true)
 else return(false)
 )$
+/* Get vector from asym*/
+getAsimVect(S):=block(
+[v:zeromatrix(3,1)],
+/*Verifico che la matrice è antisimmetrica*/
+if isAsim(S) then(
+/*Mappo le componenti della matrice antisimmetrica nel vettore*/
+  v[1,1]:S[3,2],
+  v[2,1]:S[1,3],
+  v[3,1]:S[2,1],
+  return(v)
+) else (
+  error("La matrice non è antisimmetrica")
+)
+)$
+/*Antisimmetric product*/
+antiSimProduct(v,w):=block(
+[S,Sw],
+ S:S(v),
+ Sw:S.w,
+ return(Sw)
+)$
+/*Calcolo autovettore*/
+colsimp(cs):=block(
+[csimp:[], v, bool],
+for v in cs do(
+      bool: false,
+      for i:1 thru length(v) do(
+        if v[i,1] # 0 and bool = false then(
+          bool: true,
+          v:ratsimp(v/v[i,1])
+        )
+      ),
+      csimp:append(csimp,[v])
+),
+return(csimp)
+)$
+myColspace(A):= block(
+[sz:size(A), cs:set(), pos, i, j, col, v, zeros],
+     if sz[1]#sz[2] or sz[1]=0 or sz[2]=0 then(
+       error("Inserisci una matrice quadrata")
+     ),
+/*Determino sottoinsieme di colonne lin. indip. di A.*/
+     zeros:zeromatrix(sz[1],1),
+     for i:1 thru sz[1] do(
+       col:simp(col(A,i)),
+       if col # zeros then (cs:adjoin(col, cs))
+     ),
+/*Scalo le colonne per una loro componente non nulla*/
+    cs:args(cs),
+    return(cs)
+)$
+myEigens(A):=block(
+[II, sII, sIImA, pA, i, j, k, sz:size(A), specSz, adj, adji, imm, ker, v, M, zeros, bool,s],
+     if (sz[1] # sz[2]) and (sz[1] <2) then
+       error("Matrice non quadrata o vettore in ingresso"),
+/* definisco una matrice identità delle dimensioni di A*/
+     II: identfor(A),
+/*Calcolo il polinomio caratteristico di A*/
+     sIImA: s*II-A,
+     pA:expand(trigreduce(expand(determinant(sIImA)))),
+/*Determino gli autovalori e controllo il loro numero*/
+     eigs:solve(pA=0,s),
+     specSz: length(eigs),
+     adj:adjoint(sIImA),
+     v:[],
+     zeros: zeromatrix(sz[1],sz[2]),
+     for i:1 thru specSz do(
+       adji: subst(eigs[i], adj),
+/*Se l'aggiunta è nulla l'autovettore è preso come vettore nel nucleo di (sI-A)*/
+       if adji = zeros then(
+         kerA:nullspace(subst(eigs[i],sIImA)),
+         for j:1 thru length(kerA) do(
+/*Tramite args() prendiamo una colonna linearmente indipendente*/
+           v:append(v,[args(kerA)[j]])
+         )
+     ) else (
+         immA:myColspace(adji),
+/*Tramite args()[1] prendiamo una colonna linearmente indipendente*/
+         v:append(v,[args(immA)[1]]))
+     ),
+     v:colsimp(v),
+     return([map(rhs,eigs),v])
+)$
+/*Exponential Laplace*/
+expLaplace(A,t):=block(
+[sz, II, s, sIImA, sIImAT, i, iltA],
+     /*Controlliamo che la matrice inserita sia quadrata*/
+     sz:size(A),
+     if(sz[1]#sz[2]) then error("Matrice non Quadrata"),
+     II:ident(sz[1]),
+     sIImA:invert(s*II-A),
+     iltA:zerofor(A),
+     for i:1 thru sz[1] do(
+       for j:1 thru sz[2] do(
+         iltA[i,j]:ilt(sIImA[i,j],s,t)
+       )
+     ),
+     return(scanmap(trigsimp,expand(trigexpand(iltA))))
+)$
+/*Exponential by Jordan*/
+expVect(A,t):=block(
+[sz, V, eigVec, Vi, D, expD, res, theta],
+      sz:size(A),
+      if matrix_input(A) then error("Matrix not Square"),
+/*Definiamo una matrice vuota pronta a contenere vettori colonna di dimensione 3*/
+      V:zeromatrix(sz[1],0),
+      eigVec:myEigens(A)[2],
+      /*Controlliamo la presenza di eventuali blocchi di Jordan e andiamo in recovery usando expLaplace*/
+      if(length(eigVec)#3) then return(expLaplace(A,t)),
+      for i:1 thru sz[1] do(
+        V:addcol(V, eigVec[i])
+      ),
+      Vi:invert(V),
+      D:Vi.A.V,
+      expD:D,
+      for i:1 thru sz[1] do(
+       expD[i,i]:exp(expD[i,i]*t)
+      ),
+      res:V.expD.Vi,
+      return(scanmap(ratsimp,scanmap(factor,res,bottomup)))
+)$
+/*Rotazioni parametrizzate tramite antisimmetriche*/
+rotExp(S,t):=block(
+[R],
+/*Verifichiamo che S sia antisimmetrica*/
+if isAsim(S) then(
+  R:expLaplace(S,t),
+  return(R)
+) else (
+  error("Inserire una matrice antisimmetrica")
+)
+)$
+/*Normalizzazione due output*/
+normalize(v):=block(
+[norm, u, i, sz, vv],
+sz:size(v),
+/*Mi assicuro che v sia un vettore colonna*/
+if nonscalarp(v) and sz[2] = 1  then(
+  vv:ratsimp(v),
+  norm:sqrt(transpose(vv).vv),
+  u:vv/norm
+),
+return([norm,u])
+)$
+/*Rodrigues*/
+rodrigues(v,theta):=block(
+[S,II,S2,rodr,norm,u,theta1],
+/*normaliziamo il vettore*/
+[norm,u]:normalize(v),
+/*calcoliamo l'antisimmetrica sul versore*/
+ S:S(u),
+ II:identfor(S),
+ /*S2:trigsimp(expand(trigreduce(expand(S.S)))),*/
+ S2:S.S,
+ /*implementiamo la formula di rodrigues, moltiplicando l'angolo per la norma di v*/
+ theta1: theta,
+ /*rodr:scanmap(factor,scanmap(ratsimp,factor(trigexpand(II+S2*(1-cos(theta1))+S*sin(theta1)))),bottomup),*/
+ rodr:II+S2*(1-cos(theta1))+S*sin(theta1),
+ return((rodr))
+)$
+/*Procedura calcolo asse*/
+getAxis(R):=block(
+[II, v, i, u, norm,c],
+  /*Verifichiamo che la matrice data è di rotazione*/
+  if (isRot(R) = false) then (
+    error("La matrice inserita non è di rotazione.")
+  ) else (
+    /*Calcolo autovalori e autovettori*/
+    eigs:myEigens(R),
+    for i:1 thru length(eigs[1]) do(
+/*Cerco l'autovettore relativo all'autovalore 1. Unico per ipotesi.*/
+      if eigs[1][i] = 1 then( /*scorro autovalori per trovare lambda=1*/
+         v:expand(eigs[2][i]),
+         [norm, u] : normalize(v),
+         return([u*norm, norm, u])
+      )
+    )
+  )
+)$
+/*Procedura calcolo angolo*/
+getAngle(R):=block(
+[Rplus, Rminus, S1, S2, dim, Rt, v, c:0, s:0, norm, u, angle,cc,Rm],
+        Rm:matrix_input(R),
+        dim:size(Rm),
+        Rt:transpose(Rm),
+        I:ident(dim[1]),
+        Rminus:trigsimp(factor((Rm-Rt)/2)),
+        Rplus:trigsimp(factor((Rm+Rt)/2-I)),
+        [v, norm, u]:getAxis(Rm),
+        S1:S(u),
+        if(isRot(R) = false) then (
+        error("La matrice inserita non di rotazione.")),
+        for i:1 thru dim[1] do(
+          for j:1 thru dim[2] do(
+           if(S1[i][j]#0) then(
+             s:Rminus[i][j]/S1[i][j],
+             return(s))
+          )
+         ),
+         S2:S1.S1,
+         for i:1 thru dim[1] do(
+          for j:1 thru dim[2] do(
+           if(S2[i][j]#0) then(
+             c:expand(1-Rplus[i][j]/S2[i][j]),
+             return(c))
+          )
+         ),
+        angle:simp(atan2mod(expand(s),expand(c))),
+        return(expand(angle))
+)$
+/*Asse e angolo Rodrigues*/
+getRotData(R):=block(
+[angle, axes],
+        axes:getAxis(R),
+        angle:getAngle(R),
+        return([axes[3],angle])
+)$
+/*Parametrizzazione di Cayley*/
+cayley(ax,angle):=block(
+    [cay,I,dim,s,norm, vers, theta],
+     /*Normalizzo il vettore e ottengo norma e versore*/
+     [norm, vers]: normalize(ax),
+     /* Calcolo antisimmetrica con l'angolo corretto*/
+    s:S(vers*sin(angle)/(cos(angle)+1)),
+    I:identfor(s),
+    cay:expand(I+s).invert(expand(I-s)),
+return(scanmap(trigsimp,factor(cay)))
+)$
+/*Cayley from antisimmetrica*/
+cayleyS(S):=block([I],
+      I:identfor(S),
+      return(scanmap(trigsimp,factor(expand(I+S).invert(expand(I-S)))))
+)$
+/*Cayley Inverso*/
+invCayley(R):=block([Rc,I,S,v,nm,cosTheta,sinTheta,theta,cond],
+   Rc:matrix_input(R),
+   if isRot(Rc) then(
+     I:ident(3),
+     /*Applico Calyley Inverso*/
+     S:matrix_input(invert(Rc+I).(Rc-I)),
+     v:getAsimVect(S),
+     nm:factor(norm(v)^2),
+     cosTheta:trigsimp(trigexpand(expand((1-nm)/(1+nm)))),
+     sinTheta:trigsimp(trigexpand(expand((2*sqrt(nm))/(1+nm)))),
+     theta:atan2mod(sinTheta,cosTheta),
+     return([scanmap(trigsimp,(v/sqrt(nm))),scanmap(trigsimp,trigexpand(theta))])
+   )
+   else(error("La matrice non è di rotazione"))
+)$
+/*cinematica diretta*/
+/*Avvitamento*/
+Av(v, theta, d):=block([exp, S, dv, row, T,norm,ax],
+[norm,ax]:normalize(v),
+S:S(v),
+exp:expLaplace(S, theta),
+row:matrix([0,0,0,1]),
+dv:d*v,
+T:addcol(exp, dv),
+T:addrow(T,row),
+return(trigsimp(trigrat(trigreduce(trigexpand(T)))))
+)$
+/*Avvitamento z*/
+Avz(theta,d):=block(
+    [z, Av],
+    z:matrix([0],[0],[1]),
+    Av:Av(z,theta,d),
+    return(Av)
+    )$
+/*Avvitamento x*/
+Avx(alpha,a):=block([x,Av],
+    x:matrix([1],[0],[0]),
+    Av:Av(x,alpha,a),
+    return(Av)
+)$
+/*Matrice trasformazione Qij*/
+Qij(thetai,di,alphai,ai):=block([Avz,Avx,Q],
+    Avz:Avz(thetai,di),
+    Avx:Avx(alphai,ai),
+    Q:Avz.Avx,
+    return(Q)
+)$
+/*Tabella Denavit-Hartenberg*/
+DH(M):=block(
+[dim, Q:ident(4), Qlist:[], idx:1, i:1, term, term1,Qm:[]],
+    dim:size(M),
+    for i:1 thru dim[1] do(
+    Qlist:append(Qlist,[Qij(M[i][1],M[i][2],M[i][3],M[i][4])])
+    ),
+     i:1,
+    while not emptyp(Qlist) do(
+        if (M[i][3]=0 or M[i][3] = %pi) then(
+            term:pop(Qlist),
+            if emptyp(Qlist) then(
+                Q:scanmap(trigsimp,factor(Q.term))
+             )
+            else( 
+                  Qm:append(Qm,[Q.term]),
+                  term1:pop(Qlist),
+                  Q:Q.trigreduce(term.term1),
+                  i:i+2
+            )
+        )
+        else(  
+            Q:Q.pop(Qlist),i:i+1
+        ),
+        Qm:append(Qm,[Q])
+    ),
+    return([Q,Qm])
+)$
+
+/*Matrice Inerzia*/
+inerzia(j):=block(
+[II],
+II:matrix([I[concat(x,j)],0,0],
+[0,I[concat(y,j)],0],
+[0,0,I[concat(z,j)]]),
+/*II:subst(j,i,II),*/
+return(II)
+)$
+/*Baricentro*/
+baricentro(row):=block(
+[bc],
+bc:addrow(addcol(ident(3),transpose(row)),[0,0,0,1]),
+return(bc)
+)$
+/*Derivata Parziale*/
+gradef(q,t,v)$
+gradef(v,t,a)$
+partial(f,dir,tot):=block([
+  dot:0,
+  index:0,
+  value:0
+  ],
+  if(subvarp(dir) and tot=t) then(
+    index:part(dir,1),
+    dot:diff(part(dir,0),t),
+    if(dot#0) then(return(diff(f,dir)*dot[index]))
+    else(return(0))
+  )
+  else if(symbolp(dir) and tot=t) then(
+    dot:diff(dir,t),
+    return(diff(f,dir)*dot)
+  )else(
+    return(diff(f,dir))
+  )
+)$
+/*Derivata*/
+dev(f,var):=block([symb,
+                  varTograd,
+                  dif:0],
+  symb:listofvars(f),
+  varToGrad:[],
+  for s in symb do(
+    if(symbolp(s) and s#L and s#D) then push(s,varToGrad)
+    else if(subvarp(s) and part(s,0)#L and part(s,0)#D) then  push(s,varToGrad)
+  ),
+    if(var=t) then(
+      for dir in varToGrad do(
+        dif:dif+partial(f,dir,t)
+      ),
+      return(dif)
+    )else(
+      return(partial(f,var,var))
+    )
+)$
+/*FormaQuad*/
+formaQuad(func,n):=block(
+[B],
+B:zeromatrix(n,n),
+/*Derivoduevolte:ottengoiterminiquadraticinellevelocità*/
+for k:1thru n do(
+B[k,k]:diff(func,v[k],2)),
+/*Derivoiterminimisti:*/
+/*ottengoiterminisopraesottoladiagonaleprincipale.*/
+for i:1 thru n do(
+for j:i+1 thru n do(
+B[i,j]:1/2*dev(dev(func,v[j]),v[i]),
+B[j,i]:B[i,j]
+)
+),
+return(B)
+)$
+/*Derivata Matrice*/
+matrixDot(m):=block([sizeM:size(m),dotM:zerofor(m)],
+    for i:1 thru sizeM[1] do (
+      for j:1 thru sizeM[2] do(
+      dotM[i,j]:dev(m[i][j],t)
+    )
+  ),
+    return(dotM)
+)$
+/*Energia potenziale link*/
+Ulink(Qh,M):=block(
+[g,U,d],
+/*Approssimoaccelerazionegravitazionalea10m/s^2*/
+g:[0,0,10],
+d:submatrix(4,Qh,1,2,3),
+U:-M*g.d,
+return(U)
+)$
+/*Energia cinetica link*/
+Tlink(Qh,dof,M):=block(
+[Tr,Tt,w,wt,II,R,Rt,Rd,Sw,result,dd,ddt],
+R:submatrix(4,Qh,4),
+d:submatrix(4,Qh,1,2,3),
+Rd:matrixDot(R),
+dd:matrixDot(d),
+Sw:trigsimp(Rd.transpose(R)),
+w:matrix([Sw[3][2]],[Sw[1][3]],[Sw[2][1]]),
+wt:transpose(w),
+dd:trigsimp(trigexpand(dd)),
+ddt:transpose(dd),
+II:inerzia(dof),
+Tt:1/2*M*trigsimp(trigexpand(ddt.dd)),
+Tr:1/2*trigsimp(trigexpand(wt.R.II.transpose(R).w)),
+result:[Tr,Tt,II],
+return(result)
+)$
+/*Funzione di stampa delle informazioni*/
+stampa(T,U,Ttot,Utot,size):=block([dof:size(U)[2],Tr:T,Ur:U,brToPrint:0,btToPrint:0,pos:[],vel:[]],
+  
+   for i:1 thru 6 do(
+      vel:flatten([vel,[v[i]]]),
+      pos:flatten([pos,[q[i]]])
+   ),
+   for i:1 thru size do(
+        print("Link",i),
+        print("Energica Cinetica di Rotazione:",
+                collectterms(intosum(scanmap(multthru,factor(Tr[i][1]))),
+                                    vel[1],vel[2],vel[3],vel[4],vel[5],vel[6])
+                ),
+        print("Energia Cinetica di Traslazione:",
+                collectterms(intosum(scanmap(multthru,factor(Tr[i][2]))),
+                                    vel[1],vel[2],vel[3],vel[4],vel[5],vel[6])
+                ),
+        print("Matrice di Inerzia:",Tr[i][3]),
+        print("Energia Potenziale:",collectterms(Ur[i],pos[1],pos[2],pos[3],pos[4],pos[5],pos[6])),
+        brToPrint:formaQuad(Tr[i][1],size),
+        btToPrint:formaQuad(Tr[i][2],size),
+        print("Br:",intosum(scanmap(multthru,brToPrint))),
+        print("Bt:",intosum(scanmap(multthru,btToPrint)))
+   ),
+    print("Energia Cinetica Complessiva:",collectterms(intosum(scanmap(multthru,factor(Ttot))),vel[1],vel[2],vel[3],vel[4],vel[5],vel[6])),
+    print("Energia Potenziale Complessiva:",collectterms(Utot,pos[1],pos[2],pos[3],pos[4],pos[5],pos[6]))
+)$
+/*Funzione calcolo energia di un robot*/
+energia(tab,M,Trs,flag):=block(
+  [T:[],U:[],Q:[],Qbc:[],i,Qdr:0,Ttot:0,Utot:0],
+dof:size(tab)[1],
+[Qdr,Q]:DH(tab),
+for i:1 thru size(Q)[1] do (
+   Qbc:append(Qbc,[Q[i].baricentro(Trs[i])]),
+   T:append(T,[Tlink(Qbc[i],i,M[i])]),
+   /*print("T",T)*/
+   U:append(U,[Ulink(Qbc[i],M[i])]),
+   /* print("U",U)*/
+   Ttot:expand(Ttot+T[i][1]+T[i][2]),
+   /*print("Ttot",Ttot)*/
+   Utot:expand(Utot+U[i])
+   /*print("Utot",Utot)*/
+),if flag=1 then stampa(rename(T,0),rename(U,0),rename(Ttot,0),rename(Utot,0),dof),
+   return(rename(expand([formaQuad(Ttot,dof),Utot]),0))
+   )$
