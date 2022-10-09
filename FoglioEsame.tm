@@ -124,6 +124,16 @@
     <item>energia(tab,M,Trs,flag)<math|\<rightarrow\>funzione di calcolo
     energia di un robot>
   </itemize>
+
+  Manca:
+
+  <\itemize>
+    <item>inerzia;
+
+    <item>Eulero Lagrange;
+
+    <item>
+  </itemize>
 </body>
 
 <\initial>
