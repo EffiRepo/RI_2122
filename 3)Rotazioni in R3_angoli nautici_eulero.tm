@@ -322,11 +322,6 @@
       )$
     </input>
 
-    <\textput>
-      Definisco una funzione utile per comprimere l'output di risultati
-      simbolici
-    </textput>
-
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>22) >
     <|unfolded-io>
@@ -578,9 +573,9 @@
       >x<text|? ><math-bf|true>>>
     </unfolded-io>
 
-    <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>7) >
-    <|unfolded-io>
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>1) >
+    <|input>
       ternaEulero(axes,angle):=block([dim],
 
       \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dim:size(axes),
@@ -613,14 +608,8 @@
       \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error("Insert
       3x1 list")
 
-      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ))
-    <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o7>)
-      >><math-up|ternaEulero><around*|(|<math-up|axes>,<math-up|angle>|)>\<assign\><math-bf|block><space|0.27em><around*|(|<around*|[|<math-up|dim>|]>,<math-up|dim>:<math-up|size><around*|(|<math-up|axes>|)>,<math-bf|if><space|0.27em><math-up|dim><rsub|1>=3<space|0.27em><math-bf|then><space|0.27em><math-bf|if><space|0.27em><math-up|axes><rsub|1>=<math-up|axes><rsub|3><space|0.27em><math-bf|then><space|0.27em><math-bf|if><space|0.27em><around*|(|<math-up|size><around*|(|<math-up|angle>|)>|)><rsub|1>=3<space|0.27em><math-bf|then><space|0.27em><math-up|return><around*|(|<with|math-font-family|rm|rot3><around*|(|<math-up|axes><rsub|1>,<math-up|angle><rsub|1>|)>\<cdot\><with|math-font-family|rm|rot3><around*|(|<math-up|axes><rsub|2>,<math-up|angle><rsub|2>|)>\<cdot\><with|math-font-family|rm|rot3><around*|(|<math-up|axes><rsub|3>,<math-up|angle><rsub|3>|)>|)><space|0.27em><math-bf|else><space|0.27em><math-up|error><around*|(|<text|Insert
-      3x1 angle list >|)><space|0.27em><math-bf|else><space|0.27em><math-up|error><around*|(|<text|First
-      and Last axe doesn't match >|)><space|0.27em><math-bf|else><space|0.27em><math-up|error><around*|(|<text|Insert
-      3x1 list >|)>|)>>>
-    </unfolded-io>
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ))$
+    </input>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>8) >
