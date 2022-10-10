@@ -759,3 +759,75 @@ for i:1 thru size(Q)[1] do (
     return([Ttot,Utot])
   )
    )$
+/*Eulero Lagrange*/
+euleroLagrange(tab,M,F,u,Trsz):=block(
+[T,U,l,dFdq,dldq,dldv,dtdldv,eq:[],solEL:[],a:[a[1],a[2],a[3],a[4],a[5],a[6]],v,q],
+/*T:energiacinetica,U:energiapotenzialegravitazionale*/
+/*F:attritostatico,dLdq:derivatadiLrispettoq*/
+/*dLddq:derivatadiLrispettoaqpunto,e:energia*/
+/*q:variabilidigiunto*/
+/*EL:equazionieulerolagrange*/
+[T,U]:energia(tab,M,Trsz,2),
+l:T-U,
+dof:size(tab)[1],
+for i:1 thru dof do(
+dldv:dev(l,v[i]),
+dldq:dev(l,q[i]),
+dFdv:dev(F,v[i]),
+dtdldv:dev(dldv,t),
+eq:flatten(append(eq,[dtdldv-dldq+dFdv-u[i,1]])),
+solEL:flatten(append(solEL,[factor(ratsimp(solve(eq[i],a[i])))]))
+),
+return(rename([eq,solEL],0))
+)$
+/*EEL Lagrangiano,F,u*/
+EEL(L,F,u):=block([dim,eq:[],dldv,dldq,dtdldv,dfdv,sols:[]],
+  dim:size(u)[1],
+  if(nonscalarp(u))then(
+  for i:1 thru dim do(
+    dldv:dev(L,v[i]),
+    dldq:dev(L,q[i]),
+    dtdldv:dev(dldv,t),
+    dfdv:dev(F,v[i]),
+    eq:flatten(append(eq,[dtdldv-dldq+dfdv-u[i,1]])),
+    sols:flatten(append(sols,[solve(eq[i]=0,a[i])]))
+  ),
+  return([eq,sols]))
+)$
+/*Gravitazionale*/
+Ug(tab,bcPos,rn):=block([dr,Qbc,dof:size(tab)[1],g:[0,0,10],U:[]],
+dr:DH(tab)[2],
+for i:1 thru dof do(
+Qbc:dr[i].baricentro(bcPos[i]),
+d:submatrix(4,Qbc,1,2,3),
+/*Approssimoaccelerazionegravitazionalea10m/s^2*/
+U:flatten(append(U,[-M[i]*g.d]))
+),
+U:flatten(append(U,[apply("+",U)])),
+if(rn=false)then(return(U))
+else(return(rename(U,0)))
+)$
+/*Cinetica*/
+(%i69)  Tl(tab,bcPos,rn):=block([dr,dof,Qbc,II,R,d,Ttr:[],ddot,Tr:[],RdotR,Sw,ax,Ttot:[],Br:[],Bt:[],Btot:[]],
+dr:DH(tab)[2],dof:size(tab)[1],
+for i:1 thru dof do(
+  II:inerzia(i),
+  Qbc:dr[i].baricentro(bcPos[i]),
+  R:submatrix(4,Qbc,4),
+  d:submatrix(4,Qbc,1,2,3),
+  /*Cinetica Traslazione*/
+  Ttr:flatten(append(Ttr,[simp(1/2*M[i]*simp(transpose(dev(d,t)).dev(d,t)))])),
+  RdotR:factor(matrixDot(R)),
+  Sw:trigsimp(RdotR.transpose(R)),
+  ax:getAsimVect(Sw),
+  Tr:flatten(append(Tr,[simp(1/2*transpose(ax).R.II.transpose(R).ax)])),
+  Br:flatten(append(Br,[formaQuad(Tr[i],dof)])),
+  Bt:flatten(append(Bt,[formaQuad(Ttr[i],dof)])),
+  Btot:flatten(append(Btot,[Br[i]+Bt[i]])),
+  Ttot:flatten(append(Ttot,[Ttr[i]+Tr[i]]))
+),
+Btot:flatten(append(Btot,[apply("+",Btot)])),
+Ttot:flatten(append(Ttot,[apply("+",Ttot)])),
+if(rn=false)then(return([Ttr,Tr,Ttot,Bt,Br,Btot]))
+else(return(rename([Ttr,Tr,Ttot,Bt,Br,Btot],0)))
+)$

@@ -212,7 +212,7 @@
     </textput>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>4) >
+      <with|color|red|(<with|math-font-family|rm|%i>26) >
     <|input>
       matrixDot(m):=block([sizeM:size(m),dotM:zerofor(m)],
 
@@ -530,6 +530,16 @@
     <\textput>
       <center|<with|font-series|bold|Robot Cartesiano>>
     </textput>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>1) >
+    <|unfolded-io>
+      dev(v[2]*cos(q[2]),t)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
+      >>a<rsub|2>*cos <around*|(|q<rsub|2>|)>-v<rsub|2><rsup|2>*sin
+      <around*|(|q<rsub|2>|)>>>
+    </unfolded-io>
 
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>18) >
@@ -1236,6 +1246,198 @@
 
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>25) >
+    <|input>
+      \;
+    </input>
+  </session>
+
+  <\center>
+    <with|font-series|bold|Funzioni aggiuntive>
+  </center>
+
+  <\session|maxima|default>
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>1) >
+    <|unfolded-io>
+      DH:[matrix([q[1],0,0,L[1]],[q[2],0,0,L[2]]),
+
+      matrix([0,q[1],-%pi/2,0],[-%pi/2,q[2],-%pi/2,0],[0,q[3],0,0]),
+
+      matrix([q[1],L[1],0,0],[0,q[2],-%pi/2,0],[0,q[3],0,0]),
+
+      matrix([q[1],L[1],0,D[1]],[q[2],0,0,D[2]],[0,q[3],0,L[3]]),
+
+      matrix([q[1],L[1],%pi/2,0],[q[2],0,%pi/2,D[2]],[0,q[3],0,0]),
+
+      matrix([q[1],L[1],-%pi/2,0],[q[2],L[2],%pi/2,0],[0,q[3],0,0]),
+
+      matrix([q[1],L[1],%pi/2,0],[q[2],0,0,D[2]],[q[3],0,0,D[3]])]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|0>|<cell|0>|<cell|L<rsub|1>>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|L<rsub|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|q<rsub|1>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|-<frac|\<pi\>|2>>|<cell|q<rsub|2>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|2>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|0>|<cell|D<rsub|1>>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|D<rsub|2>>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|L<rsub|3>>>>>>,<matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|D<rsub|2>>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|L<rsub|2>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|D<rsub|2>>>|<row|<cell|q<rsub|3>>|<cell|0>|<cell|0>|<cell|D<rsub|3>>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>2) >
+    <|unfolded-io>
+      Trsz:[matrix([-L[1]/2,0,0],[-L[2]/2,0,0]),
+
+      matrix([0,L[1]/2,0],[0,L[2]/2,0],[0,0,-L[3]/2]),
+
+      matrix([0,0,-L[1]/2],[0,L[2]/2,0],[0,0,-L[3]/2]),
+
+      matrix([-D[1]/2,0,-L[1]/2],[-D[2]/2,0,0],[0,0,L[3]/2]),
+
+      matrix([0,-L[1]/2,0],[-D[2]/2,0,0],[0,0,-L[3]/2]),
+
+      matrix([0,L[1]/2,0],[0,-L[2]/2,0],[0,0,-L[3]/2]),
+
+      matrix([0,-L[1]/2,0],[-D[2]/2,0,0],[-D[3]/2,0,0])]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o2>)
+      >><around*|[|<matrix|<tformat|<table|<row|<cell|-<frac|L<rsub|1>|2>>|<cell|0>|<cell|0>>|<row|<cell|-<frac|L<rsub|2>|2>>|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|<frac|L<rsub|1>|2>>|<cell|0>>|<row|<cell|0>|<cell|<frac|L<rsub|2>|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|1>|2>>>|<row|<cell|0>|<cell|<frac|L<rsub|2>|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|-<frac|D<rsub|1>|2>>|<cell|0>|<cell|-<frac|L<rsub|1>|2>>>|<row|<cell|-<frac|D<rsub|2>|2>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|-<frac|L<rsub|1>|2>>|<cell|0>>|<row|<cell|-<frac|D<rsub|2>|2>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|<frac|L<rsub|1>|2>>|<cell|0>>|<row|<cell|0>|<cell|-<frac|L<rsub|2>|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|-<frac|L<rsub|1>|2>>|<cell|0>>|<row|<cell|-<frac|D<rsub|2>|2>>|<cell|0>|<cell|0>>|<row|<cell|-<frac|D<rsub|3>|2>>|<cell|0>|<cell|0>>>>>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>3) >
+    <|unfolded-io>
+      dueDof:DH[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o3>)
+      >><matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|0>|<cell|0>|<cell|L<rsub|1>>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|L<rsub|2>>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>4) >
+    <|unfolded-io>
+      Trsz2Dof:Trsz[1]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o4>)
+      >><matrix|<tformat|<table|<row|<cell|-<frac|L<rsub|1>|2>>|<cell|0>|<cell|0>>|<row|<cell|-<frac|L<rsub|2>|2>>|<cell|0>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>69) >
+    <|input>
+      Tl(tab,bcPos,rn):=block([dr,dof,Qbc,II,R,d,Ttr:[],ddot,Tr:[],RdotR,Sw,ax,Ttot:[],Br:[],Bt:[],Btot:[]],
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dr:DH(tab)[2],dof:size(tab)[1],
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for i:1 thru dof do(
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ II:inerzia(i),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Qbc:dr[i].baricentro(bcPos[i]),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ R:submatrix(4,Qbc,4),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d:submatrix(4,Qbc,1,2,3),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /*Cinetica Traslazione*/
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ttr:flatten(append(Ttr,[simp(1/2*M[i]*simp(transpose(dev(d,t)).dev(d,t)))])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ RdotR:factor(matrixDot(R)),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Sw:trigsimp(RdotR.transpose(R)),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ax:getAsimVect(Sw),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Tr:flatten(append(Tr,[simp(1/2*transpose(ax).R.II.transpose(R).ax)])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Br:flatten(append(Br,[formaQuad(Tr[i],dof)])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Bt:flatten(append(Bt,[formaQuad(Ttr[i],dof)])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Btot:flatten(append(Btot,[Br[i]+Bt[i]])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ttot:flatten(append(Ttot,[Ttr[i]+Tr[i]]))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Btot:flatten(append(Btot,[apply("+",Btot)])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Ttot:flatten(append(Ttot,[apply("+",Ttot)])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if(rn=false)then(return([Ttr,Tr,Ttot,Bt,Br,Btot]))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else(return(rename([Ttr,Tr,Ttot,Bt,Br,Btot],0)))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>70) >
+    <|unfolded-io>
+      Tl(dueDof,Trsz2Dof,true)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o70>)
+      >><around*|[|<around*|[|<frac|L<rsub|1><rsup|2>*M<rsub|1>*v<rsub|1><rsup|2>|8>,<frac|M<rsub|2>*<around*|(|L<rsub|2><rsup|2>*v<rsub|2><rsup|2>+4*L<rsub|1>*v<rsub|1>*L<rsub|2>*c<rsub|2>*v<rsub|2>+2*v<rsub|1>*L<rsub|2><rsup|2>*v<rsub|2>+4*L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*c<rsub|2>+v<rsub|1><rsup|2>*L<rsub|2><rsup|2>+4*L<rsub|1><rsup|2>*v<rsub|1><rsup|2>|)>|8>|]>,<around*|[|<frac|v<rsub|1><rsup|2>*I<rsub|<with|math-font-family|rm|z1>>|2>,<frac|<around*|(|v<rsub|2>+v<rsub|1>|)><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>|2>|]>,<around*|[|<frac|v<rsub|1><rsup|2>*I<rsub|<with|math-font-family|rm|z1>>|2>+<frac|L<rsub|1><rsup|2>*M<rsub|1>*v<rsub|1><rsup|2>|8>,<frac|<around*|(|v<rsub|2>+v<rsub|1>|)><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|L<rsub|2><rsup|2>*v<rsub|2><rsup|2>+4*L<rsub|1>*v<rsub|1>*L<rsub|2>*c<rsub|2>*v<rsub|2>+2*v<rsub|1>*L<rsub|2><rsup|2>*v<rsub|2>+4*L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*c<rsub|2>+v<rsub|1><rsup|2>*L<rsub|2><rsup|2>+4*L<rsub|1><rsup|2>*v<rsub|1><rsup|2>|)>|8>,<frac|<around*|(|v<rsub|2>+v<rsub|1>|)><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|v<rsub|1><rsup|2>*I<rsub|<with|math-font-family|rm|z1>>|2>+<frac|M<rsub|2>*<around*|(|L<rsub|2><rsup|2>*v<rsub|2><rsup|2>+4*L<rsub|1>*v<rsub|1>*L<rsub|2>*c<rsub|2>*v<rsub|2>+2*v<rsub|1>*L<rsub|2><rsup|2>*v<rsub|2>+4*L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*c<rsub|2>+v<rsub|1><rsup|2>*L<rsub|2><rsup|2>+4*L<rsub|1><rsup|2>*v<rsub|1><rsup|2>|)>|8>+<frac|L<rsub|1><rsup|2>*M<rsub|1>*v<rsub|1><rsup|2>|8>|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|<frac|M<rsub|2>*<around*|(|8*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>+8*L<rsub|1><rsup|2>|)>|8>>|<cell|<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>|)>|16>>>|<row|<cell|<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>|)>|16>>|<cell|<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z1>>>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z2>>>|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>>>|<row|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>>|<cell|I<rsub|<with|math-font-family|rm|z2>>>>>>>|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z1>>+<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z2>>+<frac|M<rsub|2>*<around*|(|8*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>+8*L<rsub|1><rsup|2>|)>|8>>|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>|)>|16>>>|<row|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>|)>|16>>|<cell|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>,<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z2>>+I<rsub|<with|math-font-family|rm|z1>>+<frac|M<rsub|2>*<around*|(|8*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>+8*L<rsub|1><rsup|2>|)>|8>+<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>|)>|16>>>|<row|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*c<rsub|2>+2*L<rsub|2><rsup|2>|)>|16>>|<cell|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>|]>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>71) >
+    <|unfolded-io>
+      Tl(dueDof,Trsz2Dof,false)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o71>)
+      >><around*|[|<around*|[|<frac|L<rsub|1><rsup|2>*M<rsub|1>*v<rsub|1><rsup|2>|8>,<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*v<rsub|1>*L<rsub|2>*v<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+4*L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+L<rsub|2><rsup|2>*v<rsub|2><rsup|2>+2*v<rsub|1>*L<rsub|2><rsup|2>*v<rsub|2>+v<rsub|1><rsup|2>*L<rsub|2><rsup|2>+4*L<rsub|1><rsup|2>*v<rsub|1><rsup|2>|)>|8>|]>,<around*|[|<frac|v<rsub|1><rsup|2>*I<rsub|<with|math-font-family|rm|z1>>|2>,<frac|<around*|(|v<rsub|2>+v<rsub|1>|)><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>|2>|]>,<around*|[|<frac|v<rsub|1><rsup|2>*I<rsub|<with|math-font-family|rm|z1>>|2>+<frac|L<rsub|1><rsup|2>*M<rsub|1>*v<rsub|1><rsup|2>|8>,<frac|<around*|(|v<rsub|2>+v<rsub|1>|)><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*v<rsub|1>*L<rsub|2>*v<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+4*L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+L<rsub|2><rsup|2>*v<rsub|2><rsup|2>+2*v<rsub|1>*L<rsub|2><rsup|2>*v<rsub|2>+v<rsub|1><rsup|2>*L<rsub|2><rsup|2>+4*L<rsub|1><rsup|2>*v<rsub|1><rsup|2>|)>|8>,<frac|<around*|(|v<rsub|2>+v<rsub|1>|)><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|v<rsub|1><rsup|2>*I<rsub|<with|math-font-family|rm|z1>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*v<rsub|1>*L<rsub|2>*v<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+4*L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+L<rsub|2><rsup|2>*v<rsub|2><rsup|2>+2*v<rsub|1>*L<rsub|2><rsup|2>*v<rsub|2>+v<rsub|1><rsup|2>*L<rsub|2><rsup|2>+4*L<rsub|1><rsup|2>*v<rsub|1><rsup|2>|)>|8>+<frac|L<rsub|1><rsup|2>*M<rsub|1>*v<rsub|1><rsup|2>|8>|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|<frac|M<rsub|2>*<around*|(|8*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>+8*L<rsub|1><rsup|2>|)>|8>>|<cell|<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>|)>|16>>>|<row|<cell|<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>|)>|16>>|<cell|<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z1>>>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z2>>>|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>>>|<row|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>>|<cell|I<rsub|<with|math-font-family|rm|z2>>>>>>>|]>,<around*|[|<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z1>>+<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|0>>|<row|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z2>>+<frac|M<rsub|2>*<around*|(|8*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>+8*L<rsub|1><rsup|2>|)>|8>>|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>|)>|16>>>|<row|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>|)>|16>>|<cell|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>,<matrix|<tformat|<table|<row|<cell|I<rsub|<with|math-font-family|rm|z2>>+I<rsub|<with|math-font-family|rm|z1>>+<frac|M<rsub|2>*<around*|(|8*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>+8*L<rsub|1><rsup|2>|)>|8>+<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>>|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>|)>|16>>>|<row|<cell|<frac|I<rsub|<with|math-font-family|rm|z2>>|2>+<frac|M<rsub|2>*<around*|(|4*L<rsub|1>*L<rsub|2>*cos
+      <around*|(|q<rsub|2>|)>+2*L<rsub|2><rsup|2>|)>|16>>|<cell|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>>>>>>|]>|]>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>80) >
+    <|input>
+      Ug(tab,bcPos,rn):=block([dr,Qbc,dof:size(tab)[1],g:[0,0,10],U:[]],
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dr:DH(tab)[2],
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for i:1 thru dof do(
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Qbc:dr[i].baricentro(bcPos[i]),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ d:submatrix(4,Qbc,1,2,3),
+
+      /*Approssimoaccelerazionegravitazionalea10m/s^2*/
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U:flatten(append(U,[-M[i]*g.d]))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ U:flatten(append(U,[apply("+",U)])),
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if(rn=false)then(return(U))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else(return(rename(U,0)))
+
+      \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )$
+    </input>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>81) >
+    <|unfolded-io>
+      Ug(DH[5],Trsz[5],true)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o81>)
+      >><around*|[|-5*L<rsub|1>*M<rsub|1>,-10*M<rsub|2>*<around*|(|<frac|D<rsub|2>*s<rsub|2>|2>+L<rsub|1>|)>,-10*M<rsub|3>*<around*|(|-c<rsub|2>*q<rsub|3>+<frac|c<rsub|2>*L<rsub|3>|2>+D<rsub|2>*s<rsub|2>+L<rsub|1>|)>,-10*M<rsub|3>*<around*|(|-c<rsub|2>*q<rsub|3>+<frac|c<rsub|2>*L<rsub|3>|2>+D<rsub|2>*s<rsub|2>+L<rsub|1>|)>-10*M<rsub|2>*<around*|(|<frac|D<rsub|2>*s<rsub|2>|2>+L<rsub|1>|)>-5*L<rsub|1>*M<rsub|1>|]>>>
+    </unfolded-io>
+
+    <\input>
+      <with|color|red|(<with|math-font-family|rm|%i>82) >
     <|input>
       \;
     </input>

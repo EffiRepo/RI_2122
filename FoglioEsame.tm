@@ -5,7 +5,7 @@
 <\body>
   <doc-data|<doc-title|Foglio Esame>>
 
-  <\itemize>
+  <\enumerate>
     Lista procedure libreria (Nome procedura, args_in,args_out):
 
     <item><math|prod_vect<around*|(|vectA,vectB|)>\<rightarrow\>prodotto
@@ -125,7 +125,15 @@
     energia di un robot>
 
     <item>euleroLagrange(tabList,Mlist,Fequation,uMatrix,TrszList)<math|\<rightarrow\><around*|{|equation,solutions|}>>
-  </itemize>
+
+    <item>EEL(LPoly,FPoly,uMatrix)<math|\<rightarrow\><around*|{|Equation,Solution|}>>
+
+    <item><math|dev<around*|(|f,var|)>\<rightarrow\>f<script-assign>function,var<script-assign>variableToDerivate>
+
+    <item><math|Tl<around*|(|tab,bcpos,flag|)>\<rightarrow\><around*|{|Ttr,Tr,Ttot,Bt,Br,Btot|}>>
+
+    <item>Ug(tab,bcpos,flag)<math|\<rightarrow\><around*|{|U|}>>
+  </enumerate>
 
   \;
 </body>
