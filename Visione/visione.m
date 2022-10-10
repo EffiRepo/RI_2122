@@ -9,8 +9,8 @@ syms x rect(x,x0,y0,m) rect2p(x,x0,y0,x1,y1)
 rect(x,x0,y0,m)=m*(x-x0)+y0;
 rect2p(x,x0,y0,x1,y1) = (x-x0)/(x1-x0)*(y1-y0)+y0;
 %% Scelta delle immagini
-obsTarget = 8;
-noise = 0.04;
+obsTarget = 4;
+noise = 0.0007;
 %%
 switch(obsTarget)
      case 8
@@ -102,10 +102,10 @@ title("Immagine senza buchi")
 
 
 %% Grafico contorno dell'oggetto
-figure(2)
+figure(4)
 imshow(imgM{end},'Border','tight');
 hold on
-plot(obb(:,2),obb(:,1),'g','LineWidth',3);
+plot(obb(:,2),obb(:,1),'g','LineWidth',3,'DisplayName','contorno');
 
 phi = linspace(0,2*pi,50);
 cosphi = cos(phi);
@@ -127,40 +127,40 @@ xy = R*xy;
 xx = xy(1,:) + xbar;
 yy = xy(2,:) + ybar;
 
-plot(xx,yy,'r','LineWidth',2);
+plot(xx,yy,'r','LineWidth',2,'DisplayName','Ellisse');
 
 %% Disegno assi maggiori dell'oggetto
-ang=(wrapTo360(orient));
+ang=orient
 % aggiungo sfasamento trovato empiricamente dai plot precedenti per far
 % coincidere lo 'zero' con quello da noi considerato.
 majorax=rect(x,z(1),z(2),ang);
 point=subs(majorax,x,z(1)+linspace(-a/2,a/2));
-plot(z(1)+linspace(-a/2,a/2),point)
-plot(z(1),z(2),'*g')
-minorax=rect(x,z(1),z(2),-1/ang);
-point=subs(minorax,x,z(1)+linspace(-b,b));
-h=plot(z(1)+linspace(-b,b),point);
+% plot(z(1)+linspace(-a/2,a/2),point)
+plot(z(1),z(2),'*g','DisplayName','Centro assi')
+% minorax=rect(x,z(1),z(2),-1/ang);
+% point=subs(minorax,x,z(1)+linspace(-b,b));
+% h=plot(z(1)+linspace(-b,b),point);
 
 hold on
 %% Disegno Baricentro dell'oggetto
-plot(z(1),z(2),'bo','MarkerSize',10)
+plot(z(1),z(2),'bo','MarkerSize',10,'DisplayName','Baricentro')
 %% Visualizzo Diagonali dell'oggetto
-lineOrient =  z(2) + tan(orient) * ( x  - z(1) ) ;
-fplot(lineOrient,'y', 'LineWidth', 2.5);
-plot(z(1)*ones(1,maxRes(1)),linspace(0,maxRes(1),maxRes(1)),'--r','linewidth',2)
-plot(linspace(0,maxRes(2),maxRes(2)),z(2)*ones(1,maxRes(2)),'--r','linewidth',2)
+lineOrient =  z(2) + tand(orient) * ( x  - z(1) ) ;
+fplot(lineOrient,'y', 'LineWidth', 2.5,'DisplayName','Orientamento');
+plot(z(1)*ones(1,maxRes(1)),linspace(0,maxRes(1),maxRes(1)),'--r','linewidth',2,'DisplayName','R0')
+plot(linspace(0,maxRes(2),maxRes(2)),z(2)*ones(1,maxRes(2)),'--r','linewidth',2,'DisplayName','R0')
 for i =1:size(diag,2)
-    eq = diag(i);
-    fplot(eq, 'b','LineWidth', 1.5);
+    eq = diag{i};
+    str="diag("+i+")";
+    fplot(eq, 'b','LineWidth', 1.5,'DisplayName',str);
     hold on
 end
-frame = frame2im(getframe(gcf));
-
+legend
 %% Report dell'Identificazione
 fprintf("Area: %f, Perimetro: %f\n", objArea, objPerim);
 fprintf("Forma dell'Oggetto: %s\n", objShape);
 fprintf("Baricentro dell'Oggetto: X[bc] = %f, Y[bc] = %f\n", z(1), z(2));
-fprintf("Orientamento dell'Oggetto: %f°\n", ang);
+fprintf("Orientamento dell'Oggetto: %f°\n", -ang);
 
 
 

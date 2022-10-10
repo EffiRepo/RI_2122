@@ -96,15 +96,54 @@ maxRadon = max(R1);
 % SosrtStr specifica che i risultati andranno ordinati
 % NPeaks specifica quanti massimi locali trovare nel vettore.
 % figure
-angleCut = (180*(numLati-2))/numLati;
+angleCut = (180)/(numLati-2);
 [pk, locs] = findpeaks(maxRadon,'SortStr','descend',...
     'MinPeakHeight',max(maxRadon)*0.7,'MinPeakDistance',angleCut,'Threshold',1e-4);
 % Scommentare per plottare l'output di findpeak
-% findpeaks(maxRadon,'SortStr','descend','MinPeakHeight',max(maxRadon)*0.6,...
-%     'MinPeakDistance',25,'Threshold',1e-4)
+figure(2)
+subplot(3,3,1)
+plot(xp1,R1(:,1))
+title('Theta=0')
+
+subplot(3,3,2)
+plot(xp1,R1(:,31))
+title('Theta=30')
+
+subplot(3,3,3)
+plot(xp1,R1(:,46))
+title('Theta=45')
+
+subplot(3,3,4)
+plot(xp1,R1(:,61))
+title('Theta=60')
+
+subplot(3,3,5)
+plot(xp1,R1(:,91))
+title('Theta=90')
+
+subplot(3,3,6)
+plot(xp1,R1(:,121))
+title('Theta=120')
+
+subplot(3,3,7)
+plot(xp1,R1(:,136))
+title('Theta=135')
+
+subplot(3,3,8)
+plot(xp1,R1(:,161))
+title('Theta=160')
+
+subplot(3,3,9)
+plot(xp1,R1(:,180))
+title('Theta=179')
+
+figure(3)
+title('Valori massimi Trasformata Radon')
+findpeaks(maxRadon,'SortStr','descend',...
+    'MinPeakHeight',max(maxRadon)*0.6,'MinPeakDistance',angleCut,'Threshold',1e-4);
 locs = locs - 1;
 [M, idM] = max(pk);
-%% Ellisse circoscritta all'oggetto
+%% Contorno dell'oggetto più grande
 % trovo l'oggetto più grande nella fotoù
 if length(B) == 1 
     obb = B{1};
@@ -124,13 +163,14 @@ z = props.Centroid';
 a = props.MajorAxisLength;
 b = props.MinorAxisLength;
 alpha = props.Orientation;
+diag=cell.empty(size(locs,2),0);
 %% Calcolo diagonali
 for i = 1:size(locs,2)
     theta_i = locs(i);
         offset = xp1(R1(:,locs(i)+1) == pk(i));
     diag_i(x) = -tand(theta_i+90)*(x-offset*cosd(theta_i)-center(1))-offset*sind(theta_i)+center(2);
-    diag = horzcat(diag,diag_i(x));
+    diag{i} = diag_i(x);
 end
-orient = alpha+pi;
+orient = alpha;
 end
 

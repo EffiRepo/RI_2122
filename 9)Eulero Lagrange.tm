@@ -100,9 +100,9 @@
     <\input>
       <with|color|red|(<with|math-font-family|rm|%i>1) >
     <|input>
-      euleroLagrange(DH,M,F,u,Trsz):=block(
+      euleroLagrange(tab,M,F,u,Trsz):=block(
 
-      [T,U,l,dFdq,dldq,dldv,dtdldv,eq:[],solEL:[],a,v,q],
+      [T,U,l,dFdq,dldq,dldv,dtdldv,eq:[],solEL:[],a:[a[1],a[2],a[3],a[4],a[5],a[6]],v,q],
 
       /*T:energiacinetica,U:energiapotenzialegravitazionale*/
 
@@ -114,11 +114,11 @@
 
       /*EL:equazionieulerolagrange*/
 
-      [T,U]:energia(DH,M,Trsz,0),
+      [T,U]:energia(tab,M,Trsz,2),
 
       l:T-U,
 
-      dof:size(DH)[1],
+      dof:size(tab)[1],
 
       for i:1 thru dof do(
 
@@ -130,9 +130,9 @@
 
       dtdldv:dev(dldv,t),
 
-      eq:append(eq,dtdldv-dldq+dFdv-u[i]),
+      eq:flatten(append(eq,[dtdldv-dldq+dFdv-u[i,1]])),
 
-      solEL:append(solEL,solve(eq[i],a[i]))
+      solEL:flatten(append(solEL,[factor(ratsimp(solve(eq[i],a[i])))]))
 
       ),
 
@@ -183,6 +183,10 @@
       >><around*|[|<matrix|<tformat|<table|<row|<cell|-<frac|L<rsub|1>|2>>|<cell|0>|<cell|0>>|<row|<cell|-<frac|L<rsub|2>|2>>|<cell|0>|<cell|0>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|<frac|L<rsub|1>|2>>|<cell|0>>|<row|<cell|0>|<cell|<frac|L<rsub|2>|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|1>|2>>>|<row|<cell|0>|<cell|<frac|L<rsub|2>|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|-<frac|D<rsub|1>|2>>|<cell|0>|<cell|-<frac|L<rsub|1>|2>>>|<row|<cell|-<frac|D<rsub|2>|2>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|-<frac|L<rsub|1>|2>>|<cell|0>>|<row|<cell|-<frac|D<rsub|2>|2>>|<cell|0>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|<frac|L<rsub|1>|2>>|<cell|0>>|<row|<cell|0>|<cell|-<frac|L<rsub|2>|2>>|<cell|0>>|<row|<cell|0>|<cell|0>|<cell|-<frac|L<rsub|3>|2>>>>>>,<matrix|<tformat|<table|<row|<cell|0>|<cell|-<frac|L<rsub|1>|2>>|<cell|0>>|<row|<cell|-<frac|D<rsub|2>|2>>|<cell|0>|<cell|0>>|<row|<cell|-<frac|D<rsub|3>|2>>|<cell|0>|<cell|0>>>>>|]>>>
     </unfolded-io>
 
+    <\textput>
+      <center|<with|font-series|bold|2 DOF>>
+    </textput>
+
     <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>4) >
     <|unfolded-io>
@@ -229,11 +233,11 @@
       dd:euleroLagrange(dueDof,Mdd,Fdd,udd,Trsz[1])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o8>)
-      >><around*|[|<around*|[|a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z2>>+I<rsub|<with|math-font-family|rm|z1>>+L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>+L<rsub|1><rsup|2>*M<rsub|2>+<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>|)>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>|)>+v<rsub|2>*<around*|(|-<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2>|2>-L<rsub|1>*v<rsub|1>*L<rsub|2>*M<rsub|2>*s<rsub|2>|)>+D<rsub|1>*v<rsub|1>-u<rsub|1>,a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>|)>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>|)>+D<rsub|2>*v<rsub|2>-u<rsub|2>+<frac|L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*M<rsub|2>*s<rsub|2>|2>|]>,<around*|[|a<rsub|1>=-<frac|4*a<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>+s<rsub|2>*<around*|(|-2*L<rsub|1>*L<rsub|2>*M<rsub|2>*v<rsub|2><rsup|2>-4*L<rsub|1>*v<rsub|1>*L<rsub|2>*M<rsub|2>*v<rsub|2>|)>+2*L<rsub|1>*L<rsub|2>*M<rsub|2>*a<rsub|2>*c<rsub|2>+L<rsub|2><rsup|2>*M<rsub|2>*a<rsub|2>+4*D<rsub|1>*v<rsub|1>-4*u<rsub|1>|4*I<rsub|<with|math-font-family|rm|z2>>+4*I<rsub|<with|math-font-family|rm|z1>>+4*L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>+<around*|(|L<rsub|2><rsup|2>+4*L<rsub|1><rsup|2>|)>*M<rsub|2>+L<rsub|1><rsup|2>*M<rsub|1>>,a<rsub|2>=-<frac|4*a<rsub|1>*I<rsub|<with|math-font-family|rm|z2>>+4*D<rsub|2>*v<rsub|2>-4*u<rsub|2>+2*L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*M<rsub|2>*s<rsub|2>+2*L<rsub|1>*a<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>+a<rsub|1>*L<rsub|2><rsup|2>*M<rsub|2>|4*I<rsub|<with|math-font-family|rm|z2>>+L<rsub|2><rsup|2>*M<rsub|2>>|]>|]>>>
+      >><around*|[|<around*|[|a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z2>>+I<rsub|<with|math-font-family|rm|z1>>+L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>+L<rsub|1><rsup|2>*M<rsub|2>+<frac|L<rsub|1><rsup|2>*M<rsub|1>|4>|)>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>|)>+v<rsub|2>*<around*|(|-<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2>|2>-L<rsub|1>*v<rsub|1>*L<rsub|2>*M<rsub|2>*s<rsub|2>|)>+D<rsub|1>*v<rsub|1>-u<rsub|1>,a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>|)>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|z2>>+<frac|L<rsub|2><rsup|2>*M<rsub|2>|4>|)>+D<rsub|2>*v<rsub|2>-u<rsub|2>+<frac|L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*M<rsub|2>*s<rsub|2>|2>|]>,<around*|[|a<rsub|1>=-<frac|4*a<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>-2*L<rsub|1>*L<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2><rsup|2>-4*L<rsub|1>*v<rsub|1>*L<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2>+2*L<rsub|1>*L<rsub|2>*M<rsub|2>*a<rsub|2>*c<rsub|2>+L<rsub|2><rsup|2>*M<rsub|2>*a<rsub|2>+4*D<rsub|1>*v<rsub|1>-4*u<rsub|1>|4*I<rsub|<with|math-font-family|rm|z2>>+4*I<rsub|<with|math-font-family|rm|z1>>+4*L<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>+L<rsub|2><rsup|2>*M<rsub|2>+4*L<rsub|1><rsup|2>*M<rsub|2>+L<rsub|1><rsup|2>*M<rsub|1>>,a<rsub|2>=-<frac|4*a<rsub|1>*I<rsub|<with|math-font-family|rm|z2>>+4*D<rsub|2>*v<rsub|2>-4*u<rsub|2>+2*L<rsub|1>*v<rsub|1><rsup|2>*L<rsub|2>*M<rsub|2>*s<rsub|2>+2*L<rsub|1>*a<rsub|1>*L<rsub|2>*M<rsub|2>*c<rsub|2>+a<rsub|1>*L<rsub|2><rsup|2>*M<rsub|2>|4*I<rsub|<with|math-font-family|rm|z2>>+L<rsub|2><rsup|2>*M<rsub|2>>|]>|]>>>
     </unfolded-io>
 
     <\textput>
-      Robot Cartesiano
+      <center|<with|font-series|bold|Robot Cartesiano>>
     </textput>
 
     <\unfolded-io>
@@ -241,7 +245,9 @@
     <|unfolded-io>
       cartes:DH[2]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o9>)
       >><matrix|<tformat|<table|<row|<cell|0>|<cell|q<rsub|1>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|-<frac|\<pi\>|2>>|<cell|q<rsub|2>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>>>
     </unfolded-io>
 
@@ -282,7 +288,7 @@
     </unfolded-io>
 
     <\textput>
-      Robot Cilindrico
+      <center|<with|font-series|bold|Robot Cilindrico>>
     </textput>
 
     <\unfolded-io>
@@ -327,11 +333,11 @@
       cil:euleroLagrange(cilin,Mc,Fc,uc,Trsz[3])
     <|unfolded-io>
       <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o18>)
-      >><around*|[|<around*|[|a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z1>>+I<rsub|<with|math-font-family|rm|y3>>+I<rsub|<with|math-font-family|rm|y2>>+M<rsub|3>*q<rsub|3><rsup|2>-L<rsub|3>*M<rsub|3>*q<rsub|3>+<frac|L<rsub|3><rsup|2>*M<rsub|3>|4>|)>+<around*|(|2*v<rsub|1>*M<rsub|3>*q<rsub|3>-v<rsub|1>*L<rsub|3>*M<rsub|3>|)>*v<rsub|3>+D<rsub|1>*v<rsub|1>-u<rsub|1>,a<rsub|2>*<around*|(|M<rsub|3>+M<rsub|2>|)>-10*M<rsub|3>+v<rsub|2>*D<rsub|3>+D<rsub|2>*v<rsub|2>-u<rsub|2>-10*M<rsub|2>,-u<rsub|3>-v<rsub|1><rsup|2>*M<rsub|3>*q<rsub|3>+M<rsub|3>*a<rsub|3>+<frac|v<rsub|1><rsup|2>*L<rsub|3>*M<rsub|3>|2>|]>,<around*|[|a<rsub|1>=-<frac|<around*|(|8*v<rsub|1>*M<rsub|3>*q<rsub|3>-4*v<rsub|1>*L<rsub|3>*M<rsub|3>|)>*v<rsub|3>+4*D<rsub|1>*v<rsub|1>-4*u<rsub|1>|4*I<rsub|<with|math-font-family|rm|z1>>+4*I<rsub|<with|math-font-family|rm|y3>>+4*I<rsub|<with|math-font-family|rm|y2>>+4*M<rsub|3>*q<rsub|3><rsup|2>-4*L<rsub|3>*M<rsub|3>*q<rsub|3>+L<rsub|3><rsup|2>*M<rsub|3>>,a<rsub|2>=<frac|10*M<rsub|3>-v<rsub|2>*D<rsub|3>-D<rsub|2>*v<rsub|2>+u<rsub|2>+10*M<rsub|2>|M<rsub|3>+M<rsub|2>>,a<rsub|3>=<frac|2*u<rsub|3>+2*v<rsub|1><rsup|2>*M<rsub|3>*q<rsub|3>-v<rsub|1><rsup|2>*L<rsub|3>*M<rsub|3>|2*M<rsub|3>>|]>|]>>>
+      >><around*|[|<around*|[|a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z1>>+I<rsub|<with|math-font-family|rm|y3>>+I<rsub|<with|math-font-family|rm|y2>>+M<rsub|3>*q<rsub|3><rsup|2>-L<rsub|3>*M<rsub|3>*q<rsub|3>+<frac|L<rsub|3><rsup|2>*M<rsub|3>|4>|)>+<around*|(|2*v<rsub|1>*M<rsub|3>*q<rsub|3>-v<rsub|1>*L<rsub|3>*M<rsub|3>|)>*v<rsub|3>+D<rsub|1>*v<rsub|1>-u<rsub|1>,a<rsub|2>*<around*|(|M<rsub|3>+M<rsub|2>|)>-10*M<rsub|3>+v<rsub|2>*D<rsub|3>+D<rsub|2>*v<rsub|2>-u<rsub|2>-10*M<rsub|2>,-u<rsub|3>-v<rsub|1><rsup|2>*M<rsub|3>*q<rsub|3>+M<rsub|3>*a<rsub|3>+<frac|v<rsub|1><rsup|2>*L<rsub|3>*M<rsub|3>|2>|]>,<around*|[|a<rsub|1>=-<frac|4*<around*|(|2*v<rsub|1>*M<rsub|3>*q<rsub|3>*v<rsub|3>-v<rsub|1>*L<rsub|3>*M<rsub|3>*v<rsub|3>+D<rsub|1>*v<rsub|1>-u<rsub|1>|)>|4*I<rsub|<with|math-font-family|rm|z1>>+4*I<rsub|<with|math-font-family|rm|y3>>+4*I<rsub|<with|math-font-family|rm|y2>>+4*M<rsub|3>*q<rsub|3><rsup|2>-4*L<rsub|3>*M<rsub|3>*q<rsub|3>+L<rsub|3><rsup|2>*M<rsub|3>>,a<rsub|2>=<frac|10*M<rsub|3>-v<rsub|2>*D<rsub|3>-D<rsub|2>*v<rsub|2>+u<rsub|2>+10*M<rsub|2>|M<rsub|3>+M<rsub|2>>,a<rsub|3>=<frac|2*u<rsub|3>+2*v<rsub|1><rsup|2>*M<rsub|3>*q<rsub|3>-v<rsub|1><rsup|2>*L<rsub|3>*M<rsub|3>|2*M<rsub|3>>|]>|]>>>
     </unfolded-io>
 
     <\textput>
-      SCARA
+      <center|<with|font-series|bold|SCARA>>
     </textput>
 
     <\unfolded-io>
@@ -339,7 +345,9 @@
     <|unfolded-io>
       scara:DH[4]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o19>)
       >><matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|0>|<cell|D<rsub|1>>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|0>|<cell|D<rsub|2>>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|L<rsub|3>>>>>>>>
     </unfolded-io>
 
@@ -348,7 +356,9 @@
     <|unfolded-io>
       Ms:[M[1],M[2],M[3]]
     <|unfolded-io>
-      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o20>)
       >><around*|[|M<rsub|1>,M<rsub|2>,M<rsub|3>|]>>>
     </unfolded-io>
 
@@ -371,18 +381,118 @@
     </unfolded-io>
 
     <\unfolded-io>
-      <with|color|red|(<with|math-font-family|rm|%i>24) >
+      <with|color|red|(<with|math-font-family|rm|%i>23) >
     <|unfolded-io>
       scar:euleroLagrange(scara,Ms,Fs,us,Trsz[4])
     <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o23>)
+      >><around*|[|<around*|[|a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z3>>+I<rsub|<with|math-font-family|rm|z2>>+I<rsub|<with|math-font-family|rm|z1>>+L<rsub|3><rsup|2>*M<rsub|3>+2*D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+D<rsub|1><rsup|2>*M<rsub|3>+D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>+D<rsub|1><rsup|2>*M<rsub|2>+<frac|D<rsub|1><rsup|2>*M<rsub|1>|4>|)>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|z3>>+I<rsub|<with|math-font-family|rm|z2>>+L<rsub|3><rsup|2>*M<rsub|3>+D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>|)>+v<rsub|2>*<around*|(|-D<rsub|1>*s<rsub|2>*v<rsub|2>*L<rsub|3>*M<rsub|3>-2*D<rsub|1>*v<rsub|1>*s<rsub|2>*L<rsub|3>*M<rsub|3>-D<rsub|1>*D<rsub|2>*s<rsub|2>*v<rsub|2>*M<rsub|3>-2*D<rsub|1>*v<rsub|1>*D<rsub|2>*s<rsub|2>*M<rsub|3>-<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2>|2>-D<rsub|1>*v<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>|)>+D<rsub|1>*v<rsub|1>-u<rsub|1>,a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z3>>+I<rsub|<with|math-font-family|rm|z2>>+L<rsub|3><rsup|2>*M<rsub|3>+D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>|)>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|z3>>+I<rsub|<with|math-font-family|rm|z2>>+L<rsub|3><rsup|2>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>|)>+v<rsub|2>*<around*|(|-D<rsub|1>*v<rsub|1>*s<rsub|2>*L<rsub|3>*M<rsub|3>-D<rsub|1>*v<rsub|1>*D<rsub|2>*s<rsub|2>*M<rsub|3>-<frac|D<rsub|1>*v<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>|2>|)>+D<rsub|1>*v<rsub|1>*s<rsub|2>*v<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*v<rsub|1><rsup|2>*s<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*v<rsub|1>*D<rsub|2>*s<rsub|2>*v<rsub|2>*M<rsub|3>+D<rsub|1>*v<rsub|1><rsup|2>*D<rsub|2>*s<rsub|2>*M<rsub|3>+v<rsub|2>*D<rsub|3>+<frac|D<rsub|1>*v<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2>|2>+D<rsub|2>*v<rsub|2>-u<rsub|2>+<frac|D<rsub|1>*v<rsub|1><rsup|2>*D<rsub|2>*M<rsub|2>*s<rsub|2>|2>,-u<rsub|3>+M<rsub|3>*a<rsub|3>-10*M<rsub|3>|]>,<around*|[|a<rsub|1>=-<frac|4*a<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>+4*a<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>+4*a<rsub|2>*L<rsub|3><rsup|2>*M<rsub|3>-4*D<rsub|1>*s<rsub|2>*v<rsub|2><rsup|2>*L<rsub|3>*M<rsub|3>-8*D<rsub|1>*v<rsub|1>*s<rsub|2>*v<rsub|2>*L<rsub|3>*M<rsub|3>+4*D<rsub|1>*a<rsub|2>*c<rsub|2>*L<rsub|3>*M<rsub|3>+8*D<rsub|2>*a<rsub|2>*L<rsub|3>*M<rsub|3>-4*D<rsub|1>*D<rsub|2>*s<rsub|2>*v<rsub|2><rsup|2>*M<rsub|3>-8*D<rsub|1>*v<rsub|1>*D<rsub|2>*s<rsub|2>*v<rsub|2>*M<rsub|3>+4*D<rsub|1>*D<rsub|2>*a<rsub|2>*c<rsub|2>*M<rsub|3>+4*D<rsub|2><rsup|2>*a<rsub|2>*M<rsub|3>-2*D<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2><rsup|2>-4*D<rsub|1>*v<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2>+2*D<rsub|1>*D<rsub|2>*M<rsub|2>*a<rsub|2>*c<rsub|2>+D<rsub|2><rsup|2>*M<rsub|2>*a<rsub|2>+4*D<rsub|1>*v<rsub|1>-4*u<rsub|1>|4*I<rsub|<with|math-font-family|rm|z3>>+4*I<rsub|<with|math-font-family|rm|z2>>+4*I<rsub|<with|math-font-family|rm|z1>>+4*L<rsub|3><rsup|2>*M<rsub|3>+8*D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+8*D<rsub|2>*L<rsub|3>*M<rsub|3>+8*D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+4*D<rsub|2><rsup|2>*M<rsub|3>+4*D<rsub|1><rsup|2>*M<rsub|3>+4*D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>+D<rsub|2><rsup|2>*M<rsub|2>+4*D<rsub|1><rsup|2>*M<rsub|2>+D<rsub|1><rsup|2>*M<rsub|1>>,a<rsub|2>=-<frac|4*a<rsub|1>*I<rsub|<with|math-font-family|rm|z3>>+4*a<rsub|1>*I<rsub|<with|math-font-family|rm|z2>>+4*a<rsub|1>*L<rsub|3><rsup|2>*M<rsub|3>+4*D<rsub|1>*v<rsub|1><rsup|2>*s<rsub|2>*L<rsub|3>*M<rsub|3>+4*D<rsub|1>*a<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+8*a<rsub|1>*D<rsub|2>*L<rsub|3>*M<rsub|3>+4*D<rsub|1>*v<rsub|1><rsup|2>*D<rsub|2>*s<rsub|2>*M<rsub|3>+4*D<rsub|1>*a<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+4*a<rsub|1>*D<rsub|2><rsup|2>*M<rsub|3>+4*v<rsub|2>*D<rsub|3>+4*D<rsub|2>*v<rsub|2>-4*u<rsub|2>+2*D<rsub|1>*v<rsub|1><rsup|2>*D<rsub|2>*M<rsub|2>*s<rsub|2>+2*D<rsub|1>*a<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>+a<rsub|1>*D<rsub|2><rsup|2>*M<rsub|2>|4*I<rsub|<with|math-font-family|rm|z3>>+4*I<rsub|<with|math-font-family|rm|z2>>+4*L<rsub|3><rsup|2>*M<rsub|3>+8*D<rsub|2>*L<rsub|3>*M<rsub|3>+4*D<rsub|2><rsup|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|2>>,a<rsub|3>=<frac|u<rsub|3>+10*M<rsub|3>|M<rsub|3>>|]>|]>>>
+    </unfolded-io>
+
+    <\textput>
+      <center|<with|font-series|bold|Robot Sferico (di primo tipo)>>
+    </textput>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>24) >
+    <|unfolded-io>
+      sferI:DH[5]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
+      >><matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|0>|<cell|<frac|\<pi\>|2>>|<cell|D<rsub|2>>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>25) >
+    <|unfolded-io>
+      M:[m[1],m[2],m[3]]
+    <|unfolded-io>
       \;
 
-      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o24>)
-      >><around*|[|<around*|[|a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z3>>+I<rsub|<with|math-font-family|rm|z2>>+I<rsub|<with|math-font-family|rm|z1>>+L<rsub|3><rsup|2>*M<rsub|3>+2*D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+D<rsub|1><rsup|2>*M<rsub|3>+D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>+D<rsub|1><rsup|2>*M<rsub|2>+<frac|D<rsub|1><rsup|2>*M<rsub|1>|4>|)>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|z3>>+I<rsub|<with|math-font-family|rm|z2>>+L<rsub|3><rsup|2>*M<rsub|3>+D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>|)>+v<rsub|2>*<around*|(|-D<rsub|1>*s<rsub|2>*v<rsub|2>*L<rsub|3>*M<rsub|3>-2*D<rsub|1>*v<rsub|1>*s<rsub|2>*L<rsub|3>*M<rsub|3>-D<rsub|1>*D<rsub|2>*s<rsub|2>*v<rsub|2>*M<rsub|3>-2*D<rsub|1>*v<rsub|1>*D<rsub|2>*s<rsub|2>*M<rsub|3>-<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2>|2>-D<rsub|1>*v<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>|)>+D<rsub|1>*v<rsub|1>-u<rsub|1>,a<rsub|1>*<around*|(|I<rsub|<with|math-font-family|rm|z3>>+I<rsub|<with|math-font-family|rm|z2>>+L<rsub|3><rsup|2>*M<rsub|3>+D<rsub|1>*c<rsub|2>*L<rsub|3>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*D<rsub|2>*c<rsub|2>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+<frac|D<rsub|1>*D<rsub|2>*M<rsub|2>*c<rsub|2>|2>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>|)>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|z3>>+I<rsub|<with|math-font-family|rm|z2>>+L<rsub|3><rsup|2>*M<rsub|3>+2*D<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|3>+<frac|D<rsub|2><rsup|2>*M<rsub|2>|4>|)>+v<rsub|2>*<around*|(|-D<rsub|1>*v<rsub|1>*s<rsub|2>*L<rsub|3>*M<rsub|3>-D<rsub|1>*v<rsub|1>*D<rsub|2>*s<rsub|2>*M<rsub|3>-<frac|D<rsub|1>*v<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>|2>|)>+D<rsub|1>*v<rsub|1>*s<rsub|2>*v<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*v<rsub|1><rsup|2>*s<rsub|2>*L<rsub|3>*M<rsub|3>+D<rsub|1>*v<rsub|1>*D<rsub|2>*s<rsub|2>*v<rsub|2>*M<rsub|3>+D<rsub|1>*v<rsub|1><rsup|2>*D<rsub|2>*s<rsub|2>*M<rsub|3>+v<rsub|2>*D<rsub|3>+<frac|D<rsub|1>*v<rsub|1>*D<rsub|2>*M<rsub|2>*s<rsub|2>*v<rsub|2>|2>+D<rsub|2>*v<rsub|2>-u<rsub|2>+<frac|D<rsub|1>*v<rsub|1><rsup|2>*D<rsub|2>*M<rsub|2>*s<rsub|2>|2>,-u<rsub|3>+M<rsub|3>*a<rsub|3>-10*M<rsub|3>|]>,<around*|[|a<rsub|1>=-<frac|4*a<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>+4*a<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>+s<rsub|2>*<around*|(|<around*|(|<around*|(|-4*D<rsub|1>*v<rsub|2><rsup|2>-8*D<rsub|1>*v<rsub|1>*v<rsub|2>|)>*L<rsub|3>-4*D<rsub|1>*D<rsub|2>*v<rsub|2><rsup|2>-8*D<rsub|1>*v<rsub|1>*D<rsub|2>*v<rsub|2>|)>*M<rsub|3>-2*D<rsub|1>*D<rsub|2>*M<rsub|2>*v<rsub|2><rsup|2>-4*D<rsub|1>*v<rsub|1>*D<rsub|2>*M<rsub|2>*v<rsub|2>|)>+c<rsub|2>*<around*|(|<around*|(|4*D<rsub|1>*a<rsub|2>*L<rsub|3>+4*D<rsub|1>*D<rsub|2>*a<rsub|2>|)>*M<rsub|3>+2*D<rsub|1>*D<rsub|2>*M<rsub|2>*a<rsub|2>|)>+<around*|(|4*a<rsub|2>*L<rsub|3><rsup|2>+8*D<rsub|2>*a<rsub|2>*L<rsub|3>+4*D<rsub|2><rsup|2>*a<rsub|2>|)>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|2>*a<rsub|2>+4*D<rsub|1>*v<rsub|1>-4*u<rsub|1>|4*I<rsub|<with|math-font-family|rm|z3>>+4*I<rsub|<with|math-font-family|rm|z2>>+4*I<rsub|<with|math-font-family|rm|z1>>+c<rsub|2>*<around*|(|<around*|(|8*D<rsub|1>*L<rsub|3>+8*D<rsub|1>*D<rsub|2>|)>*M<rsub|3>+4*D<rsub|1>*D<rsub|2>*M<rsub|2>|)>+<around*|(|4*L<rsub|3><rsup|2>+8*D<rsub|2>*L<rsub|3>+4*D<rsub|2><rsup|2>+4*D<rsub|1><rsup|2>|)>*M<rsub|3>+<around*|(|D<rsub|2><rsup|2>+4*D<rsub|1><rsup|2>|)>*M<rsub|2>+D<rsub|1><rsup|2>*M<rsub|1>>,a<rsub|2>=-<frac|4*a<rsub|1>*I<rsub|<with|math-font-family|rm|z3>>+4*a<rsub|1>*I<rsub|<with|math-font-family|rm|z2>>+s<rsub|2>*<around*|(|<around*|(|4*D<rsub|1>*v<rsub|1><rsup|2>*L<rsub|3>+4*D<rsub|1>*v<rsub|1><rsup|2>*D<rsub|2>|)>*M<rsub|3>+2*D<rsub|1>*v<rsub|1><rsup|2>*D<rsub|2>*M<rsub|2>|)>+c<rsub|2>*<around*|(|<around*|(|4*D<rsub|1>*a<rsub|1>*L<rsub|3>+4*D<rsub|1>*a<rsub|1>*D<rsub|2>|)>*M<rsub|3>+2*D<rsub|1>*a<rsub|1>*D<rsub|2>*M<rsub|2>|)>+<around*|(|4*a<rsub|1>*L<rsub|3><rsup|2>+8*a<rsub|1>*D<rsub|2>*L<rsub|3>+4*a<rsub|1>*D<rsub|2><rsup|2>|)>*M<rsub|3>+4*v<rsub|2>*D<rsub|3>+4*D<rsub|2>*v<rsub|2>-4*u<rsub|2>+a<rsub|1>*D<rsub|2><rsup|2>*M<rsub|2>|4*I<rsub|<with|math-font-family|rm|z3>>+4*I<rsub|<with|math-font-family|rm|z2>>+<around*|(|4*L<rsub|3><rsup|2>+8*D<rsub|2>*L<rsub|3>+4*D<rsub|2><rsup|2>|)>*M<rsub|3>+D<rsub|2><rsup|2>*M<rsub|2>>,a<rsub|3>=<frac|u<rsub|3>+10*M<rsub|3>|M<rsub|3>>|]>|]>>>
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o25>)
+      >><around*|[|m<rsub|1>,m<rsub|2>,m<rsub|3>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>26) >
+    <|unfolded-io>
+      uI:matrix([u[1]],[u[2]],[u[3]])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o26>)
+      >><matrix|<tformat|<table|<row|<cell|u<rsub|1>>>|<row|<cell|u<rsub|2>>>|<row|<cell|u<rsub|3>>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>27) >
+    <|unfolded-io>
+      F:(1/2)*D[1]*v[1]^2+(1/2)*D[2]*v[2]^2+(1/2)*D[3]*v[2]^2
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o27>)
+      >><frac|v<rsub|2><rsup|2>*D<rsub|3>|2>+<frac|D<rsub|2>*v<rsub|2><rsup|2>|2>+<frac|D<rsub|1>*v<rsub|1><rsup|2>|2>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>28) >
+    <|unfolded-io>
+      elSfer:euleroLagrange(sferI,M,F,uI,Trsz[5])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o28>)
+      >><around*|[|<around*|[|v<rsub|2>*<around*|(|-2*v<rsub|1>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>-2*v<rsub|1>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>+2*v<rsub|1>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x3>>+2*v<rsub|1>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x2>>+2*v<rsub|1>*c<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3><rsup|2>-2*v<rsub|1>*c<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>-2*v<rsub|1>*D<rsub|2>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>+2*v<rsub|1>*D<rsub|2>*c<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>+<frac|v<rsub|1>*c<rsub|2>*s<rsub|2>*L<rsub|3><rsup|2>*m<rsub|3>|2>+v<rsub|1>*D<rsub|2>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>-v<rsub|1>*D<rsub|2>*c<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>-2*v<rsub|1>*D<rsub|2><rsup|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>-<frac|v<rsub|1>*D<rsub|2><rsup|2>*c<rsub|2>*m<rsub|2>*s<rsub|2>|2>|)>+a<rsub|1>*<around*|(|c<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|z3>>+c<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>+I<rsub|<with|math-font-family|rm|y1>>+s<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|x3>>+s<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|x2>>+s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3><rsup|2>-s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+2*D<rsub|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3>+<frac|s<rsub|2><rsup|2>*L<rsub|3><rsup|2>*m<rsub|3>|4>-D<rsub|2>*c<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>-D<rsub|2><rsup|2>*s<rsub|2><rsup|2>*m<rsub|3>+D<rsub|2><rsup|2>*m<rsub|3>+<frac|D<rsub|2><rsup|2>*c<rsub|2><rsup|2>*m<rsub|2>|4>|)>+<around*|(|2*v<rsub|1>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-v<rsub|1>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>+2*v<rsub|1>*D<rsub|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>|)>*v<rsub|3>+D<rsub|1>*v<rsub|1>-u<rsub|1>,v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>+v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|y3>>+I<rsub|<with|math-font-family|rm|y2>>+m<rsub|3>*q<rsub|3><rsup|2>-L<rsub|3>*m<rsub|3>*q<rsub|3>+<frac|L<rsub|3><rsup|2>*m<rsub|3>|4>+D<rsub|2><rsup|2>*m<rsub|3>+<frac|D<rsub|2><rsup|2>*m<rsub|2>|4>|)>-v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x3>>-v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x2>>+<around*|(|2*v<rsub|2>*m<rsub|3>*q<rsub|3>-v<rsub|2>*L<rsub|3>*m<rsub|3>|)>*v<rsub|3>-v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3><rsup|2>+v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+v<rsub|1><rsup|2>*D<rsub|2>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-10*s<rsub|2>*m<rsub|3>*q<rsub|3>-v<rsub|1><rsup|2>*D<rsub|2>*c<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-D<rsub|2>*a<rsub|3>*m<rsub|3>-<frac|v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*L<rsub|3><rsup|2>*m<rsub|3>|4>-<frac|v<rsub|1><rsup|2>*D<rsub|2>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>|2>+5*s<rsub|2>*L<rsub|3>*m<rsub|3>+<frac|v<rsub|1><rsup|2>*D<rsub|2>*c<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>|2>+v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>-10*D<rsub|2>*c<rsub|2>*m<rsub|3>+v<rsub|2>*D<rsub|3>+D<rsub|2>*v<rsub|2>-u<rsub|2>+<frac|v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*c<rsub|2>*m<rsub|2>*s<rsub|2>|4>-5*D<rsub|2>*c<rsub|2>*m<rsub|2>,-u<rsub|3>-v<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-v<rsub|1><rsup|2>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>+a<rsub|3>*m<rsub|3>+<frac|v<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>|2>+<frac|v<rsub|1><rsup|2>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>|2>-v<rsub|1><rsup|2>*D<rsub|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>+10*c<rsub|2>*m<rsub|3>-D<rsub|2>*a<rsub|2>*m<rsub|3>|]>,<around*|[|a<rsub|1>=<frac|2*<around*|(|4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>+4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>-4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*I<rsub|<with|math-font-family|rm|x3>>-4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*I<rsub|<with|math-font-family|rm|x2>>-4*v<rsub|1>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>*v<rsub|3>+2*v<rsub|1>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>*v<rsub|3>-4*v<rsub|1>*D<rsub|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>*v<rsub|3>-4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*m<rsub|3>*q<rsub|3><rsup|2>+4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+4*v<rsub|1>*D<rsub|2>*s<rsub|2><rsup|2>*v<rsub|2>*m<rsub|3>*q<rsub|3>-4*v<rsub|1>*D<rsub|2>*c<rsub|2><rsup|2>*v<rsub|2>*m<rsub|3>*q<rsub|3>-v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*L<rsub|3><rsup|2>*m<rsub|3>-2*v<rsub|1>*D<rsub|2>*s<rsub|2><rsup|2>*v<rsub|2>*L<rsub|3>*m<rsub|3>+2*v<rsub|1>*D<rsub|2>*c<rsub|2><rsup|2>*v<rsub|2>*L<rsub|3>*m<rsub|3>+4*v<rsub|1>*D<rsub|2><rsup|2>*c<rsub|2>*s<rsub|2>*v<rsub|2>*m<rsub|3>+v<rsub|1>*D<rsub|2><rsup|2>*c<rsub|2>*m<rsub|2>*s<rsub|2>*v<rsub|2>-2*D<rsub|1>*v<rsub|1>+2*u<rsub|1>|)>|4*c<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|z3>>+4*c<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>+4*I<rsub|<with|math-font-family|rm|y1>>+4*s<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|x3>>+4*s<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|x2>>+4*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3><rsup|2>-4*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+8*D<rsub|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3>+s<rsub|2><rsup|2>*L<rsub|3><rsup|2>*m<rsub|3>-4*D<rsub|2>*c<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>-4*D<rsub|2><rsup|2>*s<rsub|2><rsup|2>*m<rsub|3>+4*D<rsub|2><rsup|2>*m<rsub|3>+D<rsub|2><rsup|2>*c<rsub|2><rsup|2>*m<rsub|2>>,a<rsub|2>=-<frac|4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>+4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>-4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x3>>-4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x2>>+8*v<rsub|2>*m<rsub|3>*q<rsub|3>*v<rsub|3>-4*v<rsub|2>*L<rsub|3>*m<rsub|3>*v<rsub|3>-4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3><rsup|2>+4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+4*v<rsub|1><rsup|2>*D<rsub|2>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-40*s<rsub|2>*m<rsub|3>*q<rsub|3>-4*v<rsub|1><rsup|2>*D<rsub|2>*c<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-4*D<rsub|2>*a<rsub|3>*m<rsub|3>-v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*L<rsub|3><rsup|2>*m<rsub|3>-2*v<rsub|1><rsup|2>*D<rsub|2>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>+20*s<rsub|2>*L<rsub|3>*m<rsub|3>+2*v<rsub|1><rsup|2>*D<rsub|2>*c<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>+4*v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>-40*D<rsub|2>*c<rsub|2>*m<rsub|3>+4*v<rsub|2>*D<rsub|3>+4*D<rsub|2>*v<rsub|2>-4*u<rsub|2>+v<rsub|1><rsup|2>*D<rsub|2><rsup|2>*c<rsub|2>*m<rsub|2>*s<rsub|2>-20*D<rsub|2>*c<rsub|2>*m<rsub|2>|4*I<rsub|<with|math-font-family|rm|y3>>+4*I<rsub|<with|math-font-family|rm|y2>>+4*m<rsub|3>*q<rsub|3><rsup|2>-4*L<rsub|3>*m<rsub|3>*q<rsub|3>+L<rsub|3><rsup|2>*m<rsub|3>+4*D<rsub|2><rsup|2>*m<rsub|3>+D<rsub|2><rsup|2>*m<rsub|2>>,a<rsub|3>=<frac|2*u<rsub|3>+2*v<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>+2*v<rsub|1><rsup|2>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-v<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>-v<rsub|1><rsup|2>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>+2*v<rsub|1><rsup|2>*D<rsub|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>-20*c<rsub|2>*m<rsub|3>+2*D<rsub|2>*a<rsub|2>*m<rsub|3>|2*m<rsub|3>>|]>|]>>>
+    </unfolded-io>
+
+    <\textput>
+      <center|<with|font-series|bold|Robot Sferico II - Stanford>>
+    </textput>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>29) >
+    <|unfolded-io>
+      sferII:DH[6]
+    <|unfolded-io>
+      \;
+
+      \ <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o29>)
+      >><matrix|<tformat|<table|<row|<cell|q<rsub|1>>|<cell|L<rsub|1>>|<cell|-<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|q<rsub|2>>|<cell|L<rsub|2>>|<cell|<frac|\<pi\>|2>>|<cell|0>>|<row|<cell|0>|<cell|q<rsub|3>>|<cell|0>|<cell|0>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>30) >
+    <|unfolded-io>
+      M:[m[1],m[2],m[3]]
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o30>)
+      >><around*|[|m<rsub|1>,m<rsub|2>,m<rsub|3>|]>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>31) >
+    <|unfolded-io>
+      uII:matrix([u[1]],[u[2]],[u[3]])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o31>)
+      >><matrix|<tformat|<table|<row|<cell|u<rsub|1>>>|<row|<cell|u<rsub|2>>>|<row|<cell|u<rsub|3>>>>>>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>32) >
+    <|unfolded-io>
+      F:(1/2)*D[1]*v[1]^2+(1/2)*D[2]*v[2]^2+(1/2)*D[3]*v[2]^2
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o32>)
+      >><frac|v<rsub|2><rsup|2>*D<rsub|3>|2>+<frac|D<rsub|2>*v<rsub|2><rsup|2>|2>+<frac|D<rsub|1>*v<rsub|1><rsup|2>|2>>>
+    </unfolded-io>
+
+    <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>33) >
+    <|unfolded-io>
+      elSferII:euleroLagrange(sferII,M,F,uII,Trsz[6])
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o33>)
+      >><around*|[|<around*|[|v<rsub|2>*<around*|(|-2*v<rsub|1>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>-2*v<rsub|1>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>+2*v<rsub|1>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x3>>+2*v<rsub|1>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x2>>-L<rsub|2>*c<rsub|2>*m<rsub|3>*v<rsub|3>+2*v<rsub|1>*c<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3><rsup|2>-2*v<rsub|1>*c<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+L<rsub|2>*s<rsub|2>*v<rsub|2>*m<rsub|3>*q<rsub|3>+<frac|v<rsub|1>*c<rsub|2>*s<rsub|2>*L<rsub|3><rsup|2>*m<rsub|3>|2>-<frac|L<rsub|2>*s<rsub|2>*v<rsub|2>*L<rsub|3>*m<rsub|3>|2>|)>+a<rsub|1>*<around*|(|c<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|z3>>+c<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>+I<rsub|<with|math-font-family|rm|y1>>+s<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|x3>>+s<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|x2>>+s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3><rsup|2>-s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+<frac|s<rsub|2><rsup|2>*L<rsub|3><rsup|2>*m<rsub|3>|4>+L<rsub|2><rsup|2>*m<rsub|3>+<frac|L<rsub|2><rsup|2>*m<rsub|2>|4>|)>+<around*|(|2*v<rsub|1>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-v<rsub|1>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>-L<rsub|2>*c<rsub|2>*v<rsub|2>*m<rsub|3>|)>*v<rsub|3>+a<rsub|2>*<around*|(|<frac|L<rsub|2>*c<rsub|2>*L<rsub|3>*m<rsub|3>|2>-L<rsub|2>*c<rsub|2>*m<rsub|3>*q<rsub|3>|)>-L<rsub|2>*s<rsub|2>*a<rsub|3>*m<rsub|3>+D<rsub|1>*v<rsub|1>-u<rsub|1>,v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>+v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>+a<rsub|2>*<around*|(|I<rsub|<with|math-font-family|rm|y3>>+I<rsub|<with|math-font-family|rm|y2>>+m<rsub|3>*q<rsub|3><rsup|2>-L<rsub|3>*m<rsub|3>*q<rsub|3>+<frac|L<rsub|3><rsup|2>*m<rsub|3>|4>|)>-v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x3>>-v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x2>>+<around*|(|2*v<rsub|2>*m<rsub|3>*q<rsub|3>-v<rsub|2>*L<rsub|3>*m<rsub|3>-v<rsub|1>*L<rsub|2>*c<rsub|2>*m<rsub|3>|)>*v<rsub|3>+v<rsub|1>*L<rsub|2>*c<rsub|2>*m<rsub|3>*v<rsub|3>-v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3><rsup|2>+v<rsub|2>*<around*|(|v<rsub|1>*L<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3>-<frac|v<rsub|1>*L<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>|2>|)>+a<rsub|1>*<around*|(|<frac|L<rsub|2>*c<rsub|2>*L<rsub|3>*m<rsub|3>|2>-L<rsub|2>*c<rsub|2>*m<rsub|3>*q<rsub|3>|)>+v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>-v<rsub|1>*L<rsub|2>*s<rsub|2>*v<rsub|2>*m<rsub|3>*q<rsub|3>+10*s<rsub|2>*m<rsub|3>*q<rsub|3>-<frac|v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*L<rsub|3><rsup|2>*m<rsub|3>|4>+<frac|v<rsub|1>*L<rsub|2>*s<rsub|2>*v<rsub|2>*L<rsub|3>*m<rsub|3>|2>-5*s<rsub|2>*L<rsub|3>*m<rsub|3>+v<rsub|2>*D<rsub|3>+D<rsub|2>*v<rsub|2>-u<rsub|2>,-u<rsub|3>-v<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-v<rsub|1><rsup|2>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>+a<rsub|3>*m<rsub|3>+<frac|v<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>|2>+<frac|v<rsub|1><rsup|2>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>|2>-a<rsub|1>*L<rsub|2>*s<rsub|2>*m<rsub|3>-10*c<rsub|2>*m<rsub|3>|]>,<around*|[|a<rsub|1>=<frac|2*<around*|(|4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>+4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>-4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*I<rsub|<with|math-font-family|rm|x3>>-4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*I<rsub|<with|math-font-family|rm|x2>>-4*v<rsub|1>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>*v<rsub|3>+2*v<rsub|1>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>*v<rsub|3>+4*L<rsub|2>*c<rsub|2>*v<rsub|2>*m<rsub|3>*v<rsub|3>-4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*m<rsub|3>*q<rsub|3><rsup|2>+4*v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>-2*L<rsub|2>*s<rsub|2>*v<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>+2*L<rsub|2>*a<rsub|2>*c<rsub|2>*m<rsub|3>*q<rsub|3>+2*L<rsub|2>*s<rsub|2>*a<rsub|3>*m<rsub|3>-v<rsub|1>*c<rsub|2>*s<rsub|2>*v<rsub|2>*L<rsub|3><rsup|2>*m<rsub|3>+L<rsub|2>*s<rsub|2>*v<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>-L<rsub|2>*a<rsub|2>*c<rsub|2>*L<rsub|3>*m<rsub|3>-2*D<rsub|1>*v<rsub|1>+2*u<rsub|1>|)>|4*c<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|z3>>+4*c<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|z2>>+4*I<rsub|<with|math-font-family|rm|y1>>+4*s<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|x3>>+4*s<rsub|2><rsup|2>*I<rsub|<with|math-font-family|rm|x2>>+4*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3><rsup|2>-4*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+s<rsub|2><rsup|2>*L<rsub|3><rsup|2>*m<rsub|3>+4*L<rsub|2><rsup|2>*m<rsub|3>+L<rsub|2><rsup|2>*m<rsub|2>>,a<rsub|2>=-<frac|4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z3>>+4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|z2>>-4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x3>>-4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*I<rsub|<with|math-font-family|rm|x2>>+8*v<rsub|2>*m<rsub|3>*q<rsub|3>*v<rsub|3>-4*v<rsub|2>*L<rsub|3>*m<rsub|3>*v<rsub|3>-4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*m<rsub|3>*q<rsub|3><rsup|2>+4*v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*L<rsub|3>*m<rsub|3>*q<rsub|3>+40*s<rsub|2>*m<rsub|3>*q<rsub|3>-4*a<rsub|1>*L<rsub|2>*c<rsub|2>*m<rsub|3>*q<rsub|3>-v<rsub|1><rsup|2>*c<rsub|2>*s<rsub|2>*L<rsub|3><rsup|2>*m<rsub|3>-20*s<rsub|2>*L<rsub|3>*m<rsub|3>+2*a<rsub|1>*L<rsub|2>*c<rsub|2>*L<rsub|3>*m<rsub|3>+4*v<rsub|2>*D<rsub|3>+4*D<rsub|2>*v<rsub|2>-4*u<rsub|2>|4*I<rsub|<with|math-font-family|rm|y3>>+4*I<rsub|<with|math-font-family|rm|y2>>+4*m<rsub|3>*q<rsub|3><rsup|2>-4*L<rsub|3>*m<rsub|3>*q<rsub|3>+L<rsub|3><rsup|2>*m<rsub|3>>,a<rsub|3>=<frac|2*u<rsub|3>+2*v<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>+2*v<rsub|1><rsup|2>*s<rsub|2><rsup|2>*m<rsub|3>*q<rsub|3>-v<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>-v<rsub|1><rsup|2>*s<rsub|2><rsup|2>*L<rsub|3>*m<rsub|3>+2*a<rsub|1>*L<rsub|2>*s<rsub|2>*m<rsub|3>+20*c<rsub|2>*m<rsub|3>|2*m<rsub|3>>|]>|]>>>
     </unfolded-io>
 
     <\input>
-      <with|color|red|(<with|math-font-family|rm|%i>25) >
+      <with|color|red|(<with|math-font-family|rm|%i>34) >
     <|input>
       \;
     </input>

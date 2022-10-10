@@ -532,6 +532,16 @@
     </textput>
 
     <\unfolded-io>
+      <with|color|red|(<with|math-font-family|rm|%i>1) >
+    <|unfolded-io>
+      dev(v[2]*cos(q[2]),t)
+    <|unfolded-io>
+      <math|<with|math-display|true|<text|<with|font-family|tt|color|red|(<with|math-font-family|rm|%o1>)
+      >>a<rsub|2>*cos <around*|(|q<rsub|2>|)>-v<rsub|2><rsup|2>*sin
+      <around*|(|q<rsub|2>|)>>>
+    </unfolded-io>
+
+    <\unfolded-io>
       <with|color|red|(<with|math-font-family|rm|%i>18) >
     <|unfolded-io>
       [T,U]:energia(DH[2],M,Trsz[2],1)

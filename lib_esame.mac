@@ -55,6 +55,8 @@ wrapTo2Pi(expr):=block([positiveInput,res],
   return(res)
 )$
 /*wrapToPi*/
+
+
 wrapToPi(expr):=block([q],
   q:is(expr<-%pi or %pi<expr),
   if(q=true) then(
@@ -81,31 +83,31 @@ atan2mod(y,x):=block([signx,signy,atValue,at2Value,sn,cs,sn2,cs2],
   )
 )$
 atan2mod1(y,x):=block([signx,signy],
-                     if(scalarp(y) and scalarp(x)) then (
-                      signx:signum(float(x)),
-                      signy:signum(float(y)),
-                      if(signx=1.0) then(
-                        return(simp(atan(y/x)+%pi))
-                      )
-                      else if(signx =-1.0 and (signy = 0.0 or signy=1.0)) then (
-                        return(simp(atan(y/x)))
-                      )
-                      else if(signx=-1.0 and signy=-1.0) then (
-                        return(simp(atan(y/x)))
-                      )
-                      else if(signx=0.0 and signy=1.0) then (
-                        return(%pi/2)
-                      )
-                      else if(signx=0.0 and signy=-1.0) then (
-                        return(-%pi/2)
-                      )
-                      else if(signx=0.0 and signy=0.0) then (
-                        return(atan2(y,x))
-                      )
-                     )
-                     else(
-                          return (simp(atan(y/x)))
-                     )
+  if(scalarp(y) and scalarp(x)) then (
+  signx:signum(float(x)),
+  signy:signum(float(y)),
+  if(signx=1.0) then(
+    return(simp(atan(y/x)+%pi))
+  )
+  else if(signx =-1.0 and (signy = 0.0 or signy=1.0)) then (
+    return(simp(atan(y/x)))
+  )
+  else if(signx=-1.0 and signy=-1.0) then (
+    return(simp(atan(y/x)))
+  )
+  else if(signx=0.0 and signy=1.0) then (
+    return(%pi/2)
+  )
+  else if(signx=0.0 and signy=-1.0) then (
+    return(-%pi/2)
+  )
+  else if(signx=0.0 and signy=0.0) then (
+    return(atan2(y,x))
+  )
+  )
+  else(
+      return (simp(atan(y/x)))
+  )
 )$
 /*Prodotto vettoriale*/
 cross_prod(A,B):=block([vA,vB,E, M, AxB, res],
@@ -751,6 +753,9 @@ for i:1 thru size(Q)[1] do (
    /*print("Ttot",Ttot)*/
    Utot:expand(Utot+U[i])
    /*print("Utot",Utot)*/
-),if flag=1 then stampa(rename(T,0),rename(U,0),rename(Ttot,0),rename(Utot,0),dof),
-   return(rename(expand([formaQuad(Ttot,dof),Utot]),0))
+),if flag=1 then stampa(rename(T,0),rename(U,0),rename(Ttot,0),rename(Utot,0),dof)
+  else if(flag = 0) then(return(rename(expand([formaQuad(Ttot,dof),Utot]),0)))
+  else(
+    return([Ttot,Utot])
+  )
    )$
