@@ -122,7 +122,7 @@ else(
    M:addrow(transpose(E),transpose(A),transpose(B)),
    /*Calcolo il prodotto vettoriale. Letsimp necessario per
    coprire anche i casi di vettori simbolici assunti come paralleli*/
-   AxB:collectterms(scanmap(ratsimp,scanmap(trigsimp,factor(determinant(M)))),e[x],e[y],e[z]),
+   AxB:collectterms(expand(scanmap(ratsimp,scanmap(trigsimp,factor(determinant(M))))),e[x],e[y],e[z]),
    /*Verifico se i due vettori sono paralleli*/
    if AxB = 0 then
      printf(true,"~a//~a",vA,vB)
