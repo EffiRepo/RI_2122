@@ -71,7 +71,6 @@ atan2mod(y,x):=block([signx,signy,atValue,at2Value,sn,cs,sn2,cs2],
   if (x=0) then (return(atan2(y,x))),
   atValue:simp(atan(y/x)),
   at2Value:simp(atan2(y,x)),
-  print(atValue),print(at2Value),
   sn:signum(float(sin(atValue))),cs:signum(float(cos(atValue))),
   sn2:signum(float(sin(at2Value))),cs2:signum(float(cos(at2Value))),
   if(sn=signy and cs=signx) then (return(simp(atan(y/x))))
