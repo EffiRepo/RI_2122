@@ -808,7 +808,7 @@ if(rn=false)then(return(U))
 else(return(rename(U,0)))
 )$
 /*Cinetica*/
-(%i69)  Tl(tab,bcPos,rn):=block([dr,dof,Qbc,II,R,d,Ttr:[],ddot,Tr:[],RdotR,Sw,ax,Ttot:[],Br:[],Bt:[],Btot:[]],
+Tl(tab,bcPos,rn):=block([dr,dof,Qbc,II,R,d,Ttr:[],ddot,Tr:[],RdotR,Sw,ax,Ttot:[],Br:[],Bt:[],Btot:[]],
 dr:DH(tab)[2],dof:size(tab)[1],
 for i:1 thru dof do(
   II:inerzia(i),
