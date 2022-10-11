@@ -1,0 +1,59 @@
+
+g	java:S117ö"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÀ¡„
+l	java:S117ø"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚ğ²ıøÿÿÿÿ
+g	java:S117ù"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ß’åã
+l	java:S117ú"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Õºèøüÿÿÿÿ
+l	java:S117û"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–Öƒıÿÿÿÿ
+l	java:S117ü"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ûö·üÿÿÿÿ
+g	java:S117ı"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İŒ÷
+g	java:S117ş"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€¶¼ï
+f	java:S117ÿ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç¾¢g
+l	java:S117€"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®˜öÿÿÿÿÿ
+g	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şïŒ¬
+l	java:S117‚"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷²ªÿÿÿÿÿ
+l	java:S117ƒ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æúè¶üÿÿÿÿ
+l	java:S117„"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(çèÔ›ûÿÿÿÿ
+l	java:S117…"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò´Æ¯ûÿÿÿÿ
+g	java:S117†"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÕœõÎ
+g	java:S117‡"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(”¼‹×
+g	java:S117²"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È³•
+l	java:S117·"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(íƒ¯üÿÿÿÿ
+g	java:S117¸"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È°½”
+g	java:S117¹"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÅÇíî
+g	java:S117º"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şÏİÄ
+l	java:S117»"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ö¼ªŞÿÿÿÿÿ
+f	java:S117¼"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç¾¢g
+l	java:S117½"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®˜öÿÿÿÿÿ
+g	java:S117¾"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şïŒ¬
+l	java:S117¿"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(€¢·Çÿÿÿÿÿ
+g	java:S117Á"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦‘‚¾
+l	java:S117Â"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„ì²­øÿÿÿÿ
+l	java:S117Ã"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(á¿Áûÿÿÿÿ
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ˆ§éŒúÿÿÿÿ
+l
+java:S14505"VRemove the "sumGrad" field and declare it as a local variable in the relevant methods.(ã€Ú 
+P
+java:S1854"9Remove this useless assignment to local variable "yCurr".(õö—‘
+U
+java:S1854Œ"9Remove this useless assignment to local variable "xCurr".(ñØ›ïûÿÿÿÿ
+W	java:S125÷"<This block of commented-out lines of code should be removed.(ÊùÓÈúÿÿÿÿ
+F
+java:S1481Œ"*Remove this unused "xCurr" local variable.(ñØ›ïûÿÿÿÿ
+A
+java:S1481"*Remove this unused "yCurr" local variable.(õö—‘
+W	java:S125‘"<This block of commented-out lines of code should be removed.(µ“´ˆşÿÿÿÿ
+Q	java:S125¥"<This block of commented-out lines of code should be removed.(Ş¾™l
+n
+java:S3776Æ"RRefactor this method to reduce its Cognitive Complexity from 30 to the 15 allowed.(’Ë·éıÿÿÿÿ
+Q	java:S125×"<This block of commented-out lines of code should be removed.(ıÕø[
+R	java:S125ß"<This block of commented-out lines of code should be removed.(ÑÃĞŸ
+R	java:S125è"<This block of commented-out lines of code should be removed.(ÑÃĞŸ
+W	java:S125´"<This block of commented-out lines of code should be removed.(Êä¿«ûÿÿÿÿ
+E
+java:S1068"*Remove this unused "LOGGER" private field.(È×ãñûÿÿÿÿ
+<
+java:S1068"&Remove this unused "dx" private field.(àÜ‰
+<
+java:S1068"&Remove this unused "dy" private field.(ÂÇÃ
+A
+java:S10685"+Remove this unused "sumGrad" private field.(ã€Ú 

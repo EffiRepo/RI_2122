@@ -1,0 +1,14 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ˆ§éŒúÿÿÿÿ
+o	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(îÆ´¦
+t	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Çž·Âýÿÿÿÿ
+o	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(àñ‚Á
+o	java:S115"ZRename this constant name to match the regular expression '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'.(Ó¶°ì
+D
+java:S1068".Remove this unused "barPrimary" private field.(îÆ´¦
+K
+java:S1068"0Remove this unused "barSecondary" private field.(Çž·Âýÿÿÿÿ
+C
+java:S1068"-Remove this unused "topHeight" private field.(àñ‚Á
+C
+java:S1068"-Remove this unused "botHeight" private field.(Ó¶°ì

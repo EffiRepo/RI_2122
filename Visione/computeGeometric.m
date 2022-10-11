@@ -137,6 +137,12 @@ subplot(3,3,9)
 plot(xp1,R1(:,180))
 title('Theta=179')
 
+figure
+for k=1:5:180    
+    plot(xp1,R1(:,k))   
+    title(k)
+    pause;
+end
 figure(3)
 title('Valori massimi Trasformata Radon')
 findpeaks(maxRadon,'SortStr','descend',...

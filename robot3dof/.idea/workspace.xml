@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f7e14b8e-e268-4d29-8dc9-ad4b3aa4ba9c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../7)Energia Strutture Portanti.tm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Visione/computeGeometric.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Visione/computeGeometric.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Visione/visione.m" beforeDir="false" afterPath="$PROJECT_DIR$/../Visione/visione.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib_esame.mac" beforeDir="false" afterPath="$PROJECT_DIR$/../lib_esame.mac" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +95,7 @@
       <workItem from="1664826747978" duration="11226000" />
       <workItem from="1664867753103" duration="35962000" />
       <workItem from="1664911893487" duration="9760000" />
+      <workItem from="1665476612982" duration="379000" />
     </task>
     <servers />
   </component>

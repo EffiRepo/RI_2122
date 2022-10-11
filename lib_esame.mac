@@ -515,7 +515,7 @@ cayley(ax,angle):=block(
      /*Normalizzo il vettore e ottengo norma e versore*/
      [norm, vers]: normalize(ax),
      /* Calcolo antisimmetrica con l'angolo corretto*/
-    s:S(vers*sin(angle)/(cos(angle)+1)),
+    s:S(vers*sin(angle*norm)/(cos(angle*norm)+1)),
     I:identfor(s),
     cay:expand(I+s).invert(expand(I-s)),
 return(scanmap(trigsimp,factor(cay)))
@@ -687,7 +687,7 @@ matrixDot(m):=block([sizeM:size(m),dotM:zerofor(m)],
 Ulink(Qh,M):=block(
 [g,U,d],
 /*Approssimoaccelerazionegravitazionalea10m/s^2*/
-g:[0,0,10],
+g:matrix([0,0,10]),
 d:submatrix(4,Qh,1,2,3),
 U:-M*g.d,
 return(U)

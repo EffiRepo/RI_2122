@@ -9,8 +9,8 @@ syms x rect(x,x0,y0,m) rect2p(x,x0,y0,x1,y1)
 rect(x,x0,y0,m)=m*(x-x0)+y0;
 rect2p(x,x0,y0,x1,y1) = (x-x0)/(x1-x0)*(y1-y0)+y0;
 %% Scelta delle immagini
-obsTarget = 4;
-noise = 0.0007;
+obsTarget = 0;
+noise = 0.07;
 %%
 switch(obsTarget)
      case 8
@@ -31,7 +31,8 @@ switch(obsTarget)
         filename = 'Immagini/quadrato.jpg';
 
     case 0
-        filename = 'Immagini/sfera.jpg';
+%         filename = 'Immagini/sfera.jpg';
+filename = 'Immagini/img_esame.jpg';
     otherwise
         disp("No image path avaiable");
 end
@@ -130,7 +131,7 @@ yy = xy(2,:) + ybar;
 plot(xx,yy,'r','LineWidth',2,'DisplayName','Ellisse');
 
 %% Disegno assi maggiori dell'oggetto
-ang=orient
+ang=orient;
 % aggiungo sfasamento trovato empiricamente dai plot precedenti per far
 % coincidere lo 'zero' con quello da noi considerato.
 majorax=rect(x,z(1),z(2),ang);
